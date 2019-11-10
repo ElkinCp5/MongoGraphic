@@ -1,0 +1,1 @@
+Mongoose.connect('mongodb://localhost/test_database');  
