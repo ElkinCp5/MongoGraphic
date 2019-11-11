@@ -4,6 +4,7 @@ const Configs   = require('../config')();
 var jwt = Graphic.Jwt;
 var moment = Graphic.Moment;
 var secret = Configs.secret;
+
 exports.ensureAuth = function(req, res, next){
     if(!req.headers.authorization){
         return res.status(403).send({message: 'La peticion no tiene la cabecera de autenticación'});

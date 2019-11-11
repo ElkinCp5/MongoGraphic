@@ -10,6 +10,12 @@ https://stackoverflow.com/questions/28166463/how-to-create-mongoose-schema-dynam
 
 https://medium.com/@asfo/desarrollando-una-sencilla-api-rest-con-nodejs-y-express-cab0813f7e4b
 
+https://mongoosejs.com/docs/schematypes.html#strings
+
+https://expressjs.com/es/4x/api.html#router.METHOD
+
+https://transform.tools/json-to-mongoose
+
 npm
 https://www.npmjs.com/package/mongoose-dynamic-schemas
 
@@ -23,3 +29,9 @@ https://www.youtube.com/watch?v=794Q71KVw1k
 https://www.youtube.com/watch?v=Q3stHsWowNg
 
 https://www.youtube.com/watch?v=Kg3bl7inhgg&t=40s
+
+nuevo
+
+https://www.youtube.com/watch?v=794Q71KVw1k
+
+https://www.youtube.com/watch?v=DqpL5UtJHus
