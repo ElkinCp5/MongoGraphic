@@ -1,8 +1,8 @@
 //Load app dependencies  
-const Graphic   = require("../graphic-dependencies");
-const Routes    = require('../graphic-routes');
+const Graphic   = require("../dependencies");
+const Routes    = require('../routes');
 const Express   = require('express') ;
-const Config    = require('../graphic-config')
+const Config    = require('../config')
 //import {Express as App} from "../graphic-dependencies";
 
 //Connect to the MongoDB test database  
@@ -24,5 +24,5 @@ console.log(__dirname);
 
 //Start the server  
 App.listen(8080, ()=>{
-    console.log('Serve on port ');
+    console.log('Serve: http://localhost:8080/', Config);
 });  

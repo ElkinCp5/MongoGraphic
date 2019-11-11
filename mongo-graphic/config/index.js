@@ -7,7 +7,7 @@ module.exports = ()=>{
             batabase: "db",
             port: ""
         },
-        mongographic:{
+        host:{
             serve: "localhost/",
             port: 8080
         }
