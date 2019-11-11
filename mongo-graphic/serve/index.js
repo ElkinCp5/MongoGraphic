@@ -1,15 +1,19 @@
 //Load app dependencies  
-const Graphic   = require("../dependencies");
-const Routes    = require('../routes');
-const Express   = require('express') ;
-const Config    = require('../config')
-//import {Express as App} from "../graphic-dependencies";
+const Graphic   = require("../dependencies")();
+const Configs   = require('../config')();
+const RoutesM   = require('../routes');
+const RoutesG   = require('../routes/routes-graphic');
+//const RoutesU   = require('../auth/route/user');
+// Cargamos los módulos de express y body-parser
+var Serve = Graphic.Express();
+var BodyParser = Graphic.BodyParser;
 
-//Connect to the MongoDB test database  
-//Mongoose.connect('mongodb://localhost/test_database');  
-var App = Express();
 
-Parameters = {
+//Serve.use(BodyParser.urlencoded({extended:false}));
+//Serve.use(BodyParser.json());
+// exportamos este módulo para poder usar la variable app fuera de este archivo
+
+var Parameters = {
     model:{
         url: '',
         name: {
@@ -17,12 +21,14 @@ Parameters = {
             plural: 'people'
         }
     }
-}
+};
 
-Routes(App, Parameters);
-console.log(__dirname);
 
-//Start the server  
-App.listen(8080, ()=>{
-    console.log('Serve: http://localhost:8080/', Config);
-});  
+RoutesG(Serve);
+//Serve.use('/api', RoutesU);
+//RoutesM(Serve, Parameters);
+//console.log(__dirname);
+module.exports = Serve;
+
+
+

@@ -1,15 +1,19 @@
-
 module.exports = ()=>{
     return {    
         moongodb:{
             manager:'mongodb://',
-            serve: "localhost/",
-            batabase: "db",
-            port: ""
+            serve: "localhost:",
+            database: "demo_app",
+            port: "27017/"
         },
         host:{
             serve: "localhost/",
             port: 8080
-        }
+        },
+        patch:{
+            models: "../schemas/",
+            schemas: "../models/"
+        },
+        secret: 'clave_secreta_'
     }
 };
