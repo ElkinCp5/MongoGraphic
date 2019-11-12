@@ -1,4 +1,4 @@
-module.exports = (jsonSchema, nameSchema, root = '/src/schema/' ) => {
+module.exports = (jsonSchema, nameSchema, root = '/src/schemas/' ) => {
     const fs = require('fs');
     var pach = __dirname + root;
 
@@ -7,7 +7,7 @@ module.exports = (jsonSchema, nameSchema, root = '/src/schema/' ) => {
 
         if(JSON.parse(jsonSchema)){
 
-            fs.writeFile(`${pach + nameSchema}.json`, jsonSchema,'utf8', (err) => {
+            fs.writeFile(`${pach + nameSchema}.json`, jsonSchema, 'utf8', (err) => {
                 if (err) throw err;
                     console.warn(`The file ${nameSchema}.json has been saved!`);
             });

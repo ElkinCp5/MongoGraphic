@@ -1,18 +1,19 @@
 // Utilizar funcionalidades del Ecmascript 6
 'use strict'
-// load moduele for dependencies 
+// Load moduele for dependencies 
 const Graphic   = require("./dependencies")();
 // load moduele for config connect mongoDB
 const Configs   = require('./config')();
 const TestConfigs   = require('./connect');
-// load fil app.js the config for Express
+// Configuration file upload Express
 const Serve       = require('./serve');
 const Port        = Configs.host.port;
 const UrlConnect  = Configs.moongodb.manager+
                     Configs.moongodb.serve+
                     Configs.moongodb.port+
                     Configs.moongodb.database;
-
+// Connection object of mongoose
+const ObjetConnection = Graphic.Mongoose.connection;
 const OptionsConnect = {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -28,24 +29,19 @@ const OptionsConnect = {
     socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
     family: 4 // Use IPv4, skip trying IPv6
 };
-
+// Mongodb async connection configuration
 Graphic.Mongoose.Promise = global.Promise;
-async function ConnectAsync(){
+async function connectAsync(){
    await Graphic.Mongoose.connect(UrlConnect, OptionsConnect);
 }
 
-Serve.listen(Port, () => {
-    console.warn('servidor corriendo en http://localhost:'+Port);
-});
-/*
-ConnectAsync().then(() => {
-    console.log("La conexión a db realizada");
+connectAsync().then(() => {
+    console.log("initialized mongodb connection");
     Serve.listen(Port, () => {
-        console.warn('servidor corriendo en http://localhost:'+Port);
+        console.warn(`node server running on: http://localhost:${Port}`);
     });
 })
-// Si no se conecta correctamente escupimos el error
+// Error capture in the mongodb collection
 .catch(err => console.error(err));
-
-TestConfigs(Graphic.Mongoose.connection);
-*/
+// Event management module in the mongodb collection
+TestConfigs(ObjetConnection, UrlConnect);

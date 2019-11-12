@@ -3,7 +3,7 @@ module.exports = ()=>{
         moongodb:{
             manager:'mongodb://',
             serve: "localhost:",
-            database: "demo_app",
+            database: "local",
             port: "27017/"
         },
         host:{
