@@ -1,1 +1,1 @@
-{"module":"User","singular":"user","plural":"user","structure":{"name":"String","lastName":"String","age":"Number","create_at":{"type":"Date"},"update_at":{"type":"Date"}}}
+{"verbatim":{"low_first":"User","singularize":"user","pluralize":"users"},"structure":{"name":"String","lastName":"String","age":"Number","create_at":{"type":"Date"},"update_at":{"type":"Date"}}}

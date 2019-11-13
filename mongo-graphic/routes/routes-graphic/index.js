@@ -6,19 +6,15 @@ module.exports = (Server) =>{
     const classSchemaDynamicModal = require('../../src/schemaDynamic');
     // lista de objetos para los rutas permitidas
     const _ListsSchemaJson = require('../../schema/loadinSchemaJson');
-    var _SchemaJson = require('../../src/schemas/user.json');
+    var _SchemaJson = require('../../src/schemas/person.json');
     const _ModalDinamic = new classSchemaDynamicModal(_SchemaJson).ModalDynamic();
-
-    try {
-
-    } catch (error) {
-        console.error(error);    
-    }
     
     var json = { 
-        module: "User",
-        singular: "user",
-        plural: "user",
+        verbatim: {
+            low_first: "person",
+            singularize: "person",
+            pluralize: "people",
+        },
         structure: {
             name: "String", 
             lastName:"String",
@@ -33,9 +29,8 @@ module.exports = (Server) =>{
         /*var person = new Person({name: req.body.name, lastName: req.body.lastName});  
         person.save();  
         res.end(); */
-        greateSchema(json, json.module);
+        //greateSchema(json, json.verbatim.low_first);
         _ModalDinamic.find().then((datas)=>{
-            res.locals.users = datas;
             res.json(datas);
         });
         //res.json(_ListsSchemaJson);
@@ -44,7 +39,7 @@ module.exports = (Server) =>{
 
     //Create a new document
     create = (req, res) =>{  
-        var document = new _ModalDinamic({name: 'Marcial', lastName: 'Sanchez'});  
+        var document = new _ModalDinamic({name: 'Elkin', lastName: 'Chaverra'});  
         document.save();  
         res.end(); 
         console.log(msg + 'view connect'); 

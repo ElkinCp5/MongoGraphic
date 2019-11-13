@@ -16,10 +16,12 @@ Serve.use(BodyParser.urlencoded({extended:false}));
 Serve.use(BodyParser.json());
 Serve.use(Morgan('dev'));
 Serve.use(function (req, res, next) {
-    path = Inflection.singularize((req.path).replace('/manager/', '').split('/')[0]);
-    var SchemaJSON = {} = LoadSchema.listsSchema(path)[path];
-    //res.json(SchemaJSON);
-    RoutesM(Serve, SchemaJSON);
+    path = Inflection.singularize((req.path).replace('/api/', '').split('/')[0])
+    req.path.indexOf('/api/', 0) >= 0 ? 
+        RoutesM(Serve, LoadSchema.listsSchema(path)[path])
+    : '' ;
+    //res.json(LoadSchema.listsSchema(path)[path])
+    //res.json(req.path.indexOf('/manager/', 0))
     next(); // pass control to the next handler
 });
 

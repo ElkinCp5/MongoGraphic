@@ -1,16 +1,24 @@
 //App routes  
 module.exports = function(Server, Schema){  
-  
+    var Sch = Schema.schema;
+    var Verb = Sch.verbatim 
+    // clase que crea los esquemas y modelos dinamicamente
+    const classSchemaDynamicModal = require('../src/schemaDynamic');
+    const _ModalDinamic = new classSchemaDynamicModal(Sch).ModalDynamic();
     //Model = require(Parameters.model.url);
-    console.log(Schema.verbatim);
-    var ModelSingularize = Schema.verbatim.singularize;
-    var ModelPluralize = Schema.verbatim.pluralize;
+    console.log('Objet: ',  Sch);
+    var ModelSingularize = Verb.singularize;
+    var ModelPluralize = Verb.pluralize;
+
+
     var msg = 'I am: ';
-    
     //list the documents
     index = (req, res) =>{  
-        res.end(msg + 'list documents: ' + ModelSingularize);
-        console.log(msg + 'list documents: ' + ModelSingularize); 
+        _ModalDinamic.find().then((datas)=>{
+            res.locals[ModelPluralize] = datas;
+            res.json(datas);
+        });
+        console.log(msg + 'list documents: ' + ModelSingularize);
     };  
   
     //Create a new document
@@ -21,7 +29,9 @@ module.exports = function(Server, Schema){
   
     //find document by id  
     show = (req, res) => {  
-        res.end(msg + 'show document: ' + ModelSingularize);
+        _ModalDinamic.findOne({_id: req.params.id}).then((document)=>{
+            res.json(document);  
+        });
         console.log(msg + 'show document: ' + ModelSingularize); 
     }; 
 
@@ -38,10 +48,11 @@ module.exports = function(Server, Schema){
     };  
   
     //Link routes and functions  
-    Server.get(`/manager/${ModelSingularize}`,         index);  
-    Server.get(`/manager/${ModelSingularize}/:id`,     show); 
+    Server.get(`/api/${ModelSingularize}`,         index);  
+    Server.get(`/api/${ModelSingularize}/:id`,     show); 
 
-    Server.post(`/manager/${ModelSingularize}`,        create);  
-    Server.delete(`/manager/${ModelSingularize}/:id`,  distroy);
-    Server.put(`/manager/${ModelSingularize}/:id`,     update);
+    Server.get(`/api/${ModelSingularize}/create`,         create); 
+    Server.post(`/api/${ModelSingularize}`,        create);  
+    Server.delete(`/api/${ModelSingularize}/:id`,  distroy);
+    Server.put(`/api/${ModelSingularize}/:id`,     update);
 }
