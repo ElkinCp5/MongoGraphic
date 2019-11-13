@@ -10,6 +10,7 @@ module.exports = ()=> {
         Http:           require('http'),
         BodyParser:     require('body-parser'),
         Jwt:            require('jwt-simple'),
-        Moment:         require('moment')
+        Moment:         require('moment'),
+        Path:           require('path'),
     }
 }

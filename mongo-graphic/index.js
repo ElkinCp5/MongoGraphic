@@ -42,6 +42,6 @@ connectAsync().then(() => {
     });
 })
 // Error capture in the mongodb collection
-.catch(err => console.error(err));
+.catch(error => console.error(error));
 // Event management module in the mongodb collection
 TestConfigs(ObjetConnection, UrlConnect);
