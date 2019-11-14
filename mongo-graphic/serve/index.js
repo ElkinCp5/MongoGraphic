@@ -17,9 +17,11 @@ Serve.use(BodyParser.json());
 Serve.use(Morgan('dev'));
 Serve.use(function (req, res, next) {
     path = Inflection.singularize((req.path).replace('/api/', '').split('/')[0])
-    req.path.indexOf('/api/', 0) >= 0 ? 
-        RoutesM(Serve, LoadSchema.listsSchema(path)[path])
-    : '' ;
+    if(LoadSchema.existsSchema(path)){
+        req.path.indexOf('/api/', 0) >= 0 ? 
+            RoutesM(Serve, LoadSchema.singleSchema(path)[path])
+        : '' ;
+    }
     //res.json(LoadSchema.listsSchema(path)[path])
     //res.json(req.path.indexOf('/manager/', 0))
     next(); // pass control to the next handler

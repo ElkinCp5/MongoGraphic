@@ -3,7 +3,7 @@
 // Load moduele for dependencies 
 const Graphic   = require("./dependencies")();
 // load moduele for config connect mongoDB
-const Configs   = require('./config')();
+const Configs   = require('./config');
 const TestConfigs   = require('./connect');
 // Configuration file upload Express
 const Serve       = require('./serve');

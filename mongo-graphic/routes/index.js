@@ -6,7 +6,7 @@ module.exports = function(Server, Schema){
     const classSchemaDynamicModal = require('../src/schemaDynamic');
     const _ModalDinamic = new classSchemaDynamicModal(Sch).ModalDynamic();
     //Model = require(Parameters.model.url);
-    console.log('Objet: ',  Sch);
+    //console.log('Objet: ',  Sch);
     var ModelSingularize = Verb.singularize;
     var ModelPluralize = Verb.pluralize;
 
@@ -23,7 +23,12 @@ module.exports = function(Server, Schema){
   
     //Create a new document
     create = (req, res) =>{  
-        res.end(msg + 'create document: ' + ModelSingularize);
+        var document = new _ModalDinamic({name: 'Marya', lastName: 'Apons'});  
+        document.save();  
+        res.json({
+            model: `new ${ModelSingularize}`, 
+            document: document
+        }); 
         console.log(msg + 'create document: ' + ModelSingularize); 
     };  
   
@@ -51,7 +56,7 @@ module.exports = function(Server, Schema){
     Server.get(`/api/${ModelSingularize}`,         index);  
     Server.get(`/api/${ModelSingularize}/:id`,     show); 
 
-    Server.get(`/api/${ModelSingularize}/create`,         create); 
+    Server.get(`/api/${ModelSingularize}/create/model`,         create); 
     Server.post(`/api/${ModelSingularize}`,        create);  
     Server.delete(`/api/${ModelSingularize}/:id`,  distroy);
     Server.put(`/api/${ModelSingularize}/:id`,     update);

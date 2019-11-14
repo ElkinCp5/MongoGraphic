@@ -3,13 +3,14 @@ class loadSchema{
         this.Graphic   = require("../dependencies")();
         this.FileManager = this.Graphic.FileManager;
         this.Inflection  = this.Graphic.Inflection;
+        this.PathRoot    = `${__dirname}/../src/schemas/`
         this.Schemas = [];
     }
 
-    singleSchema(){
-        this.FileManager.readdirSync(`${__dirname}/../src/schemas`).forEach((file) =>{
+    listsSchema(){
+        this.FileManager.readdirSync(this.PathRoot).forEach((file) =>{
             const Model = {}
-            var filePath = `${__dirname}/../src/schemas/${file}`;
+            var filePath = `${this.PathRoot + file}`;
         
             // Route validation
             (!this.FileManager.statSync(filePath).isFile() && !/.*.json/.test(file)) ? 
@@ -35,10 +36,9 @@ class loadSchema{
         return this.Schemas;
     }
 
-    listsSchema(file){
+    singleSchema(file){
         const Model = {}
-        file = file+'.json'
-        var filePath = `${__dirname}/../src/schemas/${file}`;
+        var filePath = `${this.PathRoot + file}.json`;
         
         // Route validation
         (!this.FileManager.statSync(filePath).isFile() && !/.*.json/.test(file)) ? 
@@ -49,9 +49,16 @@ class loadSchema{
         Model[singularize]= {
             schema: require(filePath)
         };
-
-
         return Model;
+    }
+    
+    existsSchema(file){
+        const Model = {}
+        var filePath = `${this.PathRoot + file}.json`;
+        
+        if(this.FileManager.existsSync(filePath)) return true;
+            else return false;
+        
     }
 }
 module.exports = loadSchema;
