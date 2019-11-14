@@ -10,13 +10,12 @@ const Serve = Graphic.Express();
 const BodyParser = Graphic.BodyParser;
 const Inflection = Graphic.Inflection;
 const LoadSchema = new LoadingSchemas;
-var path = '';
 
 Serve.use(BodyParser.urlencoded({extended:false}));
 Serve.use(BodyParser.json());
 Serve.use(Morgan('dev'));
 Serve.use(function (req, res, next) {
-    path = Inflection.singularize((req.path).replace('/api/', '').split('/')[0])
+    var path = Inflection.singularize((req.path).replace('/api/', '').split('/')[0])
     if(LoadSchema.existsSchema(path)){
         req.path.indexOf('/api/', 0) >= 0 ? 
             RoutesM(Serve, LoadSchema.singleSchema(path)[path])

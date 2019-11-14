@@ -1,48 +1,45 @@
 //App routes  
 module.exports = (Server) =>{  
     var msg = 'I am: ';
-    const greateSchema = require('../../createSchemaJson');
     // clase que crea los esquemas y modelos dinamicamente
-    const classSchemaDynamicModal = require('../../src/schemaDynamic');
+    //const classSchemaDynamicModal = require('../../src/schemaDynamic');
     // lista de objetos para los rutas permitidas
-    const _ListsSchemaJson = require('../../schema/loadinSchemaJson');
-    var _SchemaJson = require('../../src/schemas/person.json');
-    const _ModalDinamic = new classSchemaDynamicModal(_SchemaJson).ModalDynamic();
-    
+    //const _ListsSchemaJson = require('../../schema/loadinSchemaJson');
+    //var _SchemaJson = require('../../src/schemas/person.json');
+    //const _ModalDinamic = new classSchemaDynamicModal(_SchemaJson).ModalDynamic();
+    const structSchemaJson = require('../../schema/createStructSchemaJson');
+    const saveFilSchemaJson = require('../../schema/createSchemaJson');
+    var _strSchema = new structSchemaJson;
     var json = { 
-        verbatim: {
-            low_first: "person",
-            singularize: "person",
-            pluralize: "people",
-        },
+        name: 'Leader',
+        timestamps: 'true',
         structure: {
             name: "String", 
             lastName:"String",
-            age: "Number"
+            age: "Number",
+            salary: "String",
+            phone: "String",
+            address: "String",
+            create_at: "Date",
+            update_at: "Date"
         }
     };
-    json.structure["create_at"] = { type: "Date", default: Date.now };
-    json.structure["update_at"] = { type: "Date", default: Date.now };
+
     //list the documents
     
-    index = (req, res) => {  
-        /*var person = new Person({name: req.body.name, lastName: req.body.lastName});  
-        person.save();  
-        res.end(); */
-        //greateSchema(json, json.verbatim.low_first);
-        _ModalDinamic.find().then((datas)=>{
-            res.json(datas);
-        });
-        //res.json(_ListsSchemaJson);
-        console.log(msg + 'view index'); 
+    index = (req, res) => { 
+        var Sch = _strSchema.toSchema(json);
+        Sch ? saveFilSchemaJson(Sch, Sch.verbatim.singularize) & res.json({Sch})
+        : res.json({msg: 'frm or struct for schema Json: invalider'});
+        console.log(json + 'view index'); 
     };  
 
     //Create a new document
     create = (req, res) =>{  
-        var document = new _ModalDinamic({name: 'Elkin', lastName: 'Chaverra'});  
+        /*var document = new _ModalDinamic({name: 'Elkin', lastName: 'Chaverra'});  
         document.save();  
         res.end(); 
-        console.log(msg + 'view connect'); 
+        console.log(msg + 'view connect'); */
     };  
     //Create a new document
     connect = (req, res) =>{  

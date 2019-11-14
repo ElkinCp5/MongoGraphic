@@ -5,7 +5,6 @@ module.exports = function(Server, Schema){
     // clase que crea los esquemas y modelos dinamicamente
     const classSchemaDynamicModal = require('../src/schemaDynamic');
     const _ModalDinamic = new classSchemaDynamicModal(Sch).ModalDynamic();
-    //Model = require(Parameters.model.url);
     //console.log('Objet: ',  Sch);
     var ModelSingularize = Verb.singularize;
     var ModelPluralize = Verb.pluralize;
@@ -56,8 +55,7 @@ module.exports = function(Server, Schema){
     Server.get(`/api/${ModelSingularize}`,         index);  
     Server.get(`/api/${ModelSingularize}/:id`,     show); 
 
-    Server.get(`/api/${ModelSingularize}/create/model`,         create); 
     Server.post(`/api/${ModelSingularize}`,        create);  
     Server.delete(`/api/${ModelSingularize}/:id`,  distroy);
-    Server.put(`/api/${ModelSingularize}/:id`,     update);
+    Server.put(`/api/${ModelSingularize}/:id`,     update); 
 }
