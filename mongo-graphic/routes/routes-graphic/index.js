@@ -1,12 +1,6 @@
 //App routes  
 module.exports = (Server) =>{  
     var msg = 'I am: ';
-    // clase que crea los esquemas y modelos dinamicamente
-    //const classSchemaDynamicModal = require('../../src/schemaDynamic');
-    // lista de objetos para los rutas permitidas
-    //const _ListsSchemaJson = require('../../schema/loadinSchemaJson');
-    //var _SchemaJson = require('../../src/schemas/person.json');
-    //const _ModalDinamic = new classSchemaDynamicModal(_SchemaJson).ModalDynamic();
     const structSchemaJson = require('../../schema/createStructSchemaJson');
     const saveFilSchemaJson = require('../../schema/createSchemaJson');
     var _strSchema = new structSchemaJson;
