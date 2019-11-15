@@ -1,20 +1,26 @@
 import React  from 'react';
-import { Card, Modal, Button, message} from 'antd';
-import './App.css';
+import ReactDOM from 'react-dom';
+import { Card, Modal, Tabs, Button, message} from 'antd';
+import './router.css'
+
+import SinglePanel from '../components/tabpanel/singlePanel';
+
+const { TabPane } = Tabs;
+const { Component } = React;
+let fieldGlobal;
+
 
 const success = (text) => {
   message.success('This is a success '+(text ? text : null), 3);
 };
-
 const error = (text) => {
   message.error('This is an error '+(text ? text : null), 3);
 };
-
 const warning = (text) => {
   message.warning('This is a warning '+(text ? text : null), 3);
 };
 
-class App extends React.Component {
+class App extends Component {
   
   constructor(props) {
     super(props);
@@ -22,7 +28,8 @@ class App extends React.Component {
       schemaJson: [], 
       visible: false,
       confirmLoading: false,
-      property: {
+      mode: 'left',
+      field: {
         column: '',
         config:{
           type: 'String',
@@ -32,7 +39,9 @@ class App extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  handleField(){
 
+  }
   showModal = () => {
     this.setState({
       visible: true,
@@ -44,11 +53,18 @@ class App extends React.Component {
       ModalText: 'The modal will be closed after two seconds',
       confirmLoading: true,
     });
+    
     setTimeout(() => {
-      this.setState({
+      fieldGlobal ?
+      this.setState({ 
+        field: fieldGlobal,
         visible: false,
-        confirmLoading: false,
-      });
+        confirmLoading: false })
+      : this.setState({ confirmLoading: false });
+
+      !fieldGlobal ? 
+        error('field: undefined and is required'):
+        success('field: undefined and is required')
     }, 2000);
   };
 
@@ -72,16 +88,21 @@ class App extends React.Component {
      schemaJson[i].column = event.target.value;
      this.setState({ schemaJson });
   }
+  // Tabs style
+  handleModeChange = e => {
+    const mode = e.target.value;
+    this.setState({ mode });
+  };
 
   addClick(){
-    this.state.property ?
+    this.state.field ?
     this.setState(prevState => ({
       schemaJson: [
-        ...prevState.schemaJson, this.state.property 
+        ...prevState.schemaJson, this.state.field 
       ]
     }))
     
-    : error('property: undefined');
+    : error('field: undefined and is required');
   }
 
   removeClick(i){
@@ -96,16 +117,10 @@ class App extends React.Component {
   }
 
   render() {
-    let file = {
-      column: '',
-      config:{
-        type: 'String',
-        required: null
-      }
-    }
+    const { mode } = this.state;
     return (
       <div>
-        <div style={{ background: '#ECECEC', padding: '30px', height:'100vh' }}>
+        <div style={{ background: '#ECECEC', padding: '30px', minHeight:'100vh' }}>
           
           <Card title="Creator of schemas" 
             extra={
@@ -121,7 +136,6 @@ class App extends React.Component {
             <form onSubmit={this.handleSubmit}>
               {this.createUI()}        
               <input type='button' value='add more' onClick={this.addClick.bind(this)}/>
-              
               <Button icon="save" htmlType="submit" >Save</Button>
             </form>
           </Card>
@@ -132,7 +146,22 @@ class App extends React.Component {
             confirmLoading={this.state.confirmLoading}
             onCancel={this.handleCancel}
           >
-            <p>Hola Mama </p>
+            <Tabs defaultActiveKey="1" tabPosition={mode} style={{ height: 220 }}>
+              <TabPane tab='Validation' key={1}>
+
+              </TabPane>
+            </Tabs>
+            <div>
+            <h1>simple field</h1>
+              <SinglePanel fields={this.state.field}/>
+              <br/>
+              <span>
+                It is a long established fact that a reader will 
+                be distracted by the readable content of a page when 
+                looking at its layout. The point of
+              </span>
+            </div>
+            
           </Modal>
         </div>
       </div>
