@@ -8,62 +8,54 @@ const { Option } = Select;
 class SinglePanel extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
-          schemaJson: [], 
-          visible: false,
-          confirmLoading: false,
-          mode: 'left',
-          property: {
-            column: '',
-            config:{
-              type: 'String',
-              required: null
-            }
+        this.state = {
+          field:{
+            name: false,
+            type: false
           }
         };
         //this.handleSubmit = this.handleSubmit.bind(this);
     }
-    onChange(value) {
-      console.log(`selected ${value}`);
+    onSelect(value) {
+      this.setState(prevState => ({
+          field: {...prevState.field, type: value}
+        }));
     }
     
-    onBlur() {
-      console.log('blur');
-    }
-    
-    onFocus() {
-      console.log('focus');
-    }
-    
-    onSearch(val) {
-      console.log('search:', val);
-    }
-
+    oInput(event) {
+      this.setState({ 
+        field: {
+          name: event.target.value
+        }
+      });
+   }
+   
     render() {
-        let { fields } = this.props;
-        fields = { name: 'String'}
-        console.log(fields);
+        let { fieldsState, fieldsEvente } = this.props;
+        var field ={};
+        (this.state.field.type && this.state.field.name ) ? 
+          field = this.state.field:
+          field = null;
+        //console.log(fieldsState, fieldsEvente);
       return (
           <div>
-            
+              <pre>
+                {
+                  JSON.stringify(this.state, null, 2)
+                }
+              </pre>
               <Row>
                 <Col className="colInput" xs={24}>
-                    <Input addonBefore="Field name" placeholder="example field name: name, surname or gender" />
+                    <Input
+                      onChange={this.oInput.bind(this)} 
+                      addonBefore="Field name" 
+                      placeholder="example field name: name, surname or gender" />
                 </Col>
                 <Col className="colInput" xs={24}>
-                  <Select
-                    showSearch
-                    style={{ width: 200 }}
-                    placeholder="Select a type of data"
-                    optionFilterProp="children"
-                    onChange={this.onChange}
-                    onFocus={this.onFocus}
-                    onBlur={this.onBlur}
-                    onSearch={this.onSearch}
-                    filterOption={(input, option) =>
-                      option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    }
-                  >
+                <Select size={'large'} 
+                  defaultValue="" 
+                  onChange={this.onSelect.bind(this)} style={{ width: 200 }}>
+                    <Option value="" disabled>Type data</Option>
                     <Option value="String">String</Option>
                     <Option value="Number">Number</Option>
                     <Option value="Date">Date</Option>
@@ -77,9 +69,8 @@ class SinglePanel extends Component {
                   </Select>
                 </Col>
                 <Col className="colInput" xs={24}>
-                  <Button style={{ 
-                    float: 'right' 
-                  }}
+                  <Button style={{  float: 'right'  }}
+                    onClick={()=>fieldsEvente(field)}
                     icon="search">validate field
                   </Button>
                 </Col>
