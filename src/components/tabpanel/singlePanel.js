@@ -28,13 +28,13 @@ class SinglePanel extends Component {
           name: event.target.value
         }
       });
-   }
+    }
    
     render() {
         let { fieldsState, fieldsEvente } = this.props;
         var field ={};
         (this.state.field.type && this.state.field.name ) ? 
-          field = this.state.field:
+          field = this.state.field :
           field = null;
         //console.log(fieldsState, fieldsEvente);
       return (
@@ -46,16 +46,16 @@ class SinglePanel extends Component {
               </pre>
               <Row>
                 <Col className="colInput" xs={24}>
-                    <Input
+                    <Input size="large"
                       onChange={this.oInput.bind(this)} 
                       addonBefore="Field name" 
                       placeholder="example field name: name, surname or gender" />
                 </Col>
                 <Col className="colInput" xs={24}>
-                <Select size={'large'} 
+                  <Select size={'large'} 
                   defaultValue="" 
                   onChange={this.onSelect.bind(this)} style={{ width: 200 }}>
-                    <Option value="" disabled>Type data</Option>
+                    <Option value="" disabled>type of data</Option>
                     <Option value="String">String</Option>
                     <Option value="Number">Number</Option>
                     <Option value="Date">Date</Option>

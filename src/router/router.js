@@ -1,12 +1,13 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
-import { Card, Modal, Tabs, Button, message} from 'antd';
+import { Card, Modal, Tabs, Select, Button, Input, message, Col, Row} from 'antd';
 import './router.css'
 
 import SinglePanel from '../components/tabpanel/singlePanel';
 
 const { TabPane } = Tabs;
 const { Component } = React;
+const { Option } = Select;
 let fieldGlobal;
 
 
@@ -19,17 +20,27 @@ const error = (text) => {
 const warning = (text) => {
   message.warning('This is a warning '+(text ? text : null), 3);
 };
-
+const OptionData =[
+  {value:"String", name: 'String'},
+  {value:"Number", name: 'Number'},
+  {value:"Date", name: 'Date'},
+  {value:"Buffer", name: 'Buffer'},
+  {value:"Boolean", name: 'Boolean'},
+  {value:"Mixed", name:'Mixed'},
+  {value:"ObjectId", name:'ObjectId'},
+  {value:"Array", name: 'Array'},
+  {value:"Decimal128", name: 'Decimal128'},
+  {value:"Map", name: 'Map'}
+];
 class App extends Component {
   
   constructor(props) {
     super(props);
     this.state = { 
-      schemaJson: [], 
+      schema: null,
+      listField: [], 
       visible: false,
       confirmLoading: false,
-      mode: 'left',
-
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleValidate = this.handleValidate.bind(this);
@@ -42,18 +53,17 @@ class App extends Component {
 
   handleOk = () => {
     this.setState({ confirmLoading: true,});
-    
+
     setTimeout(() => {
       this.state.field ?
       this.setState(prevState => ({
-        schemaJson: [...prevState.schemaJson, this.state.field],
+        listField: [...prevState.listField, this.state.field],
         visible: false,
         confirmLoading: false 
       }))
       : this.setState({ confirmLoading: false });
-
-
     }, 1000);
+
   };
 
   handleCancel = () => {
@@ -63,24 +73,53 @@ class App extends Component {
     });
   };
   createUI(){
-     return this.state.schemaJson.map((el, i) => 
-         <div key={i}>
-            <input type="text"    onChange={this.handleChange.bind(this, i)} />
+  let Field = this.state.listField;
+   if(Field)
+     return  (<Row> {Field.map((el, i) =>
+      <div key={i}>
+          <Col className="colInput">
+            <Input size="large" value={el.name} addonBefore="Field name"
+                onChange={this.handleChange.bind(this, i)}  
+                      placeholder="example field name: name, surname or gender" />
+          </Col>
+          <Col key={i} className="colInput">
+            <Select size={'large'} 
+                  defaultValue={el.type}
+                  onChange={this.onSelect.bind(this, i)} style={{ width: 200 }}>
+              {
+                OptionData.map((option, index)=>{
+                  return <Option value={option.value} key={index}>{option.name}</Option>
+                })
+              }      
+            </Select>        
             <Button shape="circle" icon="delete" onClick={this.removeClick.bind(this, i)} />
-         </div>          
-     )
+          </Col> 
+          <hr/>
+      </div>          
+    )}</Row>)
   }
 
   handleChange(i, event) {
-     let schemaJson = [...this.state.schemaJson];
-     schemaJson[i].name = event.target.value;
-     this.setState({ schemaJson });
+     let updateName = [...this.state.listField];
+     updateName[i].name = event.target.value;
+     this.setState({ updateName });
   }
-  // Tabs style
-  handleModeChange = e => {
-    const mode = e.target.value;
-    this.setState({ mode });
-  };
+
+  handleShangeSchemaName(event) {
+    event.target.value ?
+    this.setState({ 
+      schema: event.target.value
+    }) :
+    this.setState({ 
+      schema: null
+    });
+  }
+
+  onSelect(i, value) {
+    let updateType = [...this.state.listField];
+    updateType[i].type = value;
+    this.setState({ updateType });
+  }
 
   handleValidate(field){
     if(field) this.setState({ field })
@@ -93,40 +132,57 @@ class App extends Component {
   };
   
   removeClick(i){
-     let schemaJson = [...this.state.schemaJson];
-     schemaJson.splice(i,1);
-     this.setState({ schemaJson });
+     let schema = [...this.state.listField];
+     schema.splice(i,1);
+     this.setState({ schema });
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.schemaJson.join(', '));
+    alert('A name was submitted: ' + this.state.listField.join(', '));
     event.preventDefault();
   }
 
   render() {
-    const { mode } = this.state;
-    let test = {una: 'mamam'};
-    console.log(JSON.stringify(test).replace('{', '').split(":", 1)[0]);
+    //let test = {una: 'mamam'};
+    //console.log(JSON.stringify(test).replace('{', '').split(":", 1)[0]);
     return (
       <div>
         <div style={{ background: '#ECECEC', padding: '30px', minHeight:'100vh' }}>
           
-          <Card title="Creator of schemas" 
-            extra={
+          <Card title={'Creator of schemas'} extra={
               <Button shape="circle" icon="plus" onClick={this.showModal} />
             }
+            actions={[
+              <Button shape="circle" icon="save" size="large" htmlType="submit" />
+            ]}
             bordered={false} 
+            
             style={{ width: 500, margin:'auto' }}>
-              <pre>
-                {
-                  JSON.stringify(this.state, null , 4)
-                }
-              </pre>
-            <form onSubmit={this.handleSubmit}>
-              {this.createUI()}        
-              <Button icon="save" htmlType="submit" >Save</Button>
-            </form>
+              <Row>
+                <Col className="colInput">
+                  <Input id={'shemaname'}size="default" addonBefore="shcema"
+                     onChange={this.handleShangeSchemaName.bind(this)}   
+                      placeholder="as a user, employeer etc..."
+                      //style={{ width:'200px'}} 
+                  />
+                </Col>
+              </Row>
+              <Tabs style={{ minHeight: '200px'}} defaultActiveKey="1">
+                <TabPane tab="JSON" key="1">
+                  <pre>
+                    {
+                      JSON.stringify(this.state, null , 2)
+                    }
+                  </pre>
+                </TabPane>
+                <TabPane tab="FORM" key="2">
+                  <form onSubmit={this.handleSubmit}>
+                    {this.createUI()}        
+                  </form>
+                </TabPane>
+              </Tabs>
           </Card>
+
           <Modal
             title="Title"
             visible={this.state.visible}
@@ -134,7 +190,7 @@ class App extends Component {
             confirmLoading={this.state.confirmLoading}
             onCancel={this.handleCancel}
           >
-            <Tabs defaultActiveKey="1" tabPosition={mode} style={{ minHeight: 220 }}>
+            <Tabs defaultActiveKey="1" tabPosition={'left'} style={{ minHeight: 220 }}>
               <TabPane tab='Validation' key={1}>
                 <h1>simple field</h1>
                 <SinglePanel 
