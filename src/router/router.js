@@ -9,7 +9,26 @@ const { TabPane } = Tabs;
 const { Component } = React;
 const { Option } = Select;
 let fieldGlobal;
-
+let schemaMaster ={
+  schema_name: '',
+  field_collections: [
+    {
+      field_type:'single',
+      field:{
+        name:'name',
+        type: 'String',
+        unique: [true, null],
+        max: 10,
+        min: 0
+      },
+      message:{
+        unique:'',
+        max:'max > this.field.max',
+        min: `min > this.field.min`,
+      }
+    }
+  ]
+};
 
 const success = (text) => {
   message.success('This is a success '+(text ? text : null), 3);
@@ -171,7 +190,7 @@ class App extends Component {
                 <TabPane tab="JSON" key="1">
                   <pre>
                     {
-                      JSON.stringify(this.state, null , 2)
+                      JSON.stringify(schemaMaster, null , 2)
                     }
                   </pre>
                 </TabPane>

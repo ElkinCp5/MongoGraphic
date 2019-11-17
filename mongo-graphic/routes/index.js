@@ -22,8 +22,17 @@ module.exports = function(Server, Schema){
   
     //Create a new document
     create = (req, res) =>{  
-        var document = new _ModalDinamic({name: 'Marya', lastName: 'Apons'});  
-        document.save();  
+        var document = new _ModalDinamic({
+            eggs: '"2"',
+             bacon: 0,
+             drink: 'Milk'
+            });  
+        document.save();
+        // Ojo implementar validaciones 
+        //let error = document.validateSync();
+        //assert.equal(error.errors['eggs'].message, 'Too few eggs');
+        //assert.ok(!error.errors['bacon']);
+        //assert.equal(error.errors['drink'].message, '`Milk` is not a valid enum value for path `drink`.'); 
         res.json({
             model: `new ${ModelSingularize}`, 
             document: document
@@ -54,7 +63,8 @@ module.exports = function(Server, Schema){
     //Link routes and functions  
     Server.get(`/api/${ModelSingularize}`,         index);  
     Server.get(`/api/${ModelSingularize}/:id`,     show); 
-
+    
+    Server.get(`/api/${ModelSingularize}/create/document`,        create);
     Server.post(`/api/${ModelSingularize}`,        create);  
     Server.delete(`/api/${ModelSingularize}/:id`,  distroy);
     Server.put(`/api/${ModelSingularize}/:id`,     update); 
