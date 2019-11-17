@@ -9,7 +9,10 @@ module.exports = function(Server, Schema){
     var ModelSingularize = Verb.singularize;
     var ModelPluralize = Verb.pluralize;
 
+    const JSONA = require('../src/schemas/coffee.json');
+    let set = JSON.parse(JSON.stringify(JSONA)).structure
 
+    //console.assert(Newset);
     var msg = 'I am: ';
     //list the documents
     index = (req, res) =>{  
@@ -17,27 +20,27 @@ module.exports = function(Server, Schema){
             res.locals[ModelPluralize] = datas;
             res.json(datas);
         });
-        console.log(msg + 'list documents: ' + ModelSingularize);
     };  
   
     //Create a new document
     create = (req, res) =>{  
         var document = new _ModalDinamic({
-            eggs: '"2"',
+            eggs: 0,
              bacon: 0,
-             drink: 'Milk'
+             drink: 'Coffee'
             });  
-        document.save();
+        document.save()
         // Ojo implementar validaciones 
-        //let error = document.validateSync();
+        let error = document.validateSync();
         //assert.equal(error.errors['eggs'].message, 'Too few eggs');
         //assert.ok(!error.errors['bacon']);
         //assert.equal(error.errors['drink'].message, '`Milk` is not a valid enum value for path `drink`.'); 
         res.json({
             model: `new ${ModelSingularize}`, 
-            document: document
+            document: document,
+            error
         }); 
-        console.log(msg + 'create document: ' + ModelSingularize); 
+        console.log(msg + 'create document: ' + ModelSingularize,); 
     };  
   
     //find document by id  
