@@ -210,18 +210,21 @@ class App extends Component {
             onCancel={this.handleCancel}
           >
             <Tabs defaultActiveKey="1" tabPosition={'left'} style={{ minHeight: 220 }}>
-              <TabPane tab='Validation' key={1}>
+              <TabPane tab='Simple field' key={1}>
                 <h1>simple field</h1>
                 <SinglePanel 
+                  OptionData={OptionData}
                   fieldsState={this.state.field} 
                   fieldsEvente={this.handleValidate}
                 />
-                <br/>
-                <span>
-                  It is a long established fact that a reader will 
-                  be distracted by the readable content of a page when 
-                  looking at its layout. The point of
-                </span>
+              </TabPane>
+              <TabPane tab='Validation' key={2}>
+                <h1>simple field</h1>
+                <SinglePanel 
+                  OptionData={OptionData}
+                  fieldsState={this.state.field} 
+                  fieldsEvente={this.handleValidate}
+                />
               </TabPane>
             </Tabs>
           </Modal>

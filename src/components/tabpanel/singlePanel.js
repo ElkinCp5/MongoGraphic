@@ -31,7 +31,7 @@ class SinglePanel extends Component {
     }
    
     render() {
-        let { fieldsState, fieldsEvente } = this.props;
+        let { fieldsState, fieldsEvente, OptionData } = this.props;
         var field ={};
         (this.state.field.type && this.state.field.name ) ? 
           field = this.state.field :
@@ -54,18 +54,13 @@ class SinglePanel extends Component {
                 <Col className="colInput" xs={24}>
                   <Select size={'large'} 
                   defaultValue="" 
-                  onChange={this.onSelect.bind(this)} style={{ width: 200 }}>
+                  onChange={this.onSelect.bind(this)} style={{ width: 200 }}> 
                     <Option value="" disabled>type of data</Option>
-                    <Option value="String">String</Option>
-                    <Option value="Number">Number</Option>
-                    <Option value="Date">Date</Option>
-                    <Option value="Buffer">Buffer</Option>
-                    <Option value="Boolean">Boolean</Option>
-                    <Option value="Mixed">Mixed</Option>
-                    <Option value="ObjectId">ObjectId</Option>
-                    <Option value="Array">Array</Option>
-                    <Option value="Decimal128">Decimal128</Option>
-                    <Option value="Map">Map</Option>
+                    {
+                      OptionData.map((option, index)=>{
+                        return <Option value={option.value} key={index}>{ option.name }</Option>
+                      })
+                    }
                   </Select>
                 </Col>
                 <Col className="colInput" xs={24}>
