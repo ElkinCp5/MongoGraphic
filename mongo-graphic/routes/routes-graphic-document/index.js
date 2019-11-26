@@ -12,8 +12,15 @@ module.exports = function(Ser, Sch){
     //console.assert(Newset);
     var msg = 'I am: ';
     //list the documents
-    index = (req, res) =>{  
-        _ModalDinamic.find().then((datas)=>{
+    index = (req, res) =>{ 
+        var mongoose = require('mongoose');
+        var schemaJS = require('../../src/schemas/user')
+        var Schema = mongoose.Schema;
+        var blogSchema = new Schema(schemaJS.structure);
+
+        var Blog = mongoose.model('user', blogSchema);
+
+        Blog.find().then((datas)=>{
             res.locals[ModelPluralize] = datas;
             res.json(datas);
         });

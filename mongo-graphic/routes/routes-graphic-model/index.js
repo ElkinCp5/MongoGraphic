@@ -3,17 +3,18 @@ module.exports = (Server) =>{
     var msg = 'I am: ';
     const structSchemaJson  = require('../../schema/createStructSchemaJson');
     const saveFilSchemaJson = require('../../schema/createSchemaJson');
+    const saveFilSchemaJs = require('../../schema/createSchemaJs');
     const LoadingSchemas    = require('../../schema/loadinSchemaJson');
     // Instanciar 
     var _strSchema = new structSchemaJson;
     const LoadSchema = new LoadingSchemas;
 
     var json = { 
-        name: 'Leader',
-        timestamps: 'true',
+        name: 'User',
+        timestamps: true,
         structure: {
             name: "String", 
-            lastName:"String",
+            lastName: "String",
             age: "Number",
             salary: "String",
             phone: "String",
@@ -41,6 +42,14 @@ module.exports = (Server) =>{
         var Sch = _strSchema.toSchema(json);
         Sch ? saveFilSchemaJson(Sch, Sch.verbatim.singularize) & res.json({Sch})
         : res.json({msg: 'frm or struct for schema Json: invalider'});
+        console.log(json + 'view index');  
+    };
+
+    //Create a new models
+    createJS = (req, res) =>{  
+        var Sch = _strSchema.toSchema(json);
+        Sch ? saveFilSchemaJs(Sch, Sch.verbatim.singularize) & res.json({Sch})
+        : res.json({msg: 'frm or struct for schema Js: invalider'});
         console.log(json + 'view index'); 
     };
     
@@ -62,12 +71,15 @@ module.exports = (Server) =>{
     };  
   
     //Link routes and functions  
-    Server.get('/', index);
-    Server.get('/connect', connect);
+    Server.get('/api/models/create', createJS);
+
+
+    Server.get('/api/', index);
+    Server.get('/api/connect', connect);
     // Route the manager models
-    Server.get('/models', index);
-    Server.get('/models/:name', show);
-    Server.post('/models', create);
-    Server.put('/models/:name', update);
-    Server.delete('/models/:name', distroy);
+    Server.get('/api/models', index);
+    Server.get('/api/models/:name', show);
+    Server.post('/api/models', create);
+    Server.put('/api/models/:name', update);
+    Server.delete('/api/models/:name', distroy);
 }
