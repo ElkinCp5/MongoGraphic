@@ -5,16 +5,15 @@ module.exports = (Server) =>{
     const saveFilSchemaJson = require('../../schema/createSchemaJson');
     const saveFilSchemaJs = require('../../schema/createSchemaJs');
     const LoadingSchemas    = require('../../schema/loadinSchemaJson');
-    const validateFile    = require('../../schema/validateFile');
-    const directory    = require('../../root');
+    const path    = require('../../root');
     // Instanciar 
     var _strSchema = new structSchemaJson;
     const LoadSchema = new LoadingSchemas;
-    var pathRoot = new directory('/src/schemas/');
-    console.log(pathRoot.file('coffee'))
+    var _path = new path('/src/schemas/');
+    //console.log(_path.exists('coffee', '.json'))
 
     var json = { 
-        name: 'User',
+        name: 'player',
         timestamps: true,
         structure: {
             name: "String", 
@@ -49,10 +48,8 @@ module.exports = (Server) =>{
     }
     //list the models
     index = (req, res) => {
-        var existsFile = new validateFile()
         var ListsSchema = LoadSchema.listsSchema()
         res.json(ListsSchema);
-        console.log(existsFile.existsSchema('user') + ' view index'); 
     };
 
     //find model by name  
@@ -78,7 +75,7 @@ module.exports = (Server) =>{
     //Create a new models
     create = (req, res) =>{  
         // send for post toSchema add -> req.body
-        var Sch = _strSchema.toSchema(newJson);
+        var Sch = _strSchema.toSchema(json);
         var _saveFilSchema = new saveFilSchemaJs(Sch);
         Sch ? _saveFilSchema.saveFile(Sch.verbatim.singularize) & res.json({Sch})
         : res.json({msg: 'frm or struct for schema Js: invalider'});
@@ -90,7 +87,7 @@ module.exports = (Server) =>{
         var _Sch = _strSchema.toSchema(newJson);
         var _saveFilSchema = new saveFilSchemaJs(_Sch);
         var _name = _Sch.verbatim.singularize;
-        var _rename = 'employee';
+        var _rename = 'referee';
         var _updateOne = true;
         if(_Sch) {
             var model_update = _saveFilSchema.updateFile(_name, _rename, _updateOne); 
@@ -117,11 +114,10 @@ module.exports = (Server) =>{
     //distroy a model by name  
     distroy = (req, res) => {  
         // send for post renameFile add -> req.body.name
-        var existsFile = new validateFile
         var _Sch = _strSchema.toSchema(newJson);
         var _saveFilSchema = new saveFilSchemaJs(_Sch);
-        var _name = 'coffee';
-        if(existsFile.existsSchema(_name)) {
+        var _name = 'referee';
+        if(_path.exists(_name)) {
             var module_delete = _saveFilSchema.deleteFile(_name); 
             module_delete ? res.json(errorMsg(
                 'delete', 
