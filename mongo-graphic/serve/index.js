@@ -1,8 +1,8 @@
 //Load app dependencies  
 const Graphic   = require("../dependencies")();
 const Morgan    = require('morgan'); 
-const RoutesM   = require('../routes');
-const RoutesG   = require('../routes/routes-graphic');
+const RoutesDocument   = require('../routes/routes-graphic-document');
+const RoutesModel   = require('../routes/routes-graphic-model');
 const LoadingSchemas = require('../schema/loadinSchemaJson');
 //const RoutesU   = require('../auth/route/user');
 // Cargamos los módulos de express y body-parser
@@ -15,10 +15,11 @@ Serve.use(BodyParser.urlencoded({extended:false}));
 Serve.use(BodyParser.json());
 Serve.use(Morgan('dev'));
 Serve.use(function (req, res, next) {
-    var path = Inflection.singularize((req.path).replace('/api/', '').split('/')[0])
+    var path = Inflection.singularize((req.path).replace('/api/document/', '').split('/')[0])
+    //console.log('Provar ', JSON.stringify(LoadSchema.singleSchema('user')))
     if(LoadSchema.existsSchema(path)){
-        req.path.indexOf('/api/', 0) >= 0 ? 
-            RoutesM(Serve, LoadSchema.singleSchema(path)[path])
+        req.path.indexOf('/api/document/', 0) >= 0 ?
+            RoutesDocument(Serve, LoadSchema.singleSchema(path))
         : '' ;
     }
     //res.json(LoadSchema.listsSchema(path)[path])
@@ -26,7 +27,7 @@ Serve.use(function (req, res, next) {
     next(); // pass control to the next handler
 });
 
-RoutesG(Serve);
+RoutesModel(Serve);
 //console.log(__dirname);
 module.exports = Serve;
 

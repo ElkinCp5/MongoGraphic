@@ -1,6 +1,7 @@
 class SchemaDynamic{
     constructor(bodySchema, procedure){
         this._graphic = require("../dependencies")();
+        this._schemaBuilder = require("../schema/schemaBuilder");
         this._bodySchema = JSON.parse(JSON.stringify(bodySchema));   
         this._global = {
                 pluralize:      this._bodySchema.verbatim.pluralize,
