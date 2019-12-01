@@ -22,19 +22,24 @@ module.exports = function(Ser, Sch){
     //Create a new document
     create = (req, res) =>{  
         var document = new  _ModalDinamic(req.body);  
-        document.save()
-        // Ojo implementar validaciones 
-        let error = document.validateSync();
-        //assert.equal(error.errors['eggs'].message, 'Too few eggs');
-        //assert.ok(!error.errors['bacon']);
-        //assert.equal(error.errors['drink'].message, '`Milk` is not a valid enum value for path `drink`.'); 
-        res.json({
-            req: req.body,
-            model: `new ${ModelSingularize}`, 
-            document: 'document',
-            error: error
-        }); 
-        console.log(msg + 'create document: ' + ModelSingularize,); 
+        document.save((err)=> {
+            if(err) res.json(errorMsg(
+                'create', 
+                ModelSingularize, 
+                'null', 
+                'document', 
+                'failed create this document',
+                err
+            ));
+            else res.json(errorMsg(
+                'create', 
+                ModelSingularize, 
+                req.body, 
+                'document', 
+                'create completed',
+                
+            ));
+        }) 
     };
 
   
@@ -42,14 +47,14 @@ module.exports = function(Ser, Sch){
     show = (req, res) => {  
         _ModalDinamic.findOne({_id: req.params.id}).then((document)=>{
             if(document) res.json(errorMsg(
-                'search', 
+                'show', 
                 ModelSingularize, 
                 document, 
                 'document', 
                 'search completed'
             ));
             else res.json(errorMsg(
-                'search', 
+                'show', 
                 ModelSingularize, 
                 req.params.id, 
                 'document', 
@@ -68,10 +73,23 @@ module.exports = function(Ser, Sch){
     //distroy a document by id  
     distroy = (req, res) => { 
         _ModalDinamic.deleteOne({_id: req.params.id}, (err)=> {
-            if (err) console.error(err);
-            else console.log(msg + 'distroy document: ' + ModelSingularize); 
+            if(err) res.json(errorMsg(
+                'delete', 
+                ModelSingularize, 
+                req.params.id, 
+                'document', 
+                'failed delete, this document does not exist'
+            ));
+            else res.json(errorMsg(
+                'delete', 
+                ModelSingularize, 
+                req.params.id, 
+                'document', 
+                'distroy completed',
+                err
+            ));
+
         });
-        res.json(msg + 'distroy document: ' + ModelSingularize);
         
     };
 
