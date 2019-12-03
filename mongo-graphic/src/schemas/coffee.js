@@ -1,8 +1,8 @@
 const schema = {
   verbatim:{
-    "low_first": "Employee",
-    "singularize": "employee",
-    "pluralize": "employees"
+    "low_first": "Coffee",
+    "singularize": "coffee",
+    "pluralize": "coffees"
 },
  structure:{
     eggs: {
@@ -26,7 +26,7 @@ const schema = {
             'Coffee',
             'Tea'
         ],
-        required: function() { return this.drink > 3;}
+        required: function() { return this.bacon > 3;}
     }
 }
 }

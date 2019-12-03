@@ -38,7 +38,7 @@ async function connectAsync(){
 connectAsync().then(() => {
     console.log("initialized mongodb connection");
     Serve.listen(Port, () => {
-        console.warn(`node server running on: http://localhost:${Port}`);
+        console.warn(`node server running on: http://localhost:${Port}/api/models`);
     });
 })
 // Error capture in the mongodb collection

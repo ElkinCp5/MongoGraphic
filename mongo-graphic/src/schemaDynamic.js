@@ -1,13 +1,13 @@
 class SchemaDynamic{
     constructor(bodySchema, procedure){
         this._graphic = require("../dependencies")();
-        this._schemaBuilder = require("../schema/schemaBuilder");
-        this._bodySchema = JSON.parse(JSON.stringify(bodySchema));   
+        this._schemaBuilder = require("../schema/schemaBuilder"); 
+        this.structure = bodySchema.structure;
         this._global = {
-                pluralize:      this._bodySchema.verbatim.pluralize,
+                pluralize:      bodySchema.verbatim.pluralize,
                 schema:         this._graphic.Schema,
                 model:          this._graphic.Model,
-                bodySchema:     this._bodySchema.structure 
+                bodySchema:     bodySchema.structure
         }
         
     }
@@ -16,9 +16,10 @@ class SchemaDynamic{
         const schema    = this._global.schema;
         const model     = this._global.model;
         const body      = this._global.bodySchema;
+        console.log(this.structure)
         let Mdynamic;
         const schemaDynamic = new schema(
-            body
+            this.structure
         );
         
         try {

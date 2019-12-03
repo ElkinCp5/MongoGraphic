@@ -11,15 +11,15 @@ class loadSchema{
     listsSchema(){
         var Model = {};  
         this.FileManager.readdirSync( this._Path.root() ).forEach((file) =>{
-            
             var filePath = this._Path.file(file, false);
             // Route validation
             if(this.fileExtension(file) !== 'js' && /.*.js/.test(file)){  
                 Model = false;
             }else{
                 var name = this.Inflection.singularize(file.replace('.js', '').replace('-', '_'));
+                var schema = require(filePath);
                 // Object creation to root list
-                Model = { name: `${name}`, schema: require(filePath) };
+                Model = { name: `${name}`, schema: schema};
                 // Add object to root list
                 this.Schemas.push(Model);
             } 

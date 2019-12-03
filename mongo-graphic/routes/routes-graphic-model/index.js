@@ -13,7 +13,7 @@ module.exports = (Server) =>{
     //console.log(_path.exists('coffee', '.json'))
 
     var json = { 
-        name: 'player',
+        name: 'user',
         timestamps: true,
         structure: {
             name: "String", 
@@ -75,7 +75,7 @@ module.exports = (Server) =>{
     //Create a new models
     create = (req, res) =>{  
         // send for post toSchema add -> req.body
-        var Sch = _strSchema.toSchema(json);
+        var Sch = _strSchema.toSchema(newJson);
         var _saveFilSchema = new saveFilSchemaJs(Sch);
         Sch ? _saveFilSchema.saveFile(Sch.verbatim.singularize) & res.json({Sch})
         : res.json({msg: 'frm or struct for schema Js: invalider'});
@@ -84,7 +84,7 @@ module.exports = (Server) =>{
     //update a model by name  
     update = (req, res) => {  
         // send for post renameFile add -> req.body.name
-        var _Sch = _strSchema.toSchema(newJson);
+        var _Sch = _strSchema.toSchema(json);
         var _saveFilSchema = new saveFilSchemaJs(_Sch);
         var _name = _Sch.verbatim.singularize;
         var _rename = 'referee';

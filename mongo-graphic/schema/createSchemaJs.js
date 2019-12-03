@@ -12,9 +12,9 @@ class createdSchema {
 
     saveFile(name) {
         if(this.Schema != undefined || this.Schema != 'undefined' && this.Schema){
-            var verbatim = '{\n  nverbatim:' +JSON.stringify(this.verbatim, null, 4)+',';
+            var verbatim = '{\n  verbatim:' +JSON.stringify(this.verbatim, null, 4)+',';
             var structure = '\n structure:' +JSON.stringify(this.structure, null, 4) + '\n}';
-            this.FileManager.writeFile(`${this._Pach + name}.js`, this.strJSON_JS(verbatim, structure), 'utf8', (err) => {
+            this.FileManager.writeFile(this._Path.exists(name), this.strJSON_JS(verbatim, structure), 'utf8', (err) => {
                 if (err) return false;
                 else console.error(`The file ${name}.js has been saved!`); return true;   
             });
@@ -66,7 +66,6 @@ class createdSchema {
         structure = structure.replace(/["]+/g, '');
         return ('const schema = '+ verbatim + structure + '\n module.exports = schema;');
     }
-
 
 }
 

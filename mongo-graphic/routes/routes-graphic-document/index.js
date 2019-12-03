@@ -1,5 +1,5 @@
 //App routes  
-module.exports = function(Ser, Sch){ 
+module.exports = (Ser, Sch)=>{ 
     
     const Schema = Sch.schema;
     const ModelSingularize = Schema.verbatim.singularize;
@@ -7,20 +7,12 @@ module.exports = function(Ser, Sch){
     // clase que crea los esquemas y modelos dinamicamente
     const _classSchemaDynamicModal = require('../../src/schemaDynamic');
     const _ModalDinamic = new _classSchemaDynamicModal(Schema).ModalDynamic();
-    const _createModelJson = require('../../schema/createSchemaJson');
 
     //console.assert(Newset);
     var msg = 'I am: ';
     //list the documents
     index = (req, res) =>{ 
-        var mongoose = require('mongoose');
-        var schemaJS = require('../../src/schemas/user')
-        var Schema = mongoose.Schema;
-        var blogSchema = new Schema(schemaJS.structure);
-
-        var Blog = mongoose.model('user', blogSchema);
-
-        Blog.find().then((datas)=>{
+        _ModalDinamic.find().then((datas)=>{
             res.locals[ModelPluralize] = datas;
             res.json(datas);
         });
@@ -110,11 +102,11 @@ module.exports = function(Ser, Sch){
             error:      error
         };
     }
-    //Link routes and functions  
+    //Link routes and functions 
+    Ser.get(`/api/document/model/create/`,        create);
+
     Ser.get(`/api/document/${ModelSingularize}`,         index);  
     Ser.get(`/api/document/${ModelSingularize}/:id`,     show); 
-    
-    Ser.get(`/api/document/model/create/document`,        create);
     Ser.post(`/api/document/${ModelSingularize}`,        create);  
     Ser.delete(`/api/document/${ModelSingularize}/:id`,  distroy);
     Ser.put(`/api/document/${ModelSingularize}/:id`,     update); 

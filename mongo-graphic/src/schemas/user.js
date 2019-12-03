@@ -1,5 +1,5 @@
 const schema = {
-  nverbatim:{
+  verbatim:{
     "low_first": "User",
     "singularize": "user",
     "pluralize": "users"
