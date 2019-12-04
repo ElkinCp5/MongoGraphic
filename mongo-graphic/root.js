@@ -23,9 +23,9 @@ class rootDirectory{
         if(name){
             var Path = this.file(name, ext);
             console.log('exists dev: ',Path);
-            const filePromises = this.FileManager.promises;
             if(this.FileManager.existsSync(Path)) return Path
             else return false
+            //const filePromises = this.FileManager.promises;
             /*await filePromises.access(Path)
             .then(() => {return Path} )
             .catch(() => {return false});*/

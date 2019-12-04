@@ -3,15 +3,19 @@ module.exports = (Server) =>{
     var msg = 'I am: ';
     const structSchemaJson  = require('../../schema/createStructSchemaJson');
     const saveFilSchemaJson = require('../../schema/createSchemaJson');
-    const saveFilSchemaJs = require('../../schema/createSchemaJs');
+    const saveFilSchemaJs   = require('../../schema/createSchemaJs');
     const LoadingSchemas    = require('../../schema/loadinSchemaJson');
-    const path    = require('../../root');
-    // Instanciar 
-    var _strSchema = new structSchemaJson;
-    const LoadSchema = new LoadingSchemas;
-    var _path = new path('/src/schemas/');
-    //console.log(_path.exists('coffee', '.json'))
+    const specialFunctions  = require('../../other/specialFunctions');  
+    const error             = require('../../other/error');
+    const path              = require('../../root');
 
+    // Instanciar 
+    var _strSchema  = new structSchemaJson;
+    var _LoadSchema = new LoadingSchemas;
+    var _specFuntion = new specialFunctions;
+    var _path       = new path('/src/schemas/');
+    //console.log(_path.exists('coffee', '.json'))
+    var false_schema = { name: 'user', timestamps: true, structure: { name: "String" } };
     var json = { 
         name: 'user',
         timestamps: true,
@@ -48,13 +52,13 @@ module.exports = (Server) =>{
     }
     //list the models
     index = (req, res) => {
-        var ListsSchema = LoadSchema.listsSchema()
+        var ListsSchema = _LoadSchema.listsSchema()
         res.json(ListsSchema);
     };
 
     //find model by name  
     show = (req, res) => {  
-        var model = LoadSchema.singleSchema(req.params.name);
+        var model = _LoadSchema.singleSchema(req.params.name);
         model ? res.json(errorMsg(
             'show', 
             req.params.name, 
@@ -75,49 +79,72 @@ module.exports = (Server) =>{
     //Create a new models
     create = (req, res) =>{  
         // send for post toSchema add -> req.body
-        var Sch = _strSchema.toSchema(newJson);
-        var _saveFilSchema = new saveFilSchemaJs(Sch);
-        Sch ? _saveFilSchema.saveFile(Sch.verbatim.singularize) & res.json({Sch})
-        : res.json({msg: 'frm or struct for schema Js: invalider'});
+        var schema = req.body;
+        if(_specFuntion.valSch_save(schema)){
+            var _Sch = _strSchema.toSchema(schema);
+            var _saveFilSchema = new saveFilSchemaJs(_Sch);
+
+            _Sch ? _saveFilSchema.saveFile(_Sch.verbatim.singularize) & res.json(error(
+                'create', 
+                _Sch, 
+                _Sch.verbatim.singularize, 
+                'model', 
+                'create completed',))
+
+            : res.json(error(
+                'create', 
+                _Sch, 
+                _Sch.verbatim.singularize, 
+                'model', 
+                Boolean,
+                'failed attempt to create a scheme!!'));
+        }else{
+            res.json({msg: 'frm or struct for schema Js: invalider'})
+        }
     };
     
     //update a model by name  
     update = (req, res) => {  
         // send for post renameFile add -> req.body.name
-        var _Sch = _strSchema.toSchema(json);
-        var _saveFilSchema = new saveFilSchemaJs(_Sch);
-        var _name = _Sch.verbatim.singularize;
-        var _rename = 'referee';
-        var _updateOne = true;
-        if(_Sch) {
-            var model_update = _saveFilSchema.updateFile(_name, _rename, _updateOne); 
-            model_update ? res.json(errorMsg(
-                'update', 
-                _name + ' update ->' + _rename, 
-                model_update, 
-                'model', 
-                'update completed'
-            ))
-            : res.json(errorMsg(
-                'update', 
-                req.params.name, 
-                Boolean, 
-                'model',
-                Boolean,
-                `failed update, this model <'${_name}'> does exist`
-            ))
-        } else res.json({msg: 'frm or struct for schema Js: invalider'});
-
-        console.log(msg + 'update model: ' + _name); 
+        var schema = req.body;
+        if(_specFuntion.valSch_save(schema)){
+            var _Sch = _strSchema.toSchema(schema);
+            var _saveFilSchema = new saveFilSchemaJs(_Sch);
+            var _name = _Sch.verbatim.singularize;
+            var _rename = (schema.renemer != '' && schema.renemer != undefined && schema.renemer != 'undefined') ;
+            var _updateOne = (_rename != '' && _rename != undefined && _rename != 'undefined') 
+                                ? true : false ;
+            if(_Sch) {
+                var model_update = _saveFilSchema.updateFile(_name, _rename, _updateOne); 
+                model_update ? res.json(errorMsg(
+                    'update', 
+                    _name + ' update ->' + _rename, 
+                    model_update, 
+                    'model', 
+                    'update completed'
+                ))
+                : res.json(errorMsg(
+                    'update', 
+                    req.params.name, 
+                    Boolean, 
+                    'model',
+                    Boolean,
+                    `failed update, this model <'${_name}'> does exist`
+                ))
+            } else res.json({msg: 'frm or struct for schema Js: invalider'});
+        }
+         
     };
 
     //distroy a model by name  
     distroy = (req, res) => {  
         // send for post renameFile add -> req.body.name
-        var _Sch = _strSchema.toSchema(newJson);
+        var _Sch = _strSchema.toSchema(false_schema);
         var _saveFilSchema = new saveFilSchemaJs(_Sch);
-        var _name = 'referee';
-        if(_path.exists(_name)) {
+        var _name = req.body.name;
+        var _confirm = req.body.confirm;
+
+        if(_path.exists(req.body.name) && _confirm) {
             var module_delete = _saveFilSchema.deleteFile(_name); 
             module_delete ? res.json(errorMsg(
                 'delete', 
@@ -164,6 +191,6 @@ module.exports = (Server) =>{
     Server.get('/api/models', index);
     Server.get('/api/models/:name', show);
     Server.post('/api/models', create);
-    Server.put('/api/models/:name', update);
-    Server.delete('/api/models/:name', distroy);
+    Server.put('/api/models/', update);
+    Server.delete('/api/models/', distroy);
 }

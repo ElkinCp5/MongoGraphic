@@ -14,7 +14,7 @@ class createdSchema {
         if(this.Schema != undefined || this.Schema != 'undefined' && this.Schema){
             var verbatim = '{\n  verbatim:' +JSON.stringify(this.verbatim, null, 4)+',';
             var structure = '\n structure:' +JSON.stringify(this.structure, null, 4) + '\n}';
-            this.FileManager.writeFile(this._Path.exists(name), this.strJSON_JS(verbatim, structure), 'utf8', (err) => {
+            this.FileManager.writeFile(this._Path.file(name), this.strJSON_JS(verbatim, structure), 'utf8', (err) => {
                 if (err) return false;
                 else console.error(`The file ${name}.js has been saved!`); return true;   
             });
@@ -27,7 +27,11 @@ class createdSchema {
 
     updateFile(name, rename, updateOne){
     
-        if( name != undefined || name != 'undefined' && name !=='' &&  (name !== rename) && !this._Path.exists(rename) && !updateOne){
+        if( (name != undefined && name != 'undefined' && name !=='') && 
+            (rename != undefined && rename != 'undefined' &&  rename !=='')
+            && name !== rename 
+            && !this._Path.exists(rename) && !updateOne){
+
             var new_name = rename.toLowerCase();
             var file = this.Inflection.singularize(new_name);
 

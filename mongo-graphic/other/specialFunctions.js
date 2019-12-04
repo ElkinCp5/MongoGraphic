@@ -31,5 +31,26 @@ class validate{
         else
             return false;
     }
+
+    valSch_save(data){
+        return (    data.name != undefined &&
+                    data.name != "undefined" &&
+                    data.name != "" && 
+                    data.timestamps != undefined &&
+                    data.timestamps != "undefined" && 
+                    data.structure != undefined &&
+                    data.structure != "undefined"
+                ) ? true : false;
+    }
+    valSch_update(data){
+        return (    data.name != undefined &&
+                    data.name != "undefined" &&
+                    data.name != "" && 
+                    data.timestamps != undefined &&
+                    data.timestamps != "undefined" && 
+                    data.structure != undefined &&
+                    data.structure != "undefined"
+                ) ? true : false;
+    }
 }
 module.exports = validate

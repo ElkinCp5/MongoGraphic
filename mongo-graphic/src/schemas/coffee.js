@@ -26,7 +26,7 @@ const schema = {
             'Coffee',
             'Tea'
         ],
-        required: function() { return this.bacon > 3;}
+        required: function() { return this.drink > 3;}
     }
 }
 }
