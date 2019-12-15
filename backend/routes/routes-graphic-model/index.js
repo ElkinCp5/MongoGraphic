@@ -1,13 +1,17 @@
 //App routes  
-module.exports = (Server) =>{  
+const structSchemaJson  = require('../../schema/createStructSchemaJson');
+const saveFilSchemaJson = require('../../schema/createSchemaJson');
+const saveFilSchemaJs   = require('../../schema/createSchemaJs');
+const LoadingSchemas    = require('../../schema/loadinSchemaJson');
+const specialFunctions  = require('../../other/specialFunctions');  
+const error             = require('../../other/error');
+const path              = require('../../root');
+const express           = require('express');
+
+// Estraer 
+const router = express.Router();
+
     var msg = 'I am: ';
-    const structSchemaJson  = require('../../schema/createStructSchemaJson');
-    const saveFilSchemaJson = require('../../schema/createSchemaJson');
-    const saveFilSchemaJs   = require('../../schema/createSchemaJs');
-    const LoadingSchemas    = require('../../schema/loadinSchemaJson');
-    const specialFunctions  = require('../../other/specialFunctions');  
-    const error             = require('../../other/error');
-    const path              = require('../../root');
 
     // Instanciar 
     var _strSchema  = new structSchemaJson;
@@ -181,19 +185,11 @@ module.exports = (Server) =>{
     }
 
     // Route the manager models
-    Server.get('/api/models', index);
-    Server.get('/api/models/:name', show);
-    Server.post('/api/models', create);
-    Server.put('/api/models/', update);
-    Server.delete('/api/models/', distroy);
+    router.get('/',         index);
+    router.get('/:name',    show);
+    router.post('/',        create);
+    router.put('/',         update);
+    router.delete('/',      distroy);
 
-    build =(req, res)=>{
-        var path_New = new path('../frontend/');
-        var isPath = path_New.file('index.html', false);
-        isPath ? res.sendFile(isPath):
-        null;
-        console.log(isPath)
-    }
-    //Link routes and functions
-    Server.get('*', (build));
-}
+
+module.exports = router;
