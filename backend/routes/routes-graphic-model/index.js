@@ -180,14 +180,20 @@ module.exports = (Server) =>{
         };
     }
 
-    //Link routes and functions
-
-    Server.get('/api/', index);
-    Server.get('/api/connect', connect);
     // Route the manager models
     Server.get('/api/models', index);
     Server.get('/api/models/:name', show);
     Server.post('/api/models', create);
     Server.put('/api/models/', update);
     Server.delete('/api/models/', distroy);
+
+    build =(req, res)=>{
+        var path_New = new path('../../../frontend/build/');
+        var isPath = path_New.file('index.html');
+        isPath ? res.sendFile(isPath):
+        null;
+        console.log(isPath)
+    }
+    //Link routes and functions
+    Server.get('*', (build));
 }

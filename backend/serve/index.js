@@ -19,13 +19,11 @@ const _SpecialFunction  = new this.SpecialFunction
 Serve.use(BodyParser.urlencoded({extended:false}));
 Serve.use(BodyParser.json());
 Serve.use(Morgan('dev'));
-Serve.use(function (req, res, next) {
-    var path = _SpecialFunction.extractParameter(Inflection.singularize(req.path), '/api/document/', 0);
+Serve.use((req, res, next) =>{
+    var document = _SpecialFunction.extractParameter(Inflection.singularize(req.path), '/api/document/', 0);
         //console.log('Provar ', path)
-    if(_Path.exists(path)){
-        RoutesDocument(Serve, _LoadSchema.singleSchema(path))
-    }else if(!path){
-        //RoutesDocument(Serve, _LoadSchema.singleSchema(path))
+    if(_Path.exists(document)){
+        RoutesDocument(Serve, _LoadSchema.singleSchema(document))
     }
     next(); // pass control to the next handler
 });
