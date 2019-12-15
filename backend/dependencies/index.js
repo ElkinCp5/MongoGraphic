@@ -1,16 +1,26 @@
 // MODULE FOR DEPENDENCIES
+const FileManager   = require('fs');
+const Inflection    = require('inflection');
+const Mongoose      = require('mongoose');
+const Schema        = Mongoose.Schema;
+const Model         = Mongoose.model;
+const Express       = require('express');
+const Http          = require('http');
+const Jwt           = require('jwt-simple');
+const Moment        = require('moment');
+const Path          = require('path');
+
 module.exports = ()=> {
     return {
-        FileManager:    require('fs'),
-        Inflection:     require('inflection'),
-        Mongoose:       require('mongoose'),
-        Schema:         require('mongoose').Schema,
-        Model:          require('mongoose').model,
-        Express:        require('express'),
-        Http:           require('http'),
-        BodyParser:     require('body-parser'),
-        Jwt:            require('jwt-simple'),
-        Moment:         require('moment'),
-        Path:           require('path'),
+        FileManager:    FileManager,
+        Inflection:     Inflection,
+        Mongoose:       Mongoose,
+        Schema:         Schema,
+        Model:          Model,
+        Express:        Express,
+        Http:           Http,
+        Jwt:            Jwt,
+        Moment:         Moment,
+        Path:           Path,
     }
 }

@@ -8,8 +8,8 @@ const error             = require('../../other/error');
 const path              = require('../../root');
 const express           = require('express');
 
-// Estraer 
-const router = express.Router();
+    // Estraer 
+    const router = express.Router();
 
     var msg = 'I am: ';
 
@@ -61,12 +61,12 @@ const router = express.Router();
     };
 
     //find model by name  
-    show = (req, res) => {  
-        var model = _LoadSchema.singleSchema(req.params.name);
-        model ? res.json(errorMsg(
+    show = async (req, res) => {  
+        var model = await _LoadSchema.singleSchema(req.params.name);
+        model ? res.json(error(
             'show', 
-            req.params.name, 
             model, 
+            req.params.name, 
             'model', 
             'search completed'
         ))
@@ -167,22 +167,6 @@ const router = express.Router();
             ))
         } else res.json({msg: 'frm or struct for schema Js: invalider'});
     };
-    //Create a new models
-    connect = (req, res) =>{  
-        res.end(msg + 'view connect');
-        console.log(msg + 'view connect'); 
-    };  
-
-    errorMsg = (name, action, request, area, message, error )=>{
-        console.log(`${action}: ${name} // ${area}`);
-        return {
-            data:    request,
-            action:     `${action}: ${name}`, 
-            area:       area,
-            message:    message,
-            error:      error
-        };
-    }
 
     // Route the manager models
     router.get('/',         index);

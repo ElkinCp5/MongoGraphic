@@ -1,6 +1,6 @@
 'use strict'
 //App routes  
-module.exports = (Ser, Sch)=>{ 
+module.exports = (Sch)=>{ 
     
     const Schema            = Sch.schema;
     const ModelSingularize  = Schema.verbatim.singularize;
@@ -8,9 +8,13 @@ module.exports = (Ser, Sch)=>{
     // clase que crea los esquemas y modelos dinamicamente
     const classSchemaDynamicModal   = require('../../src/schemaDynamic');
     const msgJson                   = require('../../other/error');
+    const express                   = require('express');
+    const router                    = express.Router();
 
     const _ModalDinamic = new classSchemaDynamicModal(Schema).ModalDynamic();
- 
+
+
+
     //list the documents
     index = async(req, res) =>{ 
         await _ModalDinamic.find().then(
@@ -134,9 +138,11 @@ module.exports = (Ser, Sch)=>{
     };
 
     //Link routes and functions 
-    Ser.get(`/api/document/${ModelSingularize}`,         index);  
-    Ser.get(`/api/document/${ModelSingularize}/:id`,     show); 
-    Ser.post(`/api/document/${ModelSingularize}`,        create);  
-    Ser.delete(`/api/document/${ModelSingularize}/:id`,  distroy);
-    Ser.put(`/api/document/${ModelSingularize}/:id`,     update); 
+    router.get('/:name',         index);  
+    router.get('/:name/:id',     show); 
+    router.post('/:name',        create);  
+    router.delete('/:name/:id',  distroy);
+    router.put('/:name/:id',     update); 
+
+    return router;
 }

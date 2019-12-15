@@ -1,8 +1,8 @@
 class rootDirectory{
     constructor(default_folder = '/src/schemas/'){
-        this.Pach = require('path'); 
-        this.FileManager = require('fs');
-        this.Directory = this.Pach.join(__dirname, default_folder);
+        this.Pach           = require('path'); 
+        this.FileManager    = require('fs');
+        this.Directory      = this.Pach.join(__dirname, default_folder);
     }
 
     root(default_folder = '/src/schemas/'){
