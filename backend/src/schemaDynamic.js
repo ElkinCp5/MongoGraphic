@@ -6,8 +6,7 @@ class SchemaDynamic{
         this._global = {
                 pluralize:      bodySchema.verbatim.pluralize,
                 schema:         this._graphic.Schema,
-                model:          this._graphic.Model,
-                bodySchema:     bodySchema.structure
+                model:          this._graphic.Model
         }
         
     }
@@ -15,8 +14,7 @@ class SchemaDynamic{
         const name      = this._global.pluralize;
         const schema    = this._global.schema;
         const model     = this._global.model;
-        const body      = this._global.bodySchema;
-        console.log(this.structure)
+        //console.log(this.structure)
         let Mdynamic;
         const schemaDynamic = new schema(
             this.structure

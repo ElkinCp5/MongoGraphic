@@ -1,4 +1,5 @@
-module.exports = (Connection, dbUrl) =>{
+'use strict'
+module.exports = (dbUrl, Connection) =>{
     // CONNECTION EVENTS
     // When successfully connected
     if(Connection != undefined || Connection != 'undefined'){
@@ -23,7 +24,7 @@ module.exports = (Connection, dbUrl) =>{
       
         // If the Node process ends, close the Mongoose connection
         process.on('SIGINT', () => {
-            mongoose.connection.close(() => {
+            Connection.close(() => {
             console.log('Mongoose default connection disconnected through app termination');
             process.exit(0);
             });

@@ -31,12 +31,11 @@ class loadSchema{
         var filePath = this._Path.exists(file);
         var Model= {}; 
         // Route validation
-        console.log('singleSchema: ', filePath);
+        //console.log('singleSchema: ', filePath);
         if(filePath){ 
             var name = this.Inflection.singularize(file.replace('.js', '').replace('-', '_'));
             // Object creation to root list
             Model = { name: `${name}`, schema: require(filePath) };
-            
         }else {
             Model= false
         }

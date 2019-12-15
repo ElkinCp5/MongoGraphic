@@ -20,17 +20,12 @@ class rootDirectory{
     }
 
     exists(name, ext = '.js'){
-        if(name){
-            var Path = this.file(name, ext);
+        var Path = this.file(name, ext);;
+        if(Path){ 
             console.log('exists dev: ',Path);
             if(this.FileManager.existsSync(Path)) return Path
             else return false
-            //const filePromises = this.FileManager.promises;
-            /*await filePromises.access(Path)
-            .then(() => {return Path} )
-            .catch(() => {return false});*/
-        }else return false;
-        
+        }else return false;   
     }
 
     Path(name, ext = '.js'){

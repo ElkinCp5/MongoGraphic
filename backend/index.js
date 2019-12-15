@@ -31,11 +31,11 @@ const OptionsConnect = {
 };
 // Mongodb async connection configuration
 Graphic.Mongoose.Promise = global.Promise;
-async function connectAsync(){
-   await Graphic.Mongoose.connect(UrlConnect, OptionsConnect);
+async function connectAsync(Url, Options){
+   await Graphic.Mongoose.connect(Url, Options);
 }
 
-connectAsync().then(() => {
+connectAsync(UrlConnect, OptionsConnect).then(() => {
     console.log("initialized mongodb connection");
     Serve.listen(Port, () => {
         console.warn(`node server running on: http://localhost:${Port}/api/models`);
@@ -44,4 +44,4 @@ connectAsync().then(() => {
 // Error capture in the mongodb collection
 .catch(error => console.error(error));
 // Event management module in the mongodb collection
-TestConfigs(ObjetConnection, UrlConnect);
+TestConfigs(UrlConnect, ObjetConnection);

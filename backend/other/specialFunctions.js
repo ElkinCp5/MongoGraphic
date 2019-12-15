@@ -3,17 +3,16 @@ class validate{
         this.Pach = __dirname + root;
         this.FileManager = require('fs');
     }
-    existsSchema(file){
-        var filePath = `${this.Pach + file}.js`;
-        console.log(filePath)
-        this.FileManager.stat(filePath, (err)=>{
-            if (!err) {
-                return {err: true};
-            } else if (err.code === 'ENOENT') {
-                return {err:false};
-            }
-        })
+
+    existString(Text){
+        return Text.indexOf('/api/document/', 0) >= 0 ? true : false ;
     }
+
+    extractParameter(path, ext, index = 0){
+        var name =  path.replace(ext, '').split('/')[index]
+        return name;
+    }
+
     strJSON_JS_MODEL(structure){
         const stringJSON = ' '+structure+' '
         structure = stringJSON.replace(/["]+/g, '');
@@ -25,11 +24,9 @@ class validate{
         return ('const schema = '+ verbatim + structure + '\n module.exports = schema;');
     }
 
-    typeOf(type){
-        if(typeof type == 'string' )
-            return true;
-        else
-            return false;
+    typeOf(type, validity){
+        if(typeof type == validity ) return true;
+        else return false;
     }
 
     valSch_save(data){

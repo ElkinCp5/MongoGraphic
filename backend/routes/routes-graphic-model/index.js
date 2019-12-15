@@ -51,9 +51,9 @@ module.exports = (Server) =>{
         }
     }
     //list the models
-    index = (req, res) => {
-        var ListsSchema = _LoadSchema.listsSchema()
-        res.json(ListsSchema);
+    index = async(req, res) => {
+        let schemas = await _LoadSchema.listsSchema();
+        res.json(schemas);
     };
 
     //find model by name  
@@ -181,9 +181,6 @@ module.exports = (Server) =>{
     }
 
     //Link routes and functions
-    Server.get('/api/models/create', create);
-    Server.get('/api/models/update/', update);
-    Server.get('/api/models/delete/', distroy);
 
     Server.get('/api/', index);
     Server.get('/api/connect', connect);
