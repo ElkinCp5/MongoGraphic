@@ -188,8 +188,8 @@ module.exports = (Server) =>{
     Server.delete('/api/models/', distroy);
 
     build =(req, res)=>{
-        var path_New = new path('../../../frontend/build/');
-        var isPath = path_New.file('index.html');
+        var path_New = new path('../frontend/');
+        var isPath = path_New.file('index.html', false);
         isPath ? res.sendFile(isPath):
         null;
         console.log(isPath)
