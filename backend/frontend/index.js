@@ -1,7 +1,6 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import Router from './routes/router';
+import "antd/dist/antd.css";
 
-render(
-    <h1>Hola Mundo!!, Na na na Mama</h1>,
-    document.getElementById('app')
-);
+ReactDOM.render(<Router/>, document.getElementById('root'));

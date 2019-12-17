@@ -2,7 +2,7 @@
 // Cargamos el módulo de mongoose
 const Graphic   = require("../../dependencies")();
 // Creamos el objeto del esquema y sus atributos
-var UserSchema = Graphic.Schema({
+var Schema = Graphic.Schema({
     name: String,
     surname: String,
     nick: String,
@@ -14,4 +14,4 @@ var UserSchema = Graphic.Schema({
     updated_at: { type: Date, default: Date.now }
 });
 // Exportamos el modelo para usarlo en otros ficheros
-module.exports = Graphic.Model('User', UserSchema);
+module.exports = Graphic.Model('auth', Schema);

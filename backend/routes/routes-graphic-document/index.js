@@ -8,12 +8,9 @@ module.exports = (Sch)=>{
     // clase que crea los esquemas y modelos dinamicamente
     const classSchemaDynamicModal   = require('../../src/schemaDynamic');
     const msgJson                   = require('../../other/error');
-    const express                   = require('express');
-    const router                    = express.Router();
+    const router                    = require('express-promise-router')();
 
     const _ModalDinamic = new classSchemaDynamicModal(Schema).ModalDynamic();
-
-
 
     //list the documents
     index = async(req, res) =>{ 
@@ -66,7 +63,6 @@ module.exports = (Sch)=>{
         );
     };
 
-  
     //find document by id  
     show = async(req, res) => {  
         await _ModalDinamic.findOne({_id: req.params.id})
