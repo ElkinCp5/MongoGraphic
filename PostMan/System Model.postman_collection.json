@@ -1,0 +1,152 @@
+{
+	"id": "d335a9ef-f84f-9697-d7d2-907f0fb33184",
+	"name": "System Model",
+	"description": "proebas de rutas del apartado de gestion de esquemas mongosee\ncomo crear, actualizar, eliminar y ver ",
+	"order": [
+		"ed3803bb-b6b0-db6b-9e70-ec374310a7b7",
+		"3d87c4d8-911d-b6b7-828a-0b638afed35e",
+		"978fae2a-baef-b9e7-11dc-7a0b2f1e67fa",
+		"aadb801e-fa55-a660-30b8-50d7a7771559",
+		"43699bfa-afb5-274e-5287-9fab921abe7f"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1575442692038,
+	"owner": "9475716",
+	"public": false,
+	"requests": [
+		{
+			"id": "3d87c4d8-911d-b6b7-828a-0b638afed35e",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/models/coffee",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1575670622558,
+			"name": "schema show",
+			"description": "",
+			"collectionId": "d335a9ef-f84f-9697-d7d2-907f0fb33184",
+			"responses": []
+		},
+		{
+			"id": "43699bfa-afb5-274e-5287-9fab921abe7f",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/models",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1575990198373,
+			"name": "schema delete",
+			"description": "borrar o eliminar esquemas de la api",
+			"collectionId": "d335a9ef-f84f-9697-d7d2-907f0fb33184",
+			"responses": [],
+			"rawModeData": "{\t\r\n\t\"name\": \"player\",\r\n\t\"confirm\": true\r\n}"
+		},
+		{
+			"id": "978fae2a-baef-b9e7-11dc-7a0b2f1e67fa",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/models",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "d335a9ef-f84f-9697-d7d2-907f0fb33184",
+			"data": [],
+			"dataMode": "raw",
+			"name": "schema create",
+			"description": "creacion de esquemas para la gestion de documentos ",
+			"descriptionFormat": "html",
+			"time": 1575443558102,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\t\r\n\t\"name\": \"user\",\r\n    \"timestamps\": true,\r\n    \"structure\": {\r\n        \"name\": \"String\", \r\n        \"lastName\": \"String\",\r\n        \"age\": \"Number\",\r\n        \"salary\": \"String\",\r\n        \"phone\": \"String\",\r\n        \"address\": \"String\",\r\n        \"create_at\": \"Date\",\r\n        \"update_at\": \"Date\"\r\n    }\r\n}"
+		},
+		{
+			"id": "aadb801e-fa55-a660-30b8-50d7a7771559",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/models",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1575447243422,
+			"name": "schema update",
+			"description": "adtualizacion de esquemas o renombracion de el mismo",
+			"collectionId": "d335a9ef-f84f-9697-d7d2-907f0fb33184",
+			"responses": [],
+			"rawModeData": "{\t\r\n\t\"name\": \"user\",\r\n\t\"renemer\": \"\",\r\n    \"timestamps\": false,\r\n    \"structure\": {\r\n        \"name\": \"String\", \r\n        \"lastName\": \"String\",\r\n        \"age\": \"Number\",\r\n        \"salary\": \"String\",\r\n        \"phone\": \"Number\",\r\n        \"address\": \"String\",\r\n        \"create_at\": \"Date\",\r\n        \"update_at\": \"Date\"\r\n    }\r\n}"
+		},
+		{
+			"id": "ed3803bb-b6b0-db6b-9e70-ec374310a7b7",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/models",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1575443044266,
+			"name": "schema list",
+			"description": "",
+			"collectionId": "d335a9ef-f84f-9697-d7d2-907f0fb33184",
+			"responses": []
+		}
+	]
+}
