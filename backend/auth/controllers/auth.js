@@ -12,6 +12,11 @@ isForm = (frm)=>{
 
 }
 
+removeProperty =(frm, property)=>{
+    (frm[property]) ? frm[property] = undefined : null;
+}
+
+
 module.exports = {
 
     index: async (req, res, nex) =>{
@@ -41,8 +46,8 @@ module.exports = {
     },
     register: async (req, res, nex) =>{
         const input = req.body;
-        console.log('input: ', input);
-        (input.role) ? input.role = undefined : null;
+        //console.log('input: ', input);
+        removeProperty(input, 'role');
         let auth = new Auth(input);
         if(isDuplicated(input.email)){
             Bcrypt.hash(input.password, null, null, (error, hash)=>{
