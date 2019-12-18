@@ -3,7 +3,7 @@ const Morgan            = require('morgan');
 const Graphic           = require("../dependencies")();
 const RoutesDocument    = require('../routes/routes-graphic-document');
 const RoutesModel       = require('../routes/routes-graphic-model');
-const Rmodel = require('../routes/routes-graphic-model/model.routes');
+const RoutesAuth        = require('../auth/router/route.auth');
 this.LoadingSchemas     = require('../schema/loadinSchemaJson');
 this.SpecialFunction    = require('../other/specialFunctions');
 this.NodePath           = require('path');
@@ -11,7 +11,7 @@ this.Path               = require('../root');
 
 // Cargamos los módulos de express y body-parser
 const Serve         = Graphic.Express();
-const Json          = Graphic.Express.json;
+const exJson          = Graphic.Express;
 const Static        = Graphic.Express.static;
 const BodyParser    = Graphic.Express.urlencoded;
 const Inflection    = Graphic.Inflection;
@@ -21,15 +21,16 @@ const _Path             = new this.Path;
 const _SpecialFunction  = new this.SpecialFunction
 
 Serve.use(BodyParser({extended:false}));
-Serve.use(Json());
+Serve.use(exJson.json());
 Serve.use(Morgan('dev'));
 
 // Rutas para los diferenctes apartado
+Serve.use('/api/auth/', RoutesAuth);
 Serve.use((req, res, next) =>{
     var document = _SpecialFunction.extractParameter(Inflection.singularize(req.path), '/api/documents/', 0);
-    //console.log('Provar ', path)
+    console.log('Provar ', document)
     if(_Path.exists(document)){
-        Serve.use('/api/documents/', RoutesDocument(_LoadSchema.singleSchema(document)));
+        Serve.use('/api/documents/',RoutesDocument(_LoadSchema.singleSchema(document)));
     }
     next(); // pass control to the next handler
 });

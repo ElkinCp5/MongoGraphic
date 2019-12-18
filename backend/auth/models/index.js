@@ -3,10 +3,7 @@
 const Graphic   = require("../../dependencies")();
 // Creamos el objeto del esquema y sus atributos
 var Schema = Graphic.Schema({
-    name: { 
-        type: String, 
-        required: true 
-    },
+    name: { type: String, required: true },
     email: {
         type: String,
         trim: true, 
@@ -33,16 +30,10 @@ var Schema = Graphic.Schema({
     image: {
         type: String,
         required: true,
-        default: 'USER_STANDAR'
+        default: 'img/user/default.jpg'
     },
-    created_at: { 
-        type: Date, 
-        default: Date.now 
-    },
-    updated_at: { 
-        type: Date, 
-        default: Date.now 
-    }
+    created_at: { type: Date, default: Date.now },
+    updated_at: { type: Date, default: Date.now }
 });
 // Exportamos el modelo para usarlo en otros ficheros
 module.exports = Graphic.Model('auth', Schema);

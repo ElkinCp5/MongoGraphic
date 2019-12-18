@@ -70,7 +70,7 @@ const express           = require('express');
             'model', 
             'search completed'
         ))
-        : res.json(errorMsg(
+        : res.json(error(
             'show', 
             req.params.name, 
             Boolean, 
