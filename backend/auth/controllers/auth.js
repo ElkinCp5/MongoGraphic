@@ -5,11 +5,11 @@ const Bcrypt = require('bcrypt-nodejs');
 isDuplicated = (email) =>{
     let isRegistered = Auth.findOne({email: email});
     // Si no esta registrado
-    if(!isRegistered._id){ return true; }else{ return false; } 
+    if(!isRegistered._id){ return true; }else{ return false} 
 }
 
 isForm = (frm)=>{
-
+    return (frm.password && frm.name);
 }
 
 removeProperty =(frm, property)=>{
@@ -49,7 +49,7 @@ module.exports = {
         //console.log('input: ', input);
         removeProperty(input, 'role');
         let auth = new Auth(input);
-        if(isDuplicated(input.email)){
+        if(isDuplicated(input.email, res) && isForm(input)){
             Bcrypt.hash(input.password, null, null, (error, hash)=>{
                 if(error){ return res.status(500).json(
                     Responder(
@@ -73,6 +73,17 @@ module.exports = {
                     'create completed'
                 )
             );
+        }else{
+            res.status(500).json(
+                Responder(
+                    'create auth', 
+                    undefined, 
+                    'auth', 
+                    'document', 
+                    'failed create this document',
+                    'Esta credencial que intentas crear ya existe!'
+                )
+            ); 
         }
     },
     login: async (req, res, nex)=>{
