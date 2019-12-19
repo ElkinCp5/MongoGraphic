@@ -6,7 +6,8 @@ var moment  = Graphic.Moment;
 var secret  = Configs.secret;
 
 module.exports = {
-    ensureAuth: (req, res, next) => {
+
+    accountAuth: (req, res, next) => {
         if(!req.headers.authorization){
             return res.status(403).json({message: 'La peticion no tiene la cabecera de autenticación'});
         }else{
@@ -27,10 +28,13 @@ module.exports = {
             next();
         }
     },
+
     accountVerify: (req, res, next) =>{
 
     },
+
     verify: (req, res, next) =>{
 
     }
+    
 }
