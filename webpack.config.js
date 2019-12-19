@@ -1,12 +1,14 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin')
-
+const miniCssExtractPlugin = require('mini-css-extract-plugin');
+const devMode = 'development';
+// 'production'
 module.exports = {
 
     entry: './backend/frontend/index.js',
     output:{
         path: path.join(__dirname, './backend/public'),
-        filename: 'bundle.js'
+        filename: 'js/bundle.js'
     },
     devServer:{
         port: '4000'
@@ -20,12 +22,32 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: ['babel-loader']
+            },
+            { 
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    {
+                        loader: miniCssExtractPlugin.loader,
+                        options:{
+                            hmr: devMode,
+                            reloadAll: true,
+                        }
+                    },
+                    'css-loader',
+                    'sass-loader',
+                    //'postcss-loader',
+                ]
             }
         ]
     },
     plugins:[
         new htmlWebpackPlugin({
             template: './backend/frontend/index.html'
+        }),
+        new miniCssExtractPlugin({
+            filename: 'css/bundle.css',
+            chunkFilename: '[id].css',
+            //ignoreOrder: false, 
         })
     ]
 }

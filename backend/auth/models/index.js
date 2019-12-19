@@ -32,6 +32,10 @@ var Schema = Graphic.Schema({
         required: true,
         default: 'img/user/default.jpg'
     },
+    verify:{
+        type:Boolean,
+        default: false
+    },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now }
 });
