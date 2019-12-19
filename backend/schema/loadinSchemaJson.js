@@ -1,6 +1,6 @@
 class loadSchema{
     constructor(){
-        this.Graphic        = require("../dependencies")();
+        this.Graphic        = require("../dependencies");
         this.FileManager    = require('fs');
         this.Inflection     = require('inflection');
         this.Path           = require('../root');

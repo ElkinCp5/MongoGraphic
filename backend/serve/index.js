@@ -1,6 +1,6 @@
 //Load app dependencies  
 const Morgan            = require('morgan'); 
-const Graphic           = require("../dependencies")();
+const Graphic           = require("../dependencies");
 const RoutesDocument    = require('../routes/routes-graphic-document');
 const RoutesModel       = require('../routes/routes-graphic-model');
 const RoutesAuth        = require('../auth/router/route.auth');

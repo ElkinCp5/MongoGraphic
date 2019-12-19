@@ -1,5 +1,5 @@
 'user strict'
-const Graphic   = require("../dependencies")();
+const Graphic   = require("../dependencies");
 const Configs   = require('../config');
 var jwt = Graphic.Jwt;
 var moment = Graphic.Moment;

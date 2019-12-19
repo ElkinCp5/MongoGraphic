@@ -11,18 +11,16 @@ const Jwt           = require('jwt-simple');
 const Moment        = require('moment');
 const Path          = require('path');
 
-module.exports = ()=> {
-    return {
-        FileManager:    FileManager,
-        Inflection:     Inflection,
-        Mongoose:       Mongoose,
-        Schema:         Schema,
-        Model:          Model,
-        Express:        Express,
-        Router:         Router,
-        Http:           Http,
-        Jwt:            Jwt,
-        Moment:         Moment,
-        Path:           Path,
-    }
+module.exports = {
+    FileManager:    FileManager,
+    Inflection:     Inflection,
+    Mongoose:       Mongoose,
+    Schema:         Schema,
+    Model:          Model,
+    Express:        Express,
+    Router:         Router,
+    Http:           Http,
+    Jwt:            Jwt,
+    Moment:         Moment,
+    Path:           Path,
 }

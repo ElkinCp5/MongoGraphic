@@ -1,6 +1,6 @@
 'use strict'
 // Cargamos el módulo de mongoose
-const Graphic   = require("../../dependencies")();
+const Graphic   = require("../../dependencies");
 // Creamos el objeto del esquema y sus atributos
 var Schema = Graphic.Schema({
     name: { type: String, required: true },

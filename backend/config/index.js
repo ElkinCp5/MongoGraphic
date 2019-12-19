@@ -28,5 +28,5 @@ module.exports = {
         models: "../schemas/",
         schemas: "../models/"
     },
-    secret: 'clave_secreta_'
+    secret: 'SXw{2WMaL}I1hL1ZDG^I'
 }

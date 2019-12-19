@@ -1,6 +1,6 @@
 class StructSchema{
     constructor(){
-        this.Graphic   = require("../dependencies")();
+        this.Graphic   = require("../dependencies");
         this.Inflection  = this.Graphic.Inflection;
     }
     toType(obj) {

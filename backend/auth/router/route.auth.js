@@ -1,6 +1,6 @@
 'use strict'
 // Cargamos el módulo de express para poder crear rutas
-const Graphic   = require("../../dependencies")();
+const Graphic   = require("../../dependencies");
 // Cargamos el controlador
 var { 
     index,

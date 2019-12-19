@@ -1,9 +1,12 @@
 const Auth      = require('../models');
 const Responder = require('../../other/error');
-const Bcrypt = require('bcrypt-nodejs');
+const Bcrypt    = require('bcrypt-nodejs');
+const { create_token }  = require('../service/token');
 
 isDuplicated = (email) =>{
-    let isRegistered = Auth.findOne({email: email});
+    let isRegistered = Auth.findOne({email: email}, error=>{
+        return !(error);
+    });
     // Si no esta registrado
     if(!isRegistered._id){ return true; }else{ return false} 
 }
@@ -87,11 +90,35 @@ module.exports = {
         }
     },
     login: async (req, res, nex)=>{
-        try {
-            
-        } catch (error) {
-            
-        }
+        const { email, password, token } = req.body;
+        let authBD = await Auth.findOne({email: email});
+        Bcrypt.compare(password, authBD.password, (error, confirmed)=>{
+            authBD.password = undefined;
+            if(confirmed){
+                token ?  res.status(200).json( create_token(authBD) ) :
+                res.status(200).json(
+                    Responder(
+                        'login auth', 
+                        authBD, 
+                        'auth', 
+                        'user', 
+                        'auth completed'
+                    )
+                ); 
+            }
+            if(error){ 
+                res.status(500).json(
+                    Responder(
+                        'login auth', 
+                        undefined, 
+                        'auth', 
+                        'document', 
+                        'failed user auth!',
+                        error
+                    )
+                ); 
+            }
+        });
     },
     signup:async (req, res, nex) =>{
         try {
