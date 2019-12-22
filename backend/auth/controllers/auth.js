@@ -89,7 +89,7 @@ module.exports = {
             ); 
         }
     },
-    login: async (req, res, nex)=>{
+    login: async (req, res, nex) =>{
         const { email, password, token } = req.body;
         let authBD = await Auth.findOne({email: email});
         Bcrypt.compare(password, authBD.password, (error, confirmed)=>{

@@ -1,0 +1,92 @@
+:root{
+    --heightLogin:500px;
+    --heightFooter:70px;
+    --heightTabs:50px;
+    --heightLogo: (130px + var(--heightTabs));
+    --heightConent:calc(100% - (var(--heightLogo) + var(--heightFooter)));
+    --colorTabs: var(--color-gray-3);
+}
+.card-login{
+    width: 300px;
+    height: 500px;
+    border-radius: 10px;
+    display: block;
+    margin: calc(50vh - 250px) auto;
+    background-color: var(--color-white);
+}
+
+.card-login .logo-login {
+    height: var(--heightLogo);
+    width: 100%;
+    text-align: center;
+}
+
+.card-login 
+.logo-login img{
+    width: 90px;
+    margin: 10px auto;
+}
+
+/*style tabs*/
+.card-login
+.tabs-login{
+    width: 100%;
+    height: var(--heightTabs);
+    text-align: center;
+}
+.tabs-login ul,
+.tabs-login ul li{
+    margin: 0;
+    padding: 0;
+    border-radius: 10px ;
+}
+
+.tabs-login ul li {
+    display: inline-block;
+    list-style: none;
+    font-size: 1.3em !important;
+    color: var(--colorTabs) !important;
+}
+
+.tabs-login ul li a{
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: var(--colorTabs) !important;
+}
+
+.tabs-login ul li.active,
+.tabs-login ul li:focus,
+.tabs-login ul li:hover,
+.tabs-login ul li a.active,
+.tabs-login ul li a:focus,
+.tabs-login ul li a:hover,
+.tabs-login ul li a:focus{
+    color: var(--color-fuschia) !important;
+}
+
+/*style container*/
+.card-login
+.container-login{
+    height: var(--heightConent);
+    padding: 10px 20px;
+}
+/*style footer*/
+.card-login
+.footer-login{
+    height: var(--heightFooter);
+    border-top: 1px solid var(--color-gray);
+    text-align: center;
+}
+
+.footer-login button{
+    height: 40px;
+    width: 40px;
+    margin: calc((var(--heightFooter) / 2) - 20px) 5px;
+}
+
+.footer-login button:hover,
+.footer-login button:focus{
+    color: var(--color-fuschia);
+    border-color: var(--color-fuschia);
+}

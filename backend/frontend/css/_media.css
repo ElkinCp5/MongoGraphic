@@ -1,0 +1,136 @@
+/* Media display hidden*/
+:root{
+    --sizeLogo:250px;
+}
+
+@media only screen and (max-width: 576px) {
+    .hidden-xs{
+        display: none !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .hidden-md{
+        display: none !important;
+    }
+    .dashboard .ant-layout-sider{
+        top: 0;
+        left: 0;
+        position: absolute !important;
+        background-color: rgba(0, 0, 0, 0.8);
+        min-height: 100vh;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        width: 100% !important;
+        z-index: 800;
+    }
+    .dashboard .ant-layout-sider.ant-layout-sider-collapsed{
+        top: 0;
+        left: -250px;
+        max-width: 200px !important;
+        min-width: 200px !important;
+        width: 200px !important;
+    }
+    .ant-layout-sider
+    .close-sider{
+        top: 0px;
+        right: 0px;
+        height: 100vh;
+        display: block;
+        width: calc(100% - 200px);
+        position: absolute !important;
+        font-size: 24px;
+        z-index: 900;
+        cursor: pointer !important;
+    }
+    .ant-layout-sider
+    .close-sider i{
+        top: 10px;
+        right: 10px;
+        position: absolute;
+        color: var(--color-white);
+    }
+    .ant-layout-sider .ant-layout-sider-children{
+        min-height: 100vh !important;
+        max-width: 200px !important;
+        min-width: 200px !important;
+        width: 200px !important;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .hidden-lg{
+        display: none !important;
+    }
+}
+
+
+/*Media login*/
+
+@media only screen and (max-height: 510px) {
+    .hidden-lg{
+        display: none !important;
+    }
+    .card-login{
+        height: 340px;
+        width: 90%;
+        min-width: 540px;
+        max-width: 740px;
+        margin: calc(50vh - (340px / 2)) auto;
+        display: grid !important;
+        position:relative;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0px;
+        grid-auto-rows: minmax(100%, auto);
+    }
+    .card-login .logo-login{
+        grid-column: 1;
+        grid-row: 1;
+        text-align:center;
+        border-radius: 10px 0 0 10px;
+        background-image: url(../resources/images/other/bg7.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 200%;
+        
+    }
+    .card-login 
+    .logo-login img{
+        width: var(--sizeLogo);
+        height:var(--sizeLogo);
+        margin: calc(50% - ((var(--sizeLogo) / 2)- var(--heightTabs)) ) auto;
+    }
+    .tabs-login ul{
+        margin: auto;
+        width: 210px !important;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .tabs-login ul li,
+    .tabs-login ul li a{
+        color: var(--color-blue) !important;
+        border-radius: 10px ;
+    }
+    .tabs-login ul li:nth-last-child(2){
+        margin-left: -6px;
+    }
+    .tabs-login ul li:hover,
+    .tabs-login ul li a:focus,
+    .tabs-login ul li a:hover,
+    .tabs-login ul li a:focus{
+        color: var(--color-white) !important;
+    }
+    .tabs-login ul li.active,
+    .tabs-login ul li a.active{
+        color: var(--color-white) !important;
+        background-color: var(--color-blue) !important;
+    }
+
+    .card-login .container-login{
+        height: auto;
+        grid-column: 2/6;
+        grid-row: 1;
+        text-align:center;
+        border-radius: 0 10px 10px 0;
+    }
+
+}
