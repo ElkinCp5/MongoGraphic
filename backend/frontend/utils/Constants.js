@@ -1,4 +1,4 @@
-let { hostname } = window.location;
+let { hostname } = '';//window.location;
 let production = hostname !== "localhost";
 export default {
   //URL_BASE: "http://copol-dev.co/service",

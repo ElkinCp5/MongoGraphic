@@ -62,7 +62,7 @@
 .tabs-login ul li a:focus,
 .tabs-login ul li a:hover,
 .tabs-login ul li a:focus{
-    color: var(--color-fuschia) !important;
+    color: var(--primary-color) !important;
 }
 
 /*style container*/
@@ -87,6 +87,6 @@
 
 .footer-login button:hover,
 .footer-login button:focus{
-    color: var(--color-fuschia);
-    border-color: var(--color-fuschia);
+    color: var(--color-primary-2);
+    border-color: var(--color-primary-2);
 }

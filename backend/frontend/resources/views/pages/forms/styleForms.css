@@ -36,7 +36,6 @@
 #components-form-demo-normal-login .ant-input:hover{
   border: 1px solid var(--color-primary) !important;
   box-shadow: none !important;
-
 }
 
 #components-form-demo-normal-login .has-error .ant-input{

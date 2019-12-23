@@ -5,6 +5,7 @@ import { Card, Row, Col, Icon, Tooltip, Form, Input, Button, Checkbox } from "an
 /* Import Custom Components */
 import { layoutStandar as Standar } from "../layouts";
 import FormLogin from "./forms/login/formSignin"
+import FormRegiste from "./forms/register/formSignup"
 import { Ecolor} from "../../images";
 import "./css/login.css"
 
