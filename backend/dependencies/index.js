@@ -10,6 +10,7 @@ const Http          = require('http');
 const Jwt           = require('jwt-simple');
 const Moment        = require('moment');
 const Path          = require('path');
+const Cors          = require('cors');
 
 module.exports = {
     FileManager:    FileManager,
@@ -23,4 +24,5 @@ module.exports = {
     Jwt:            Jwt,
     Moment:         Moment,
     Path:           Path,
+    Cors:           Cors
 }

@@ -1,6 +1,6 @@
 class createdSchema {
     constructor(schema, root = '/../src/schemas/'){
-        this.Graphic   = require("../dependencies")();
+        this.Graphic   = require("../dependencies");
         this.FileManager = require('fs');
         this.Path    = require('../root');
         this.Inflection  = this.Graphic.Inflection;

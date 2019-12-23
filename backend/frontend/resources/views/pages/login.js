@@ -4,7 +4,7 @@ import { Card, Row, Col, Icon, Tooltip, Form, Input, Button, Checkbox } from "an
 
 /* Import Custom Components */
 import { layoutStandar as Standar } from "../layouts";
-import FormLogin from "./forms/login/structureLogin"
+import FormLogin from "./forms/login/formSignin"
 import { Ecolor} from "../../images";
 import "./css/login.css"
 
@@ -36,6 +36,5 @@ class Login extends Component {
     );
   }
 }
-
 
 export default Login;

@@ -3,7 +3,7 @@ const Responder = require('../../other/error');
 const Bcrypt    = require('bcrypt-nodejs');
 const { create_token }  = require('../service/token');
 
-isDuplicated = (email) =>{
+let isDuplicated = (email) =>{
     let isRegistered = Auth.findOne({email: email}, error=>{
         return !(error);
     });
@@ -11,11 +11,11 @@ isDuplicated = (email) =>{
     if(!isRegistered._id){ return true; }else{ return false} 
 }
 
-isForm = (frm)=>{
+let isForm = (frm)=>{
     return (frm.password && frm.name);
 }
 
-removeProperty =(frm, property)=>{
+let removeProperty =(frm, property)=>{
     (frm[property]) ? frm[property] = undefined : null;
 }
 

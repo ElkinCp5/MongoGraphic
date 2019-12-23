@@ -1,5 +1,5 @@
 /* tipo de Logo */
-import Ecolor from "./logos/logo-e-edoc-color.svg"
+import Ecolor from "./logos/logo-mongo-g-color.svg"
 import Eblack from "./logos/logo-e-edoc-black.svg"
 import Ewhite from "./logos/logo-e-edoc-white.svg"
 import ECcolor from "./logos/logo-e-edoc-color-bg.svg"

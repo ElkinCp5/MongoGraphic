@@ -1,3 +1,4 @@
+const originClient =['http://example1.com', 'http://example2.com'];
 module.exports = {    
     moongodb:{
         manager:'mongodb://',
@@ -28,5 +29,19 @@ module.exports = {
         models: "../schemas/",
         schemas: "../models/"
     },
-    secret: 'SXw{2WMaL}I1hL1ZDG^I'
+    secret: 'SXw{2WMaL}I1hL1ZDG^I',
+    //Si no desea bloquear las herramientas REST o las solicitudes de servidor a servidor, agregue una !originmarca en la función de origen de la siguiente manera:
+    //  if (whitelist.indexOf(origin) !== -1 || !origin)
+    parametersCors: {
+        origin: (origin, callback) =>{
+            if (originClient.indexOf(origin) !== -1 || !origin) {
+              callback(null, true)
+            } else {
+              callback(new Error('Not allowed by CORS'))
+            }
+        },
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        preflightContinue: false,
+        optionsSuccessStatus: 204
+    }
 }

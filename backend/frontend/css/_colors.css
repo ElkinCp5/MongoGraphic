@@ -12,142 +12,149 @@
     --color-dark-3: rgb(45, 45, 45);
     --color-dark-4: rgb(0, 0, 0);
 
-    --color-yellow: rgb(255, 221, 108);
-    --color-yellow-1: rgb(252, 200, 31);
-    --color-yellow-2: rgb(226, 179, 24);
-    --color-yellow-3: rgb(172, 135, 16);
+    --color-primary: rgb(144, 204, 116);
+    --color-primary-1: rgb(106, 179, 72);
+    --color-primary-2: rgb(0, 153, 51);
+    --color-primary-3: rgb(0, 117, 39);
 
-    --color-fuschia: rgb(240, 81, 165);
-    --color-fuschia-1: rgb(242, 14, 136);
-    --color-fuschia-2: rgb(207, 12, 116);
-    --color-fuschia-3: rgb(148, 10, 84);
+    --color-second: rgb(240, 81, 165);
+    --color-second-1: rgb(242, 14, 136);
+    --color-second-2: rgb(207, 12, 116);
+    --color-second-3: rgb(148, 10, 84);
 
-    --color-blue: rgb(109, 76, 231);
-    --color-blue-1: rgb(80, 38, 230);
-    --color-blue-2: rgb(66, 31, 190);
-    --color-blue-3: rgb(52, 25, 150);
-    --color-blue-4: rgb(17, 4, 65);
-}
+    --color-third: rgb(109, 76, 231);
+    --color-third-1: rgb(80, 38, 230);
+    --color-third-2: rgb(66, 31, 190);
+    --color-third-3: rgb(52, 25, 150);
+    --color-third-4: rgb(17, 4, 65);
 
-/* YELLOW BACKGROUND */
-.yellow-bg{
-    background-color: var(--color-yellow);
-}
-.yellow-bg-1{
-    background-color: var(--color-yellow-1);
-}
-.yellow-bg-2{
-    background-color: var(--color-yellow-2);
-}
-.yellow-bg-3{
-    background-color: var(--color-yellow-3);
+    --color-alert: rgb(242, 14, 136);
+
+    --primary-color: var(--color-primary-1);
+    --second-color: var(--color-primary-3);
+    --third-color: var(--color-primary-2);
 }
 
-/* YELLOW TEXT */
-.yellow-text{
-    color: var(--color-yellow);
+/* PRIMARY BACKGROUND */
+.primary-bg{
+    background-color: var(--color-primary);
 }
-.yellow-text-1{
-    color: var(--color-yellow-1);
+.primary-bg-1{
+    background-color: var(--color-primary-1);
 }
-.yellow-text-2{
-    color: var(--color-yellow-2);
+.primary-bg-2{
+    background-color: var(--color-primary-2);
 }
-.yellow-text-3{
-    color: var(--color-yellow-3);
+.primary-bg-3{
+    background-color: var(--color-primary-3);
+}
+
+/* PRIMARY TEXT */
+.primary-text{
+    color: var(--color-primary);
+}
+.primary-text-1{
+    color: var(--color-primary-1);
+}
+.primary-text-2{
+    color: var(--color-primary-2);
+}
+.primary-text-3{
+    color: var(--color-primary-3);
 }
 
 /* FUSCHIA BACKGROUND */
-.fuschia-bg{
-    background-color: var(--color-fuschia);
+.second-bg{
+    background-color: var(--color-second);
 }
-.fuschia-bg-1{
-    background-color: var(--color-fuschia-1);
+.second-bg-1{
+    background-color: var(--color-second-1);
 }
-.fuschia-bg-2{
-    background-color: var(--color-fuschia-2);
+.second-bg-2{
+    background-color: var(--color-second-2);
 }
-.fuschia-bg-3{
-    background-color: var(--color-fuschia-3);
+.second-bg-3{
+    background-color: var(--color-second-3);
 }
 
 /* FUSCHIA TEXT */
-.fuschia-text{
-    color: var(--color-fuschia);
+.second-text{
+    color: var(--color-second);
 }
-.fuschia-text-1{
-    color: var(--color-fuschia-1);
+.second-text-1{
+    color: var(--color-second-1);
 }
-.fuschia-text-2{
-    color: var(--color-fuschia-2);
+.second-text-2{
+    color: var(--color-second-2);
 }
-.fuschia-text-3{
-    color: var(--color-fuschia-3);
+.second-text-3{
+    color: var(--color-second-3);
 }
 
-/* BLUE BACKGROUND */
-.blue-bg{
-    background-color: var(--color-blue);
+/* THIRD BACKGROUND */
+.third-bg{
+    background-color: var(--color-third);
 }
-.blue-bg-1{
-    background-color: var(--color-blue-1);
+.third-bg-1{
+    background-color: var(--color-third-1);
 }
-.blue-bg-2{
-    background-color: var(--color-blue-2);
+.third-bg-2{
+    background-color: var(--color-third-2);
 }
-.blue-bg-3{
-    background-color: var(--color-blue-3);
+.third-bg-3{
+    background-color: var(--color-third-3);
 }
-.blue-bg-4{
-    background-color: var(--color-blue-4);
+.third-bg-4{
+    background-color: var(--color-third-4);
 }
 /* BLUE TEXT */
-.blue-text{
-    color: var(--color-blue);
+.third-text{
+    color: var(--color-third);
 }
-.blue-text-1{
-    color: var(--color-blue-1);
+.third-text-1{
+    color: var(--color-third-1);
 }
-.blue-text-2{
-    color: var(--color-blue-2);
+.third-text-2{
+    color: var(--color-third-2);
 }
-.blue-text-3{
-    color: var(--color-blue-3);
+.third-text-3{
+    color: var(--color-third-3);
 }
-.blue-text-3{
-    color: var(--color-blue-4);
+.third-text-3{
+    color: var(--color-third-4);
 }
 
-body,
-.gradien-YFB{
-    background: var(--color-yellow-1);
-    background: -moz-linear-gradient(-45deg, var(--color-yellow-1) 0%, var(--color-fuschia-1) 43%, var(--color-blue-1) 100%);
-    background: -webkit-gradient(left top, right bottom, color-stop(0%, var(--color-yellow-1)), color-stop(43%, var(--color-fuschia-1)), color-stop(100%, var(--color-blue-1)));
-    background: -webkit-linear-gradient(-45deg, var(--color-yellow-1) 0%, var(--color-fuschia-1) 43%, var(--color-blue-1) 100%);
-    background: -o-linear-gradient(-45deg, var(--color-yellow-1) 0%, var(--color-fuschia-1) 43%, var(--color-blue-1) 100%);
-    background: -ms-linear-gradient(-45deg, var(--color-yellow-1) 0%, var(--color-fuschia-1) 43%, var(--color-blue-1) 100%);
-    background: linear-gradient(135deg, var(--color-yellow-1) 0%, var(--color-fuschia-1) 43%, var(--color-blue-1) 100%);
+
+.gradien-3color{
+    background: var(--primary-color);
+    background: -moz-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 43%, var(--third-color) 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, var(--primary-color)), color-stop(43%, var(--second-color)), color-stop(100%, var(--third-color)));
+    background: -webkit-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 43%, var(--third-color) 100%);
+    background: -o-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 43%, var(--third-color) 100%);
+    background: -ms-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 43%, var(--third-color) 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--second-color) 43%, var(--third-color) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcc81f', endColorstr='#5026e6', GradientType=1 );
 }
 
-.gradien-YF{
-    background: var(--color-yellow-1);
-    background: -moz-linear-gradient(-45deg, var(--color-yellow-1) 0%, var(--color-fuschia-1) 100%);
-    background: -webkit-gradient(left top, right bottom, color-stop(0%, var(--color-yellow-1)),color-stop(100%, var(--color-fuschia-1)));
-    background: -webkit-linear-gradient(-45deg, var(--color-yellow-1) 0%,  var(--color-fuschia-1) 100%);
-    background: -o-linear-gradient(-45deg, var(--color-yellow-1) 0%, var(--color-fuschia-1) 100%);
-    background: -ms-linear-gradient(-45deg, var(--color-yellow-1) 0%, var(--color-fuschia-1) 100%);
-    background: linear-gradient(135deg, var(--color-yellow-1) 0%,var(--color-fuschia-1) 100%);
+body,
+.gradien-2color{
+    background: var(--primary-color);
+    background: -moz-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, var(--primary-color)),color-stop(100%, var(--second-color)));
+    background: -webkit-linear-gradient(-45deg, var(--primary-color) 0%,  var(--second-color) 100%);
+    background: -o-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 100%);
+    background: -ms-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%,var(--second-color) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcc81f', endColorstr='#5026e6', GradientType=1 );
 }
 
 .gradien-FB{
-    background: var(--color-yellow-1);
-    background: -moz-linear-gradient(-45deg, var(--color-fuschia-1) 0%, var(--color-blue-1) 100%);
-    background: -webkit-gradient(left top, right bottom, color-stop(0%, var(--color-fuschia-1)), color-stop(100%, var(--color-blue-1)));
-    background: -webkit-linear-gradient(-45deg, var(--color-fuschia-1) 0%,  var(--color-blue-1) 100%);
-    background: -o-linear-gradient(-45deg, var(--color-fuschia-1) 0%, var(--color-blue-1) 100%);
-    background: -ms-linear-gradient(-45deg, var(--color-fuschia-1) 0%, var(--color-blue-1) 100%);
-    background: linear-gradient(135deg, var(--color-fuschia-1) 0%, var(--color-blue-1) 100%);
+    background: var(--primary-color);
+    background: -moz-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, var(--primary-color)), color-stop(100%, var(--second-color)));
+    background: -webkit-linear-gradient(-45deg, var(--primary-color) 0%,  var(--second-color) 100%);
+    background: -o-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 100%);
+    background: -ms-linear-gradient(-45deg, var(--primary-color) 0%, var(--second-color) 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--second-color) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcc81f', endColorstr='#5026e6', GradientType=1 );
 }

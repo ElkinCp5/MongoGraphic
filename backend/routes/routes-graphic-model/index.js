@@ -55,60 +55,36 @@ const express           = require('express');
         }
     }
     //list the models
-    index = async(req, res) => {
+    let index = async(req, res) => {
         let schemas = await _LoadSchema.listsSchema();
         res.json(schemas);
     };
 
     //find model by name  
-    show = async (req, res) => {  
-        var model = await _LoadSchema.singleSchema(req.params.name);
-        model ? res.json(error(
-            'show', 
-            model, 
-            req.params.name, 
-            'model', 
-            'search completed'
-        ))
-        : res.json(error(
-            'show', 
-            req.params.name, 
-            Boolean, 
-            'model',
-            Boolean,
-            `failed search, this model <'${req.params.name}'> does not exist`
-        ))
+    let show = async (req, res) => {  
+        const { name } = req.params;
+        const model = await _LoadSchema.singleSchema(name);
+        res.json( error( 'show',  model,  name, 'model', 'search completed' ) );
     };
 
     //Create a new models
-    create = (req, res) =>{  
+    let create = (req, res) =>{  
         // send for post toSchema add -> req.body
-        var schema = req.body;
+        const schema = req.body;
         if(_specFuntion.valSch_save(schema)){
-            var _Sch = _strSchema.toSchema(schema);
-            var _saveFilSchema = new saveFilSchemaJs(_Sch);
+            let _Sch = _strSchema.toSchema(schema);
+            let _saveFilSchema = new saveFilSchemaJs(_Sch);
 
-            _Sch ? _saveFilSchema.saveFile(_Sch.verbatim.singularize) & res.json(error(
-                'create', 
-                _Sch, 
-                _Sch.verbatim.singularize, 
-                'model', 
-                'create completed',))
-
-            : res.json(error(
-                'create', 
-                _Sch, 
-                _Sch.verbatim.singularize, 
-                'model', 
-                Boolean,
-                'failed attempt to create a scheme!!'));
+            _Sch ? _saveFilSchema.saveFile(_Sch.verbatim.singularize) & 
+                res.json(error('create', _Sch, _Sch.verbatim.singularize,'model','create completed'))
+            : res.json(error( 'create', _Sch,_Sch.verbatim.singularize,'model', Boolean, 'failed attempt to create a scheme!!'));
         }else{
             res.json({msg: 'frm or struct for schema Js: invalider'})
         }
     };
     
     //update a model by name  
-    update = (req, res) => {  
+    let update = (req, res) => {  
         // send for post renameFile add -> req.body.name
         var schema = req.body;
         if(_specFuntion.valSch_save(schema)){
@@ -141,7 +117,7 @@ const express           = require('express');
     };
 
     //distroy a model by name  
-    distroy = (req, res) => {  
+    let distroy = (req, res) => {  
         // send for post renameFile add -> req.body.name
         var _Sch = _strSchema.toSchema(false_schema);
         var _saveFilSchema = new saveFilSchemaJs(_Sch);

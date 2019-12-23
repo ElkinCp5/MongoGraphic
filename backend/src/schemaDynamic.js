@@ -1,6 +1,6 @@
 class SchemaDynamic{
     constructor(bodySchema, procedure){
-        this._graphic = require("../dependencies")();
+        this._graphic = require("../dependencies");
         this._schemaBuilder = require("../schema/schemaBuilder"); 
         this.structure = bodySchema.structure;
         this._global = {
