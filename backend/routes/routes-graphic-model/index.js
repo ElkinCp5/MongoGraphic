@@ -150,6 +150,7 @@ const express           = require('express');
     router.post('/',        create);
     router.put('/',         update);
     router.delete('/',      distroy);
+    
 
 
 module.exports = router;

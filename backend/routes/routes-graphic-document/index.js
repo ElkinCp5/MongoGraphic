@@ -13,7 +13,7 @@ module.exports = (Sch)=>{
     const _ModalDinamic = new classSchemaDynamicModal(Schema).ModalDynamic();
 
     //list the documents
-    index = async(req, res) =>{ 
+    let index = async(req, res) =>{ 
         await _ModalDinamic.find().then(
             (datas)=>{
                 res.locals[ModelPluralize] = datas;
@@ -40,7 +40,7 @@ module.exports = (Sch)=>{
     };  
     
     //Create a new document
-    create = async(req, res) =>{  
+    let create = async(req, res) =>{  
         let document = new  _ModalDinamic(req.body);
         await document.save(
             (error) => error ? res.json(
@@ -64,7 +64,7 @@ module.exports = (Sch)=>{
     };
 
     //find document by id  
-    show = async(req, res) => {  
+    let show = async(req, res) => {  
         await _ModalDinamic.findOne({_id: req.params.id})
             .then(document => res.json( msgJson(
                         'show', 
@@ -87,7 +87,7 @@ module.exports = (Sch)=>{
     }; 
 
     //update a document by id  
-    update = async(req, res) => { 
+    let update = async(req, res) => { 
         const body = req.body;
         await _ModalDinamic.findByIdAndUpdate(req.params.id, body)
         .then(() => res.json( msgJson(
@@ -111,7 +111,7 @@ module.exports = (Sch)=>{
     }; 
 
     //distroy a document by id  
-    distroy = async(req, res) => { 
+    let distroy = async(req, res) => { 
         await _ModalDinamic.deleteOne({_id: req.params.id}).then(() => res.json(msgJson(
                     'delete', 
                     req.params.id, 

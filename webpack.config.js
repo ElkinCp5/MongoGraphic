@@ -1,7 +1,7 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
-const devMode = 'development';
+const devMode = 'production';
 // 'production'
 module.exports = {
 
