@@ -17,14 +17,20 @@ class NormalLoginForm extends Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form" id="components-form-demo-normal-login">
         <Form.Item>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your username!' }],
-          })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type='email'
-              placeholder="Username"
-            />,
-          )}
+          {getFieldDecorator('email', {
+            rules: [
+              {
+                type: 'email',
+                message: 'The input is not valid E-mail!',
+              },
+              {
+                required: true,
+                message: 'Please input your E-mail!',
+              },
+            ],
+          })(<Input
+              prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} 
+              placeholder="E-mail o correo"/>)}
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {

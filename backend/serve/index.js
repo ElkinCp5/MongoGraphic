@@ -29,6 +29,7 @@ Serve.use(Morgan('dev'));
 // Rutas para los diferenctes apartado
 //Cors(this.Config.parametersCors)
 Serve.use(Cors(Config.parametersCors));
+Serve.use('/api/models/', RoutesModel);
 Serve.use('/api/auth/',  RoutesAuth);
 Serve.use((req, res, next) =>{
     let document = _SpecialFunction.extractParameter(Inflection.singularize(req.path), '/api/documents/', 0);
@@ -38,7 +39,6 @@ Serve.use((req, res, next) =>{
     }
     next(); // pass control to the next handler
 });
-Serve.use('/api/models/', RoutesModel);
 // Archivos estaticos del sistema
 Serve.use(Static(NodePath.join(__dirname, '../public')));
 //console.log(NodePath.join(__dirname, '../public'));

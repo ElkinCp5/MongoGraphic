@@ -114,7 +114,10 @@ class RegistrationForm extends Component {
                 message: 'Please input your E-mail!',
               },
             ],
-          })(<Input placeholder="E-mail o Correo"/>)}
+          })(<Input 
+              prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} 
+              placeholder="E-mail o correo"/>
+            )}
         </Form.Item>
         <Form.Item hasFeedback>
           {getFieldDecorator('password', {

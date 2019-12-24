@@ -107,22 +107,22 @@
     }
     .tabs-login ul li,
     .tabs-login ul li a{
-        color: var(--color-blue) !important;
         border-radius: 10px ;
     }
     .tabs-login ul li:nth-last-child(2){
         margin-left: -6px;
     }
-    .tabs-login ul li:hover,
-    .tabs-login ul li a:focus,
-    .tabs-login ul li a:hover,
-    .tabs-login ul li a:focus{
-        color: var(--color-white) !important;
-    }
     .tabs-login ul li.active,
-    .tabs-login ul li a.active{
-        color: var(--color-white) !important;
-        background-color: var(--color-blue) !important;
+    .tabs-login ul li:focus,
+    .tabs-login ul li a.active,
+    .tabs-login ul li a:focus,
+    .tabs-login ul li a:focus{
+        color: var(--color-primary-1) !important;
+    }
+
+    .tabs-login ul li:hover,
+    .tabs-login ul li a:hover{
+        color: var(--color-second-1) !important;
     }
 
     .card-login .container-login{

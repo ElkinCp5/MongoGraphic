@@ -57,12 +57,15 @@
 
 .tabs-login ul li.active,
 .tabs-login ul li:focus,
-.tabs-login ul li:hover,
 .tabs-login ul li a.active,
 .tabs-login ul li a:focus,
-.tabs-login ul li a:hover,
 .tabs-login ul li a:focus{
-    color: var(--primary-color) !important;
+    color: var(--color-primary-1) !important;
+}
+
+.tabs-login ul li:hover,
+.tabs-login ul li a:hover{
+    color: var(--color-second-1) !important;
 }
 
 /*style container*/
@@ -87,6 +90,6 @@
 
 .footer-login button:hover,
 .footer-login button:focus{
-    color: var(--color-primary-2);
-    border-color: var(--color-primary-2);
+    color: var(--color-second-2);
+    border-color: var(--color-second-1);
 }
