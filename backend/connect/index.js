@@ -10,6 +10,8 @@ module.exports = (dbUrl, Connection) =>{
         // If the connection throws an error
         Connection.on('error', (err) => {
             console.error('Mongoose default connection error: ' + err);
+            throw err;
+            //process.exit(1);
         });
         
         // When the connection is disconnected

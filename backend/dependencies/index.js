@@ -1,25 +1,29 @@
 // MODULE FOR DEPENDENCIES
-const FileManager   = require('fs');
-const Inflection    = require('inflection');
-const Mongoose      = require('mongoose');
-const Schema        = Mongoose.Schema;
-const Model         = Mongoose.model;
-const Express       = require('express');
-const Router        = require('express-promise-router')();
-const Http          = require('http');
-const Jwt           = require('jwt-simple');
-const Moment        = require('moment');
-const Path          = require('path');
-const Cors          = require('cors');
+import FileManager   from'fs';
+import Inflection    from'inflection';
+import Mongoose      from'mongoose';
+import {Schema}      from'mongoose';
+import {model}       from'mongoose';
+import Express       from'express';
+import session       from'express-session';
+import Passport      from 'passport';
+import Router        from'express-promise-router';
+import Http          from'http';
+import Jwt           from'jwt-simple';
+import Moment        from'moment';
+import Path          from'path';
+import Cors          from'cors';
 
 module.exports = {
     FileManager:    FileManager,
     Inflection:     Inflection,
     Mongoose:       Mongoose,
     Schema:         Schema,
-    Model:          Model,
+    Model:          model,
     Express:        Express,
-    Router:         Router,
+    Session:        session,
+    Passport:       Passport,
+    Router:         Router(),
     Http:           Http,
     Jwt:            Jwt,
     Moment:         Moment,

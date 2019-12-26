@@ -1,6 +1,7 @@
-const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin')
-const miniCssExtractPlugin = require('mini-css-extract-plugin');
+import path                     from 'path';
+import htmlWebpackPlugin        from 'html-webpack-plugin';
+import miniCssExtractPlugin     from 'mini-css-extract-plugin';
+import liveReloadPlugin         from 'webpack-livereload-plugin'; 
 const devMode = 'production';
 // 'production'
 module.exports = {
@@ -54,6 +55,8 @@ module.exports = {
             filename: 'css/bundle.css',
             chunkFilename: '[id].css',
             //ignoreOrder: false, 
-        })
+        }),
+        new liveReloadPlugin()
+        
     ]
 }

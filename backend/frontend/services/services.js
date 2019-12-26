@@ -1,8 +1,6 @@
-const axios = require('axios');
-const constants = require('../utils/Api');
-console.log('constants', constants.URL_BASE);
+import Axios from '../utils/axios.config';
 
-module.exports = {
+export default {
     models: {
         all: async()=>{
 
@@ -38,19 +36,40 @@ module.exports = {
         }
     },
     auth:{
-        signin: async(user)=>{
+        signin: (data)=>{
+            console.log(data);
+            
+            let {email, password} = data;
+            return Axios.post(
+                'auth',
+                {
+                    email,
+                    password
+                }
+            ).the(res=>{
+                return {
+                    data: res.data,
+                    success: res.message,
+                    error: res.error
+                };
+            }).cath(err=>{
+                return{
+                    data: false,
+                    success: false,
+                    error: err
+                };
+            })
+        },
+        signup: async(data)=>{
 
         },
-        signup: async()=>{
+        signout: async(data)=>{
 
         },
-        signout: async()=>{
+        update: async(data)=>{
 
         },
-        update: async()=>{
-
-        },
-        delete: async()=>{
+        delete: async(data)=>{
 
         }
     }

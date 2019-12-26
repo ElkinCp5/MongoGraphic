@@ -1,16 +1,15 @@
 const schema = {
   verbatim:{
-    "low_first": "User",
-    "singularize": "user",
-    "pluralize": "users"
+    "low_first": "Player",
+    "singularize": "player",
+    "pluralize": "players"
 },
  structure:{
     name: String,
     lastName: String,
     age: Number,
     salary: String,
-    hour: String,
-    phone: Number,
+    phone: String,
     address: String
 },
  timestamps: true 

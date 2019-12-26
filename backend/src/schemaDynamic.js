@@ -3,8 +3,9 @@ class SchemaDynamic{
         this._graphic = require("../dependencies");
         this._schemaBuilder = require("../schema/schemaBuilder"); 
         this.structure = bodySchema.structure;
+        this.verbatim =  bodySchema.verbatim
         this._global = {
-                pluralize:      bodySchema.verbatim.pluralize,
+                pluralize:      this.verbatim.pluralize,
                 schema:         this._graphic.Schema,
                 model:          this._graphic.Model
         }

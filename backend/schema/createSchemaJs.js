@@ -5,16 +5,20 @@ class createdSchema {
         this.Path    = require('../root');
         this.Inflection  = this.Graphic.Inflection;
         this._Path = new this.Path('/src/schemas/');
-        this.Schema = schema;
-        this.verbatim = this.Schema.verbatim;
-        this.structure = this.Schema.structure;
+        this.Schema = (schema != undefined || schema != 'undefined' && schema) ? schema : false;
+        this.verbatim = (schema.verbatim != undefined || schema.verbatim != 'undefined' &&
+                             schema.verbatim) ? schema.verbatim : false; 
+        this.structure = (schema.structure != undefined || schema.structure != 'undefined' &&
+                             schema.structure) ? schema.structure : false; ;
+        this.timestamps = (schema.timestamps != undefined || schema.timestamps != 'undefined' &&
+                             schema.timestamps) ? true : false;
     }
 
     saveFile(name) {
-        if(this.Schema != undefined || this.Schema != 'undefined' && this.Schema){
+        if(this.Schema && this.verbatim && this.structure){
             var verbatim = '{\n  verbatim:' +JSON.stringify(this.verbatim, null, 4)+',';
-            var structure = '\n structure:' +JSON.stringify(this.structure, null, 4) + '\n}';
-            this.FileManager.writeFile(this._Path.file(name), this.strJSON_JS(verbatim, structure), 'utf8', (err) => {
+            var structure = '\n structure:' +JSON.stringify(this.structure, null, 4);
+            this.FileManager.writeFile(this._Path.file(name), this.strJSON_JS(verbatim, structure, this.timestamps), 'utf8', (err) => {
                 if (err) return false;
                 else console.error(`The file ${name}.js has been saved!`); return true;   
             });
@@ -66,9 +70,12 @@ class createdSchema {
         }else return false
     }
 
-    strJSON_JS(verbatim, structure){
+    strJSON_JS(verbatim, structure, timestamps = false){
         structure = structure.replace(/["]+/g, '');
-        return ('const schema = '+ verbatim + structure + '\n module.exports = schema;');
+        if(timestamps)
+            return ('const schema = '+ verbatim + structure +',\n timestamps: true \n \n  } \n' + '\n module.exports = schema;');
+        else
+            return ('const schema = '+ verbatim + structure +' \n}' + '\n module.exports = schema;');
     }
 
 }

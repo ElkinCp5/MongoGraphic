@@ -55,13 +55,13 @@ class Login extends Component {
               <img src={Ecolor} />
               <div className="tabs-login">
                 <ul>
-                  <li><Link to="/" className="active">Inicio</Link></li>
-                  <li><Link to="/signup">Registrate</Link></li>
+                  <li><Link to="/" className="not">Inicio</Link></li>
+                  <li><Link to="/signup" className="active">Registrate</Link></li>
                 </ul>
               </div>
             </div>
             <div className="container-login">
-              <FormLogin />
+              <FormRegiste />
               <div className="footer-login">
                 <Button shape="circle" icon="google" />
                 <Button shape="circle" icon="windows" />

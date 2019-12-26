@@ -1,144 +1,120 @@
 'use strict'
 //App routes  
-module.exports = (Sch)=>{ 
-    
-    const Schema            = Sch.schema;
-    const ModelSingularize  = Schema.verbatim.singularize;
-    const ModelPluralize    = Schema.verbatim.pluralize; 
     // clase que crea los esquemas y modelos dinamicamente
-    const classSchemaDynamicModal   = require('../../src/schemaDynamic');
-    const msgJson                   = require('../../other/error');
-    const router                    = require('express-promise-router')();
+    import Graphic                      from "../../dependencies";
+    import LoadingSchemas               from '../../schema/loadinSchemaJson';
+    import classSchemaDynamicModal      from '../../src/schemaDynamic';
+    import msgJson                      from '../../other/error';
+    import router                       from 'express-promise-router';
 
-    const _ModalDinamic = new classSchemaDynamicModal(Schema).ModalDynamic();
+    const Inflection        = Graphic.Inflection;
+    const _LoadSchema       = new LoadingSchemas;
+    const _router = router();
+
+    let _ValidateModelDinamic = async(name)=>{
+        let Name = Inflection.singularize(name);
+        let Schema = await _LoadSchema.singleSchema(Name);
+        let _Modal = await new classSchemaDynamicModal(Schema.schema).ModalDynamic();
+        //console.log(Name, Schema.schema, _Modal);
+        return _Modal;
+    };
 
     //list the documents
     let index = async(req, res) =>{ 
-        await _ModalDinamic.find().then(
-            (datas)=>{
-                res.locals[ModelPluralize] = datas;
-                res.json(msgJson(
-                    'show list', 
-                    datas, 
-                    ModelPluralize, 
-                    'document', 
-                    'search completed'
-                )
-            )
-        }).catch(error => 
-            res.json(
-                msgJson(
-                    'create', 
-                    Boolean, 
-                    ModelSingularize, 
-                    'document', 
-                    'failed create this document',
-                    error
-                )
+        let { name } = req.params; 
+        let _Modal = await _ValidateModelDinamic(name);
+        let List = await _Modal.find();
+
+        res.json(
+            msgJson(
+                'show list', 
+                List, 
+                name, 
+                'document', 
+                'search completed'
             )
         );
     };  
     
     //Create a new document
-    let create = async(req, res) =>{  
-        let document = new  _ModalDinamic(req.body);
-        await document.save(
-            (error) => error ? res.json(
-                msgJson(
-                    'create', 
-                    Boolean, 
-                    ModelSingularize, 
-                    'document', 
-                    'failed create this document',
-                    error
-                )
-            ) : res.json(msgJson(
-                        'create', 
-                        document, 
-                        ModelSingularize, 
-                        'document', 
-                        'create completed',
-                    )
-                )
+    let create = async(req, res) =>{
+        let { name } = req.params;
+        let _Modal = await _ValidateModelDinamic(name);
+        let document = await new  _Modal(req.body);
+        let createDocument = await document.save();
+
+        res.json(
+            msgJson(
+                'create', 
+                createDocument, 
+                name, 
+                'document', 
+                'create completed',
+            )
         );
     };
 
     //find document by id  
-    let show = async(req, res) => {  
-        await _ModalDinamic.findOne({_id: req.params.id})
-            .then(document => res.json( msgJson(
-                        'show', 
-                        document, 
-                        ModelSingularize, 
-                        'document', 
-                        'search completed'
-                    )
-                )
-            ).catch(error => res.json( msgJson(
-                        'show', 
-                        req.params.id, 
-                        ModelSingularize, 
-                        'document', 
-                        'failed search, this document does not exist',
-                        error
-                    )
-                )
-            );
+    let show = async(req, res) => {
+        let { name, id } = req.params; 
+
+        let _Modal      = await _ValidateModelDinamic(name);
+        let showDocument    = await _Modal.findOne({_id: id})
+
+        res.json(
+            msgJson(
+                'show', 
+                showDocument, 
+                name, 
+                'document', 
+                'search completed'
+            )
+        );
     }; 
 
     //update a document by id  
     let update = async(req, res) => { 
-        const body = req.body;
-        await _ModalDinamic.findByIdAndUpdate(req.params.id, body)
-        .then(() => res.json( msgJson(
-                    'update', 
-                    body, 
-                    ModelSingularize, 
-                    'document', 
-                    'update completed'
-                )
+        let { name, id } = req.params;
+        let body = req.body;
+
+        let _Modal          = await _ValidateModelDinamic(name);
+        let updateDocument  = await _Modal.findByIdAndUpdate(id, body);
+
+        res.json( 
+            msgJson(
+                'update', 
+                updateDocument, 
+                name, 
+                'document', 
+                'update completed'
             )
-        ).catch(error => res.json( msgJson(
-                    'update', 
-                    req.params.id, 
-                    ModelSingularize, 
-                    'document', 
-                    'failed update, this document does not exist',
-                    error
-                )
-            )
-        );
+        )
     }; 
 
     //distroy a document by id  
     let distroy = async(req, res) => { 
-        await _ModalDinamic.deleteOne({_id: req.params.id}).then(() => res.json(msgJson(
-                    'delete', 
-                    req.params.id, 
-                    ModelSingularize, 
-                    'document', 
-                    'distroy completed'
-                )
+        let { name, id } = req.params;
+
+        let _Modal          = await _ValidateModelDinamic(name);
+        let distroyDocument = await _Modal.deleteOne({_id: id});
+
+        res.json(
+            msgJson(
+                'delete', 
+                distroyDocument, 
+                name, 
+                'document', 
+                'distroy completed'
             )
-        ).catch(error => res.json(msgJson(
-                    'delete', 
-                    req.params.id, 
-                    ModelSingularize, 
-                    'document', 
-                    'failed delete, this document does not exist',
-                    error
-                )
-            )
-        );
-        
+        )
     };
 
     //Link routes and functions 
-    router.get('/:name',         index);  
-    router.get('/:name/:id',     show); 
-    router.post('/:name',        create);  
-    router.delete('/:name/:id',  distroy);
-    router.put('/:name/:id',     update); 
+    _router.get('/:name',         index);  
+    _router.get('/:name/:id',     show); 
+    _router.post('/:name',        create);  
+    _router.delete('/:name/:id',  distroy);
+    _router.put('/:name/:id',     update); 
 
-    return router;
-}
+    
+module.exports = _router;

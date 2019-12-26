@@ -1,10 +1,15 @@
-import { login, start, dashboard, profile, format, E404 } from "../../resources/views";
+import { login, signup, start, dashboard, profile, format, E404 } from "../../resources/views";
   
 const routes = [
     {
         path: "/",
         exact: true,
         component: login
+    },
+    {
+        path: "/signup",
+        exact: true,
+        component: signup
     },
     {
         path: "/dashboard",

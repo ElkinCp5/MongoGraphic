@@ -1,26 +1,26 @@
-//App routes  
-const structSchemaJson  = require('../../schema/createStructSchemaJson');
-const saveFilSchemaJson = require('../../schema/createSchemaJson');
-const saveFilSchemaJs   = require('../../schema/createSchemaJs');
-const LoadingSchemas    = require('../../schema/loadinSchemaJson');
-const specialFunctions  = require('../../other/specialFunctions');  
-const error             = require('../../other/error');
-const path              = require('../../root');
-const express           = require('express');
+'use strict'
+
+import Graphic           from "../../dependencies";
+import structSchemaJson  from '../../schema/createStructSchemaJson';
+import saveFilSchemaJson from '../../schema/createSchemaJson';
+import saveFilSchemaJs   from '../../schema/createSchemaJs';
+import LoadingSchemas    from '../../schema/loadinSchemaJson';
+import specialFunctions  from '../../other/specialFunctions';  
+import error             from '../../other/error';
+import path              from '../../root';
+import router            from 'express-promise-router';
 
     // Estraer 
-    const router = express.Router();
-
-    var msg = 'I am: ';
-
-    // Instanciar 
+    const Inflection        = Graphic.Inflection;
+    const _router = router();
+    // Instanciar
     var _strSchema  = new structSchemaJson;
     var _LoadSchema = new LoadingSchemas;
     var _specFuntion = new specialFunctions;
     var _path       = new path('/src/schemas/');
     //console.log(_path.exists('coffee', '.json'))
     var false_schema = { name: 'user', timestamps: true, structure: { name: "String" } };
-    var json = { 
+    /*var json = { 
         name: 'user',
         timestamps: true,
         structure: {
@@ -53,7 +53,15 @@ const express           = require('express');
                 "required": 'function() { return this.drink > 3;}'
             }
         }
+    }*/
+    let _ValidateModelDinamic = async (name) =>{
+        let Name = Inflection.singularize(name); 
+        const model = await _LoadSchema.singleSchema(Name);
+        return model ? model : false;
     }
+     let _VlaidateUndefai =(arg)=>{
+         return (arg !== undefined && arg !== 'undefined') ? true : false;
+     }
     //list the models
     let index = async(req, res) => {
         let schemas = await _LoadSchema.listsSchema();
@@ -61,96 +69,97 @@ const express           = require('express');
     };
 
     //find model by name  
-    let show = async (req, res) => {  
+    let show = async (req, res) => { 
         const { name } = req.params;
-        const model = await _LoadSchema.singleSchema(name);
-        res.json( error( 'show',  model,  name, 'model', 'search completed' ) );
+        const model = await _ValidateModelDinamic(name);
+        model ? res.json( error( 'show',  model,  name, 'model', 'search completed' ) ) :
+                res.json( error( 'show',  Boolean,  name, 'model', Boolean, 'This scheme does not exist!' ) );
     };
 
     //Create a new models
-    let create = (req, res) =>{  
-        // send for post toSchema add -> req.body
+    let create = async (req, res) =>{
+        const { name, structure } = req.body;
         const schema = req.body;
-        if(_specFuntion.valSch_save(schema)){
-            let _Sch = _strSchema.toSchema(schema);
-            let _saveFilSchema = new saveFilSchemaJs(_Sch);
+        // send for post toSchema add -> req.body
+        if(_VlaidateUndefai(name) && _VlaidateUndefai(structure)){
+            let model = await _ValidateModelDinamic(name);
+            if(!model && _specFuntion.valSch_save(schema)){
+                let _Sch = await _strSchema.toSchema(schema);
+                let _saveFilSchema = await new saveFilSchemaJs(_Sch);
 
-            _Sch ? _saveFilSchema.saveFile(_Sch.verbatim.singularize) & 
-                res.json(error('create', _Sch, _Sch.verbatim.singularize,'model','create completed'))
-            : res.json(error( 'create', _Sch,_Sch.verbatim.singularize,'model', Boolean, 'failed attempt to create a scheme!!'));
+                _Sch ? await _saveFilSchema.saveFile(_Sch.verbatim.singularize) & 
+                    res.json(error('create', _Sch, _Sch.verbatim.singularize,'model','create completed'))
+                : res.json(error( 'create', _Sch,_Sch.verbatim.singularize,'model', Boolean, 'failed attempt to create a scheme!!'));
+            }else if(model){
+                res.json(error( 'create', model, name,'model', Boolean, 'This scheme already exists!!'));
+            }else{
+                res.json(error( 'create', Boolean, name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+            }
         }else{
-            res.json({msg: 'frm or struct for schema Js: invalider'})
+            res.json(error( 'create', Boolean, name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
         }
     };
     
     //update a model by name  
-    let update = (req, res) => {  
+    let update = async(req, res) => {  
         // send for post renameFile add -> req.body.name
-        var schema = req.body;
-        if(_specFuntion.valSch_save(schema)){
-            var _Sch = _strSchema.toSchema(schema);
-            var _saveFilSchema = new saveFilSchemaJs(_Sch);
-            var _name = _Sch.verbatim.singularize;
-            var _rename = (schema.renemer != '' && schema.renemer != undefined && schema.renemer != 'undefined') ;
-            var _updateOne = (_rename != '' && _rename != undefined && _rename != 'undefined') 
-                                ? true : false ;
-            if(_Sch) {
-                var model_update = _saveFilSchema.updateFile(_name, _rename, _updateOne); 
-                model_update ? res.json(errorMsg(
-                    'update', 
-                    _name + ' update ->' + _rename, 
-                    model_update, 
-                    'model', 
-                    'update completed'
-                ))
-                : res.json(errorMsg(
-                    'update', 
-                    req.params.name, 
-                    Boolean, 
-                    'model',
-                    Boolean,
-                    `failed update, this model <'${_name}'> does exist`
-                ))
-            } else res.json({msg: 'frm or struct for schema Js: invalider'});
+        let {renemer, timestamps, structure, name} = req.body;
+        let schema = req.body;
+        
+        if(_VlaidateUndefai(name) &&
+             _VlaidateUndefai(structure) && 
+             _VlaidateUndefai(timestamps) && 
+             _VlaidateUndefai(renemer)){
+                 
+            let model = await _ValidateModelDinamic(name);
+            let _valSche = await _specFuntion.valSch_save(schema)
+            if(model && _valSche){
+                var _Sch = await _strSchema.toSchema(schema);
+                var _saveFilSchema = await new saveFilSchemaJs(_Sch);
+                var _name = _Sch.verbatim.singularize;
+                var _rename = (schema.renemer != '' && schema.renemer.length >= 2) ;
+                var _updateOne = _VlaidateUndefai(renemer) ? true : false ;
+
+                _Sch ? await _saveFilSchema.updateFile(_name, _rename, _updateOne) &
+                    res.json(error( 'update', schema, _name + ' update ->' + _rename, 'model', 'update completed')) :
+                    res.json(error( 'update', Boolean, name, 'model', Boolean, `failed update, this model <'${_name}'> does exist` ))
+            }else if(!model){
+                res.json(error( 'update', Boolean, name, 'model', Boolean, 'This scheme does not exist!!'));
+            }else{
+                res.json(error( 'update', Boolean, name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+            }
+        }else{
+            res.json(error( 'update', Boolean, name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
         }
          
     };
 
     //distroy a model by name  
-    let distroy = (req, res) => {  
+    let distroy = async(req, res) => {  
         // send for post renameFile add -> req.body.name
-        var _Sch = _strSchema.toSchema(false_schema);
-        var _saveFilSchema = new saveFilSchemaJs(_Sch);
-        var _name = req.body.name;
-        var _confirm = req.body.confirm;
 
-        if(_path.exists(req.body.name) && _confirm) {
-            var module_delete = _saveFilSchema.deleteFile(_name); 
-            module_delete ? res.json(errorMsg(
-                'delete', 
-                _name, 
-                Boolean, 
-                'model', 
-                'delete completed'
-            ))
-            : res.json(errorMsg(
-                'delete', 
-                _name, 
-                Boolean, 
-                'model',
-                Boolean,
-                `failed delete, this model <'${_name}'> does exist`
-            ))
-        } else res.json({msg: 'frm or struct for schema Js: invalider'});
+        let { confirm, name} = req.body
+        let _Sch = _strSchema.toSchema(false_schema);
+        let _saveFilSchema = await new saveFilSchemaJs(_Sch);
+
+        if(_VlaidateUndefai(name) && _VlaidateUndefai(confirm) && _path.exists(name) && confirm && _saveFilSchema) {
+            let module_delete = await _saveFilSchema.deleteFile(name);
+            module_delete ? res.json(error( 'delete', Boolean, name, 'model', 'delete completed' )): 
+            res.json(error( 'delete',  Boolean, name, 'model', Boolean, `failed delete, this model <'${name}'> does exist`));
+        }else if(!_path.exists(name)){
+            res.json(error( 'delete', Boolean, name,'model', Boolean, 'This scheme does not exist!!'));
+        }else if(!confirm){
+            res.json(error( 'delete', Boolean, name, 'model', Boolean, 'Invalid structure, check the field: confirm are required!!'));
+        } else res.json(error( 'delete', Boolean, name, 'model', Boolean, 'Invalid structure, check the fields: name and confirm are required!!'));
     };
 
     // Route the manager models
-    router.get('/',         index);
-    router.get('/:name',    show);
-    router.post('/',        create);
-    router.put('/',         update);
-    router.delete('/',      distroy);
+    _router.get('/',         index);
+    _router.get('/:name',    show);
+    _router.post('/',        create);
+    _router.put('/',         update);
+    _router.delete('/',      distroy);
     
 
 
-module.exports = router;
+module.exports = _router;

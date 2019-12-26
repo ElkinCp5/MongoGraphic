@@ -1,5 +1,5 @@
 import Constants from "./Constants";
-import Api from "./Api";
+import axios from "./axios.config";
 import Helper from "./Helper";
 
-export { Api, Constants, Helper};
+export { axios, Constants, Helper};

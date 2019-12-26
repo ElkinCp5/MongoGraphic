@@ -1,7 +1,8 @@
-const Auth      = require('../models');
-const Responder = require('../../other/error');
-const Bcrypt    = require('bcrypt-nodejs');
-const { create_token }  = require('../service/token');
+import Bcrypt               from 'bcrypt-nodejs';
+import Passport             from 'passport';
+import Auth                 from '../models';
+import Responder            from '../../other/error';
+import { create_token }     from '../service/token';
 
 let isDuplicated = (email) =>{
     let isRegistered = Auth.findOne({email: email}, error=>{
@@ -12,7 +13,7 @@ let isDuplicated = (email) =>{
 }
 
 let isForm = (frm)=>{
-    return (frm.password && frm.name);
+    return (frm.password !== undefined && frm.name !== undefined, frm.email !== undefined);
 }
 
 let removeProperty =(frm, property)=>{
@@ -37,6 +38,7 @@ module.exports = {
     show: async (req, res, nex) =>{
         let { id } = req.params;
         const auths = await Auth.findById(id);
+        removeProperty(auths, 'password');
         res.status(200).json(
             Responder(
                 'show auth', 
@@ -47,49 +49,21 @@ module.exports = {
             )
         )
     },
-    register: async (req, res, nex) =>{
-        const input = req.body;
-        //console.log('input: ', input);
-        removeProperty(input, 'role');
-        let auth = new Auth(input);
-        if(isDuplicated(input.email, res) && isForm(input)){
-            Bcrypt.hash(input.password, null, null, (error, hash)=>{
-                if(error){ return res.status(500).json(
-                    Responder(
-                        'create auth', 
-                        undefined, 
-                        'auth', 
-                        'document', 
-                        'failed create this document',
-                        error
-                    )
-                ); }
-                auth.password = hash;
-            });
-            let newAuth = await auth.save();
-            res.status(200).json(
-                Responder(
-                    'create auth', 
-                    newAuth, 
-                    'auth', 
-                    'document', 
-                    'create completed'
-                )
-            );
-        }else{
-            res.status(500).json(
-                Responder(
-                    'create auth', 
-                    undefined, 
-                    'auth', 
-                    'document', 
-                    'failed create this document',
-                    'Esta credencial que intentas crear ya existe!'
-                )
-            ); 
-        }
+    signup: Passport.authenticate('Local-signup', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/signup',
+        passReqToCallback: true
+    }),
+    signin: Passport.authenticate('Local-signin', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/',
+        passReqToCallback: true
+    }),
+    logout: async (req, res)=>{
+        req.logout();
+        res.status(200).json( Responder('logout', undefined,  'admin', undefined, 'successful credential closure'));
     },
-    login: async (req, res, nex) =>{
+    signinToken: async (req, res, nex) =>{
         const { email, password, token } = req.body;
         let authBD = await Auth.findOne({email: email});
         Bcrypt.compare(password, authBD.password, (error, confirmed)=>{
@@ -119,13 +93,6 @@ module.exports = {
                 ); 
             }
         });
-    },
-    signup:async (req, res, nex) =>{
-        try {
-            
-        } catch (error) {
-            
-        }
     }
 
 }

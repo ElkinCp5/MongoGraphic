@@ -20,7 +20,8 @@ class StructSchema{
                             singularize: singName,
                             pluralize: plurName,
                         },
-                        structure: strSchema.structure
+                        structure: strSchema.structure ,
+                        timestamps: strSchema.timestamps ? 'true' : 'false'
                     };
                     //if(isNaN(strSchema.timestamps) && strSchema.timestamps == true)
                         //jsonSchema.structure["create_at"] = { type: "Date", default: "Date.now" };

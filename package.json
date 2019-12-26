@@ -8,9 +8,11 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
     "codemirror": "^5.49.2",
+    "connect-flash": "^0.1.1",
     "connect-multiparty": "^2.2.0",
     "express": "^4.17.1",
     "express-promise-router": "^3.0.3",
+    "express-session": "^1.17.0",
     "inflection": "^1.12.0",
     "jwt-simple": "^0.5.1",
     "method-override": "^3.0.0",
@@ -18,6 +20,8 @@
     "mongoose": "^5.7.7",
     "mongoose-pagination": "^1.0.0",
     "morgan": "^1.9.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "react": "^16.11.0",
     "react-codemirror2": "^6.0.0",
     "react-dom": "^16.11.0",
@@ -28,8 +32,8 @@
   "scripts": {
     "start": "",
     "mongographic": "nodemon --exec babel-node backend/index.js ",
-    "webpack":      "webpack --mode production --watch",
-    "webpack-dev":  "webpack-dev-server --mode production"
+    "webpack": "webpack --mode production --watch",
+    "webpack-dev": "webpack-dev-server --mode production"
   },
   "eslintConfig": {
     "extends": "react-app"
