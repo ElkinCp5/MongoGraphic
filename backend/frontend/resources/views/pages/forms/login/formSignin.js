@@ -1,6 +1,12 @@
-import React, { Component } from "react";
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import { auth as authAxios } from '../../../../../services/services' ;
+import React, 
+{ Component }     from "react";
+import { Form, 
+  Icon, 
+  Input, 
+  Button, 
+  Checkbox }      from 'antd';
+import Auth       from '../../../../../services/signin' ;
+import { axios }  from '../../../../../utils';
 import "../styleForms.css";
 
 
@@ -10,6 +16,17 @@ function hasErrors(fieldsError){
 
 class NormalLoginForm extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      signin: true,
+      data: {},
+      success: '',
+      error: '',
+      loanding: false
+    };
+  }
+
   componentDidMount(){
     this.props.form.validateFields();
   }
@@ -17,10 +34,35 @@ class NormalLoginForm extends Component {
   handleSubmit = e => {
     e.preventDefault(); 
     this.props.form.validateFields( (err, values)=>{
-      if (!err)
-        var info = authAxios.signin(values);
+      if (!err){
+        Auth.signin({
+          email: values.email,
+          password: values.password
+        }).cath(err => {
+          console.log('Respuesta:=> ', values);
+        })}
         console.log('Received values of form: ', values);
-        console.log('Respuesta:=> ', info);
+        
+      /*axios.post(
+          'auth/signin',
+          {
+            email: values.email,
+            password: values.password
+          }
+      ).the(res=>{
+        this.setState({
+            data: res.data,
+            success: res.message,
+            error: res.error
+        });
+      }).cath(err=>{
+        this.setState({
+            data: false,
+            success: false,
+            error: res.error
+        });
+      })*/
+      
         
     });
   };

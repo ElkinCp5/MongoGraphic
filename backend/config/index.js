@@ -1,4 +1,4 @@
-const originClient =['http://example1.com', 'http://example2.com'];
+const originClient =['*', 'http://example2.com'];
 module.exports = {    
     moongodb:{
         manager:'mongodb://',
@@ -22,7 +22,7 @@ module.exports = {
         }
     },
     host:{
-        serve: "localhost/",
+        serve: `http://localhost:`,
         port: (process.env.PORT || 8080)
     },
     patch:{
@@ -40,7 +40,7 @@ module.exports = {
               callback(new Error('Not allowed by CORS'))
             }
         },
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        methods: "GET, HEAD, PUT,PATCH ,POST, DELETE",
         preflightContinue: false,
         optionsSuccessStatus: 204
     }

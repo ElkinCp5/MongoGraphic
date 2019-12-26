@@ -103,6 +103,23 @@ class RegistrationForm extends Component {
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit} className="login-form" id="components-form-demo-normal-login">
         <Form.Item>
+          {getFieldDecorator('name', {
+            rules: [
+              {
+                type: 'name',
+                message: 'The input is not valid name!',
+              },
+              {
+                required: true,
+                message: 'Please input your name!',
+              },
+            ],
+          })(<Input 
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} 
+              placeholder="name user"/>
+            )}
+        </Form.Item>
+        <Form.Item>
           {getFieldDecorator('email', {
             rules: [
               {

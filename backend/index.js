@@ -6,7 +6,8 @@ const Graphic   = require("./dependencies");
 const Configs   = require('./config');
 const TestConfigs   = require('./connect');
 // Configuration file upload Express
-const Serve       = require('./serve');
+const Server       = require('./serve');
+const ServerNode    = Configs.host.serve;
 const Port        = Configs.host.port;
 const UrlConnect  = Configs.moongodb.manager+
                     Configs.moongodb.serve+
@@ -23,8 +24,8 @@ async function connectAsync(Url, Options){
 
 connectAsync(UrlConnect, OptionsConnect).then(() => {
     console.log("initialized mongodb connection");
-    Serve.listen(Port, () => {
-        console.warn(`node server running on: http://localhost:${Port}/api/models`);
+    Server.listen(Port, () => {
+        console.warn(`node server running on: ${ServerNode}${Port}/api/models`);
     });
 })
 // Error capture in the mongodb collection
