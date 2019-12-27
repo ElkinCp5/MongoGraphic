@@ -1,33 +1,39 @@
-import Axios from '../../utils/axios.config';
-class auth{
-    signin(input){
+import {axios as Axios} from '../../utils';
+
+class Auth{
+    signin =(input)=>{
         let {email, password} = input;
         return Axios.post(
             'auth/signin',
             { email, password });
     };
-
-    signup(input){
+    signup = (input)=>{
         let {name, email, password} = input;
         return Axios.post(
             'auth/signup',
-            { name, email, password });
+            { name, email, password })
+            .catch(err=>{
+                console.error('auth error: service sign up:= ', err);
+            });
     };
-
-    signout(input){
+    signout = (input)=>{
         let {_id, email} = input;
         return Axios.post(
             'auth/signout',
-            { _id, email });
+            { _id, email })
+            .catch(err=>{
+                console.error('auth error: service sign out:= ', err);
+            });
+    };
+    update = (input)=>{
+        let {_id, email} = input;
+        return input;
     };
 
-    update(data){
-
-    }
-
-    delete(data){
-
-    }
+    delete = (input)=>{
+        let {_id, email} = input;
+        return input;
+    };
 }
 
-export default new auth();
+export default new Auth();

@@ -10,7 +10,7 @@ class rootDirectory{
     }
 
     folder(folder = false){
-        return this.Pach.join(__dirname, folder || this.Directory) ;
+        return folder ? this.Pach.join(__dirname, folder): this.Directory;
     }
 
     file(name, ext = '.js'){

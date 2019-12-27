@@ -38,17 +38,22 @@ Passport.use('Local-signin', new Strategy({
     passReqToCallback: true
 }, async(req, email, password, done)=>{
         let user = await User.findOne({email: email});
-        if(!user) return done(null, false, req.flash(
+        if(!user){ 
+            return done(null, false, req.flash(
             'signinEmail',
             `this ${email} credential does not exist !!`
             ));
+        }
         let isLogin = await user.validatePasswordLogin(password);
-        
-        isLogin ? RemoveProperty(user, 'password') & done(null, user) :
+        if(isLogin){
+            RemoveProperty(user, 'password')
+            done(null, user)
+        }else{
             done(null, false, req.flash(
                 'signinPassword',
                 'the password is invalid!!'
             ));
+        }
     }
 ))
 

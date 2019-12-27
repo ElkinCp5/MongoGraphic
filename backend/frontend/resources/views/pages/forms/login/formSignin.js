@@ -1,12 +1,11 @@
-import React, 
-{ Component }     from "react";
-import { Form, 
+import Auth from '../../../../../services/signin' ;
+import React, { Component } from "react";
+import { 
+  Form, 
   Icon, 
   Input, 
   Button, 
-  Checkbox }      from 'antd';
-import Auth       from '../../../../../services/signin' ;
-import { axios }  from '../../../../../utils';
+  Checkbox }  from 'antd';
 import "../styleForms.css";
 
 
@@ -35,15 +34,16 @@ class NormalLoginForm extends Component {
     e.preventDefault(); 
     this.props.form.validateFields((err, values)=>{
       if (!err){
-        console.log('Received values of form: ', values);
         Auth.signin({
           email: values.email,
           password: values.password
         }).then(data => {
-            console.log('Respuesta:=> ', data);
+          console.log('Respuesta:=> ', data);
         }).catch(err=>{
-            console.error('Auth.signin: ', err); 
-        })}
+          console.error('Auth.signin: ', err); 
+        })
+        console.log('Data: ', values, Auth);
+      }
         
       /*axios.post(
           'auth/signin',

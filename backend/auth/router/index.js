@@ -1,7 +1,7 @@
 'use strict'
 // Cargamos el módulo de express para poder crear rutas
 import Graphic              from "../../dependencies";
-import PassportConfig       from '../config/passport'
+import PassportConfig       from '../passport/passport'
 // Cargamos el controlador
 var { 
     index,
