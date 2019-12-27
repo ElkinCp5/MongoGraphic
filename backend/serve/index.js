@@ -4,7 +4,7 @@ import Passport             from 'passport';
 import Graphic              from "../dependencies";
 import RoutesDocument       from '../routes/routes-graphic-document';
 import RoutesModel          from '../routes/routes-graphic-model';
-import RoutesAuth           from '../auth/router/route.auth';
+import RoutesAuth           from '../auth/router';
 import SpecialFunction      from '../other/specialFunctions';
 import Path                 from '../root';
 import Configs              from '../config';
@@ -59,7 +59,7 @@ Serve.use('/api/documents/',  RoutesDocument);
 Serve.get('*', async(req, res) => {
     let root_frontend = await NewPath.exists('index', '.html');
     //console.log('Hola soy el frontend: ', root_frontend);
-     res.sendFile(root_frontend);
+     res.render(root_frontend, { session: req.user });
 });
 
 module.exports = Serve;

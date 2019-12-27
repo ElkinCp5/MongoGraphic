@@ -49,5 +49,8 @@ class validate{
                     data.structure != "undefined"
                 ) ? true : false;
     }
+    removeProperty =(frm, property)=>{
+        (frm[property]) ? frm[property] = undefined : null;
+    }
 }
 module.exports = validate

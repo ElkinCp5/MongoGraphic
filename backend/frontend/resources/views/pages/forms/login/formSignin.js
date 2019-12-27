@@ -33,15 +33,17 @@ class NormalLoginForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault(); 
-    this.props.form.validateFields( (err, values)=>{
+    this.props.form.validateFields((err, values)=>{
       if (!err){
+        console.log('Received values of form: ', values);
         Auth.signin({
           email: values.email,
           password: values.password
-        }).cath(err => {
-          console.log('Respuesta:=> ', values);
+        }).then(data => {
+            console.log('Respuesta:=> ', data);
+        }).catch(err=>{
+            console.error('Auth.signin: ', err); 
         })}
-        console.log('Received values of form: ', values);
         
       /*axios.post(
           'auth/signin',

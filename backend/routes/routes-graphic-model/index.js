@@ -6,7 +6,7 @@ import saveFilSchemaJson from '../../schema/createSchemaJson';
 import saveFilSchemaJs   from '../../schema/createSchemaJs';
 import LoadingSchemas    from '../../schema/loadinSchemaJson';
 import specialFunctions  from '../../other/specialFunctions';  
-import error             from '../../other/error';
+import MsgRespond        from '../../other/msgRespond';
 import path              from '../../root';
 import router            from 'express-promise-router';
 
@@ -72,8 +72,10 @@ import router            from 'express-promise-router';
     let show = async (req, res) => { 
         const { name } = req.params;
         const model = await _ValidateModelDinamic(name);
-        model ? res.json( error( 'show',  model,  name, 'model', 'search completed' ) ) :
-                res.json( error( 'show',  Boolean,  name, 'model', Boolean, 'This scheme does not exist!' ) );
+        model ? res.json(MsgRespond(model, 'show', name, 'model',
+                    'search completed' )) :
+                res.json(MsgRespond(false, 'show',  name, 'model', false,
+                    'This scheme does not exist!' ));
     };
 
     //Create a new models
@@ -88,15 +90,15 @@ import router            from 'express-promise-router';
                 let _saveFilSchema = await new saveFilSchemaJs(_Sch);
 
                 _Sch ? await _saveFilSchema.saveFile(_Sch.verbatim.singularize) & 
-                    res.json(error('create', _Sch, _Sch.verbatim.singularize,'model','create completed'))
-                : res.json(error( 'create', _Sch,_Sch.verbatim.singularize,'model', Boolean, 'failed attempt to create a scheme!!'));
+                    res.json(MsgRespond(_Sch, 'create', _Sch.verbatim.singularize,'model','create completed'))
+                : res.json(MsgRespond(_Sch,'create', _Sch.verbatim.singularize,'model', Boolean, 'failed attempt to create a scheme!!'));
             }else if(model){
-                res.json(error( 'create', model, name,'model', Boolean, 'This scheme already exists!!'));
+                res.json(MsgRespond(model, 'create', name,'model', Boolean, 'This scheme already exists!!'));
             }else{
-                res.json(error( 'create', Boolean, name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+                res.json(MsgRespond(false, 'create', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
             }
         }else{
-            res.json(error( 'create', Boolean, name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+            res.json(MsgRespond(false, 'create', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
         }
     };
     
@@ -121,15 +123,15 @@ import router            from 'express-promise-router';
                 var _updateOne = _VlaidateUndefai(renemer) ? true : false ;
 
                 _Sch ? await _saveFilSchema.updateFile(_name, _rename, _updateOne) &
-                    res.json(error( 'update', schema, _name + ' update ->' + _rename, 'model', 'update completed')) :
-                    res.json(error( 'update', Boolean, name, 'model', Boolean, `failed update, this model <'${_name}'> does exist` ))
+                    res.json(MsgRespond(schema, 'update', _name + ' update ->' + _rename, 'model', 'update completed')) :
+                    res.json(MsgRespond(false, 'update', name, 'model', Boolean, `failed update, this model <'${_name}'> does exist` ))
             }else if(!model){
-                res.json(error( 'update', Boolean, name, 'model', Boolean, 'This scheme does not exist!!'));
+                res.json(MsgRespond(false, 'update', name, 'model', Boolean, 'This scheme does not exist!!'));
             }else{
-                res.json(error( 'update', Boolean, name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+                res.json(MsgRespond(false, 'update', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
             }
         }else{
-            res.json(error( 'update', Boolean, name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+            res.json(MsgRespond(false, 'update', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
         }
          
     };
@@ -144,13 +146,13 @@ import router            from 'express-promise-router';
 
         if(_VlaidateUndefai(name) && _VlaidateUndefai(confirm) && _path.exists(name) && confirm && _saveFilSchema) {
             let module_delete = await _saveFilSchema.deleteFile(name);
-            module_delete ? res.json(error( 'delete', Boolean, name, 'model', 'delete completed' )): 
-            res.json(error( 'delete',  Boolean, name, 'model', Boolean, `failed delete, this model <'${name}'> does exist`));
+            module_delete ? res.json(MsgRespond(false, 'delete', name, 'model', 'delete completed' )): 
+            res.json(MsgRespond(false, 'delete', name, 'model', Boolean, `failed delete, this model <'${name}'> does exist`));
         }else if(!_path.exists(name)){
-            res.json(error( 'delete', Boolean, name,'model', Boolean, 'This scheme does not exist!!'));
+            res.json(MsgRespond(false, 'delete', name,'model', Boolean, 'This scheme does not exist!!'));
         }else if(!confirm){
-            res.json(error( 'delete', Boolean, name, 'model', Boolean, 'Invalid structure, check the field: confirm are required!!'));
-        } else res.json(error( 'delete', Boolean, name, 'model', Boolean, 'Invalid structure, check the fields: name and confirm are required!!'));
+            res.json(MsgRespond(false, 'delete', name, 'model', Boolean, 'Invalid structure, check the field: confirm are required!!'));
+        } else res.json(MsgRespond(false, 'delete', name, 'model', Boolean, 'Invalid structure, check the fields: name and confirm are required!!'));
     };
 
     // Route the manager models

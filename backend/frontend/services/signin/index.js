@@ -4,22 +4,22 @@ class auth{
         let {email, password} = input;
         return Axios.post(
             'auth/signin',
-            {
-                email,
-                password
-            }
-        ).cath(err=>{
-            console.error(err); 
-        })
+            { email, password });
     };
 
-    signup(data){
+    signup(input){
+        let {name, email, password} = input;
+        return Axios.post(
+            'auth/signup',
+            { name, email, password });
+    };
 
-    }
-
-    signout(data){
-
-    }
+    signout(input){
+        let {_id, email} = input;
+        return Axios.post(
+            'auth/signout',
+            { _id, email });
+    };
 
     update(data){
 

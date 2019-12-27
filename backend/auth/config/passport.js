@@ -1,7 +1,11 @@
-import msg              from '../../other/error';
 import Passport         from 'passport';
 import { Strategy }     from 'passport-local';
-import User          from '../models';
+import MsgRespond       from '../../other/msgRespond';
+import specialFunctions from '../../other/specialFunctions';
+import User             from '../models';
+
+const special = new specialFunctions
+let RemoveProperty = special.removeProperty;
 
 Passport.serializeUser((user, done)=>{
     done(null, user._id);
@@ -18,10 +22,12 @@ Passport.use('Local-signup', new Strategy({
     passReqToCallback: true
 }, async(req, email, password, done)=>{
         const fields = req.body;
-        fields.role = ''; fields.verify = false;
+        RemoveProperty(fields, 'role');
+        RemoveProperty(fields, 'verify');
         //console.log('fields: ', req.body)
         let user = new User(fields);
         await user.save();
+        RemoveProperty(user, 'password');
         done(null, user);
     }
 ));
@@ -35,9 +41,10 @@ Passport.use('Local-signin', new Strategy({
         if(!user) return done(null, false, req.flash(
             'signinEmail',
             `this ${email} credential does not exist !!`
-        ));
+            ));
         let isLogin = await user.validatePasswordLogin(password);
-        isLogin ? done(null, user) :
+        
+        isLogin ? RemoveProperty(user, 'password') & done(null, user) :
             done(null, false, req.flash(
                 'signinPassword',
                 'the password is invalid!!'
@@ -49,12 +56,12 @@ Passport.use('Local-signin', new Strategy({
 exports.isAuth = (req, res, next)=>{
     if(req.isAuthenticated()){ return next();}
     return res.status(401).json(
-        msg( 'middlewares', Boolean, 'protected', 'auth', Boolean, 'route protected by the authentication system!!')
+        MsgRespond( 'middlewares', Boolean, 'protected', 'auth', Boolean, 'route protected by the authentication system!!')
     );
 }
 exports.noAuth = (req, res, next)=>{
     if(!req.isAuthenticated()){ return next();}
     return res.status(401).json(
-        msg( 'middlewares', Boolean, 'protected', 'auth', Boolean, 'route protected by the authentication system!!')
+        MsgRespond( 'middlewares', Boolean, 'protected', 'auth', Boolean, 'route protected by the authentication system!!')
     );
 }
