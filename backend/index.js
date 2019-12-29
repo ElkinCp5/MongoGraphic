@@ -1,6 +1,7 @@
 // Utilizar funcionalidades del Ecmascript 6
 'use strict'
 // Load moduele for dependencies 
+import Open                 from 'open';
 const Graphic   = require("./dependencies");
 // load moduele for config connect mongoDB
 const Configs   = require('./config');
@@ -26,6 +27,7 @@ connectAsync(UrlConnect, OptionsConnect).then(() => {
     console.log("initialized mongodb connection");
     Server.listen(Port, () => {
         console.warn(`node server running on: ${ServerNode}${Port}/api/models`);
+        process.env.NODE_ENV !='production' ? Open(`${ServerNode}${Port}/`): null ;
     });
 })
 // Error capture in the mongodb collection
