@@ -1,0 +1,280 @@
+{
+	"id": "3a480f72-5b15-b925-f220-829417fd371c",
+	"name": "Auth user",
+	"description": "Sistema de inicio de sesion para usuario",
+	"order": [
+		"df889abc-2c27-69a0-1855-e0adc1116a0c",
+		"f1746411-bdf8-6b43-e3cd-df20a2cc62f1",
+		"29126dfd-aabf-2875-6177-b315416fa367",
+		"2ae0f853-0d45-5a31-2307-6a30c43c1d5e",
+		"38de85a2-47e9-b3ed-290c-7d4cd5d6bfbf"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1576698453136,
+	"owner": "9475716",
+	"public": false,
+	"requests": [
+		{
+			"id": "29126dfd-aabf-2875-6177-b315416fa367",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/auth",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [
+				{
+					"key": "email",
+					"value": "dhc@email.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "123456789",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "name",
+					"value": "Elkin portocarrer",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1577484420080,
+			"name": "Auth list",
+			"description": "",
+			"collectionId": "3a480f72-5b15-b925-f220-829417fd371c",
+			"responses": []
+		},
+		{
+			"id": "2ae0f853-0d45-5a31-2307-6a30c43c1d5e",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/auth/signout",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "email",
+					"value": "dhc@email.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "123456789",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "name",
+					"value": "Elkin portocarrer",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1577643792503,
+			"name": "Auth signout",
+			"description": "",
+			"collectionId": "3a480f72-5b15-b925-f220-829417fd371c",
+			"responses": []
+		},
+		{
+			"id": "38de85a2-47e9-b3ed-290c-7d4cd5d6bfbf",
+			"headers": "Content-Type: application/x-www-form-urlencoded\nauthenticate: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1ZTBhNjNmZjBjMTU2NDNiYTg4ZmFlYTMiLCJuYW1lIjoiZWxraW4gcG9ydG9jYXJyZXIiLCJlbWFpbCI6ImVsa2luY3A1QGVtYWlsLmNvbSIsInJvbGUiOiJVU0VSX1NUQU5EQVIiLCJhdmF0YXIiOiJpbWcvdXNlci9kZWZhdWx0LmpwZyIsImlhdCI6MTU3Nzc0NDM4OCwiZXhwIjoxNTc4MzQ5MTg4fQ.pFSBcFXIcOSk47nrMcjgNUByLro9cb1A8A_j4_8Drwc\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "authenticate",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1ZTBhNjNmZjBjMTU2NDNiYTg4ZmFlYTMiLCJuYW1lIjoiZWxraW4gcG9ydG9jYXJyZXIiLCJlbWFpbCI6ImVsa2luY3A1QGVtYWlsLmNvbSIsInJvbGUiOiJVU0VSX1NUQU5EQVIiLCJhdmF0YXIiOiJpbWcvdXNlci9kZWZhdWx0LmpwZyIsImlhdCI6MTU3Nzc0NDM4OCwiZXhwIjoxNTc4MzQ5MTg4fQ.pFSBcFXIcOSk47nrMcjgNUByLro9cb1A8A_j4_8Drwc",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/auth/account",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [
+				{
+					"key": "email",
+					"value": "dhc@email.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "123456789",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "name",
+					"value": "Elkin portocarrer",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1577756201126,
+			"name": "Auth show",
+			"description": "",
+			"collectionId": "3a480f72-5b15-b925-f220-829417fd371c",
+			"responses": []
+		},
+		{
+			"id": "df889abc-2c27-69a0-1855-e0adc1116a0c",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/auth/signin",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "email",
+					"value": "elkincp5@email.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "123456789",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "name",
+					"value": "Elkin portocarrer",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1577756198791,
+			"name": "Auth login",
+			"description": "",
+			"collectionId": "3a480f72-5b15-b925-f220-829417fd371c",
+			"responses": []
+		},
+		{
+			"id": "f1746411-bdf8-6b43-e3cd-df20a2cc62f1",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/auth/signup",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "email",
+					"value": "dhc-music@email.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "123456789",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "name",
+					"value": "Elkin portocarrer",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1577744571098,
+			"name": "Auth signup",
+			"description": "",
+			"collectionId": "3a480f72-5b15-b925-f220-829417fd371c",
+			"responses": []
+		}
+	]
+}

@@ -1,30 +1,33 @@
 'user strict'
-const Graphic   = require("../dependencies");
-const Configs   = require('../config');
-var jwt     = Graphic.Jwt;
-var moment  = Graphic.Moment;
-var secret  = Configs.secret;
+import Graphic      from  "../dependencies";
+import Configs      from '../config';
+import MsgRespond   from '../other/msgRespond';
+
+let jwt     = Graphic.Jwt;
+let moment  = Graphic.Moment;
+let secret  = Configs.secret;
 
 module.exports = {
 
     accountAuth: (req, res, next) => {
-        if(!req.headers.authorization){
-            return res.status(403).json({message: 'La peticion no tiene la cabecera de autenticación'});
+        let authorization = req.header('authenticate')
+        if(!authorization){
+            return res.status(403).json(MsgRespond(false, 'show', 'auth', 'auth', false,
+                'The request does not have the authentication header!!'));
         }else{
-            var token = req.headers.authorization.replace(/['"]+/g, '');
+            let token = authorization.replace(/['"]+/g, '');
             try{
                 var payload = jwt.decode(token, secret);
-                if(payload.exp > moment().unix()){
-                    return res.status(401).send({
-                        message: 'EL token ha expirado'
-                    });
+                console.log(payload, moment().unix())
+                if(moment().unix() > payload.exp){
+                    return res.status(401).json(MsgRespond(false, 'show', 'auth', 'auth', false,
+                    'the token has expired !!'));
                 }
             } catch (ex){
-                return res.status(404).send({
-                    message: 'EL token no es valido'
-                });
+                return res.status(401).json(MsgRespond(false, 'show', 'auth', 'auth', false,
+                'this token is invalid !!'));
             }
-            req.user = payload;
+            req.auth = payload;
             next();
         }
     },

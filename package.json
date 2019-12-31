@@ -10,6 +10,7 @@
     "codemirror": "^5.49.2",
     "connect-flash": "^0.1.1",
     "connect-multiparty": "^2.2.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-promise-router": "^3.0.3",
@@ -31,8 +32,7 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "start": "",
-    "mongographic": "nodemon --exec babel-node backend/index.js ",
+    "start": "nodemon --exec babel-node backend/index.js",
     "webpack": "webpack --mode production --watch",
     "webpack-dev": "webpack-dev-server --mode production"
   },

@@ -1,9 +1,9 @@
-const originClient =['*', 'http://example2.com', 'http://localhost:3000'];
+const originClient =['*', 'http://example2.com'];
 module.exports = {    
     moongodb:{
         manager:'mongodb://',
         serve: "localhost:",
-        database: process.env.DATE_BASE || 'dbmongographic',
+        database: "local",
         port: "27017/",
         options: {
             useNewUrlParser: true,
@@ -33,7 +33,7 @@ module.exports = {
     //Si no desea bloquear las herramientas REST o las solicitudes de servidor a servidor, agregue una !originmarca en la función de origen de la siguiente manera:
     //  if (whitelist.indexOf(origin) !== -1 || !origin)
     parametersCors: {
-        origin: function(origin, callback){
+        origin: (origin, callback) =>{
             if (originClient.indexOf(origin) !== -1 || !origin) {
               callback(null, true)
             } else {
@@ -42,6 +42,6 @@ module.exports = {
         },
         methods: "GET, HEAD, PUT,PATCH ,POST, DELETE",
         preflightContinue: false,
-        optionsSuccessStatus: 200
+        optionsSuccessStatus: 204
     }
 }

@@ -27,7 +27,7 @@ connectAsync(UrlConnect, OptionsConnect).then(() => {
     console.log("initialized mongodb connection");
     Server.listen(Port, () => {
         console.warn(`node server running on: ${ServerNode}${Port}/api/models`);
-        process.env.NODE_ENV !='production' ? Open(`${ServerNode}${Port}/`): null ;
+        //process.env.NODE_ENV !='production' ? Open(`${ServerNode}${Port}/`): null ;
     });
 })
 // Error capture in the mongodb collection

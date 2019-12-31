@@ -5,8 +5,8 @@ const liveReloadPlugin         =require('webpack-livereload-plugin');
 const devMode = 'production';
 // 'production'
 module.exports = {
-
-    entry: './backend/frontend/index.js',
+    mode: devMode,
+    entry: './frontend/src/index.js',
     output:{
         path: path.join(__dirname, './backend/public'),
         filename: 'js/bundle.js'
@@ -49,7 +49,7 @@ module.exports = {
     },
     plugins:[
         new htmlWebpackPlugin({
-            template: './backend/frontend/index.html'
+            template: './frontend/public/index.html'
         }),
         new miniCssExtractPlugin({
             filename: 'css/bundle.css',
