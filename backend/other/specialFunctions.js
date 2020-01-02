@@ -52,5 +52,8 @@ class validate{
     removeProperty =(frm, property)=>{
         (frm[property]) ? frm[property] = undefined : null;
     }
+    createProperty =(frm, property = undefined)=>{
+        (frm != undefined && property != undefined) ? frm.push({property}): null;
+    }
 }
 module.exports = validate

@@ -7,7 +7,15 @@ import { HtitleHeader as Title } from "../../../components/header";
 import { cardDash as Cards } from "../../../components/cards";
 
 class ProfilePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: false
+    };
+  }
+
   render() {
+    
     return (
       <div>
         <div className="container-page">

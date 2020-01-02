@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import SessionStorage from "../services/storage/session"
 
 const fakeAuth = {
-  isAuthenticated: sessionStorage.getItem('session') ? true : false,
+  isAuthenticated: SessionStorage.get() != undefined && SessionStorage.get() != '' && SessionStorage.get() ? true : false,
 };
-
+console.clear('SessionStorage.get:', SessionStorage.get)
 const PrivateRoute = ({ children, ...rest })=>{
   return (
     <Route {...rest} render={({ location }) =>

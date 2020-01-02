@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Link, Redirect} from "react-router-dom";
+import { Button, message } from "antd";
 
 /* Import Custom Components */
 import { layoutStandar as Standar } from "../layouts";
@@ -12,43 +12,73 @@ import "./css/login.css"
 class Login extends Component {
   
   constructor(props) {
+
     super(props);
     this.state = {
-      signin: true,
-      signup: false,
-      fromSignin: 'active',
-      fromSignup: 'not',
-
+      isRedirect: false,
+      loanding: false,
+      message: false,
+      success: false,
+      error: false
     };
+    this.handleMessage = this.handleMessage.bind(this);
+    this.handleState = this.handleState.bind(this);
+    this.handleRedirectTo = this.handleRedirectTo.bind(this); 
   }
 
-  handleClick = e =>{
-    let button = e.target.name;
-    let signin = this.state.signin;
-    let signup = this.state.signup;
-    let fromSignin = this.state.fromSignin;
-    let fromSignup = this.state.fromSignup;
-
-    if(button == 'signin' && !signin && signup){
-      signup = signin; signin = !signin;
-      fromSignup = 'not'; fromSignin = 'active'; 
-      //console.log('signin', this.state.signin)
-    }else if(button == 'signup' && !signup && signin){
-      signup = signin; signin = !signin;
-      fromSignin = 'not'; fromSignup = 'active'; 
-      //console.log('signup', this.state.signup)
+  componentDidUpdate(){
+    if(this.state.isRedirect){
+      console.log(this.state.isRedirect);
+      this.props.history.push('/dashboard');
     }
+  }
+
+  handleState =(state)=>{
+    this.setState({
+      isRedirect: state.isRedirect || this.state.isRedirect,
+      loanding: state.loanding || this.state.loanding,
+      message: state.message || this.state.message,
+      success: state.success || this.state.success,
+      error: state.error || this.state.error
+    })
+  }
+
+  handleMessage(){
+    let success     = this.state.success,
+        error       = this.state.error, 
+        messageInfo = this.state.message, 
+        loanding    = this.state.loanding;
+
+    if(error && loanding){ 
+      message.error(messageInfo);
+    };
+
+    if(success && loanding){
+      message.success(messageInfo);
+    };
 
     this.setState({
-      signin: signin, 
-      signup: signup,
-      fromSignin: fromSignin,
-      fromSignup: fromSignup
+      loading: false
     });
+
+    setTimeout(
+      this.setState({
+        isRedirect: true
+      }
+    ), 1000);
   }
+
+  handleRedirectTo(){
+    this.props.history.push('/dashboard');
+    
+  }
+  
   render() {
+    const { history, location} = this.props
+    
     return (
       <Standar className="login-page">
+          <div className={this.state.loanding ? 'loanding' : ''} />
           <div className="card-login">
             <div className="logo-login">
               <img src={Ecolor} />
@@ -60,7 +90,7 @@ class Login extends Component {
               </div>
             </div>
             <div className="container-login">
-              <FormLogin />
+              <FormLogin stateLogin={this.handleState} showMessage={this.handleMessage} redirectTo={this.handleRedirectTo} />
               <div className="footer-login">
                 <Button shape="circle" icon="google" />
                 <Button shape="circle" icon="windows" />

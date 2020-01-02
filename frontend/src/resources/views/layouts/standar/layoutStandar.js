@@ -27,15 +27,18 @@ class standarLayout extends React.Component {
       isToggleOn: false,
       isMobile: false
     };
-
+    
+  }
+  redirect(history){
+    history.push('/dashboard');
   }
 
-
   render() {
-    let { className, location, routes, children } = this.props;
+    let { className, location, routes, children, history, redirectTo } = this.props;
+    //this.redirectTo(history)
 
     return (
-    <Layout className={className}>
+    <Layout className={className} >
         <Content>
             {children}
         </Content>

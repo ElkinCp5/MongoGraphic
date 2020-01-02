@@ -19,7 +19,7 @@ function RouteLink() {
             ))
           }
           {
-            console.log('RouteLink: ',routes)
+            //console.log('RouteLink: ',routes)
           }
         </Switch>
       </Router>

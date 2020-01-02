@@ -15,6 +15,7 @@ let isForm = (frm)=>{
 
 const special = new specialFunctions
 let RemoveProperty = special.removeProperty;
+let CreateProperty = special.createProperty;
 
 
 module.exports = {
@@ -31,10 +32,10 @@ module.exports = {
         let authenticate = req.header('authenticate');
         console.log('authenticate: ',authenticate)
         const auths = await Auth.findById(req.auth.sub, {password: 0});
-        !auths ? res.status(200).json(MsgRespond(auths, 'show', 'auth', 'auth', 
-            'search completed'))
-        : res.status(200).json(MsgRespond( auths, 'show', 'auth', 'auth', 
-                'search completed' ))
+        if(!auths){return res.status(200).json(MsgRespond(false, 'show', 'auth', 'auth', 
+            'the credential is invalid!!'))}
+        return res.status(200).json(MsgRespond(auths, 'show', 'auth', 'auth',
+            'search completed' ));
     },
     signup: async (req, res, next)=>{
         let {name, email, password} = req.body;
@@ -43,7 +44,11 @@ module.exports = {
             user = await newUser.save()
             RemoveProperty(user, 'password');
             let token = await jwt.create_token(user);
-            res.header('authenticate', token).status(200).json(user);
+            CreateProperty(user, 'accenss_token', token);
+            res.header('Authenticate', token).status(200)
+                .json(MsgRespond(user, 'show', 'auth', 'auth',
+                    'registro completado, bienvenido a mongo graphic')
+                );
         }else{
             console.error('This credential already exists!!');
             res.status(200).json(MsgRespond(false, 'signup','auth', 'admin', false,
@@ -58,15 +63,29 @@ module.exports = {
             if(isCredential.validatePasswordLogin(password)){
                 RemoveProperty(isCredential, 'password');
                 let token = await jwt.create_token(isCredential);
-                res.header('authenticate', token).status(200).json(isCredential);
+                const user = {
+                    id: isCredential._id,
+                    email: isCredential.email,
+                    image: isCredential.image,
+                    name: isCredential.name,
+                    role: isCredential.role,
+                    verify: isCredential.verify,
+                    createdAt: isCredential.createdAt,
+                    updatedAt: isCredential.updatedAt,
+                    token: token,
+                };
+                res.header('Authenticate', token).status(200).json(
+                    MsgRespond(user, 'show', 'auth', 'auth',
+                    'bienvenido a mongo graphic')
+                    );
             }else{
-                res.status(400).json(MsgRespond(false, 'signup','auth', 'admin', false,
+                res.status(200).json(MsgRespond(false, 'signup','auth', 'admin', false,
                 'the password is invalid!!'));
             }
             
         }else{
             console.error(`this credential does not exist !!`);
-            return res.status(400).json(MsgRespond(false, 'signin','auth', 'admin', false,
+            return res.status(200).json(MsgRespond(false, 'signin','auth', 'admin', false,
             `this credential does not exist !!`))
         }   
 

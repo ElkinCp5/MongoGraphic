@@ -1,5 +1,5 @@
-import {axios as Axios} from '../../utils';
-class model{
+
+class document{
     all(input){
         return  input
     };
@@ -21,4 +21,4 @@ class model{
     };
 }
 
-export default new model();
+export default new document();

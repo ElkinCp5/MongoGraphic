@@ -1,33 +1,30 @@
-import auth from '../../../../../services/signin' ;
-import { messageSimple } from '../../../../../components/message';
 import React, { Component, useState, useReducer, useEffect  } from "react";
+import { Redirect } from "react-router-dom";
+import services from '../../../../../services' ;
+import SessionLocal from '../../../../../services/storage/session' ;
+import { successSimple, errorSimple  } from '../../../../../components/message';
 import {axios as Axios} from '../../../../../utils';
 import { 
   Form, 
   Icon, 
   Input, 
-  Button, 
-  message,
+  Button,
+  message, 
   Checkbox }  from 'antd';
 import "../styleForms.css";
-
 
 function hasErrors(fieldsError){
   return Object.keys(fieldsError).some( field => fieldsError[field]);
 }
 
-const success = (text) => {
-  return message.success(text || 'This is a success message');    
-};
-
-const { signin } = auth;
+const { authFetch, authAxios } = services;
 class NormalLoginForm extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      signin: true,
-      data: false,
+      user: false,
+      message: false,
       success: false,
       error: false,
       loanding: false
@@ -36,7 +33,10 @@ class NormalLoginForm extends Component {
 
 
   componentDidMount(){
-    this.props.form.validateFields();
+    //this.props.form.validateFields();
+  }
+  componentDidUpdate(){
+    
   }
 
   handleSubmit = e => {
@@ -44,29 +44,57 @@ class NormalLoginForm extends Component {
     this.props.form.validateFields(async(err, values)=>{
       if (!err){
         const {email, password} = values;
-        var url = 'http://localhost:8080/api/auth/signin';
-        var data = {email, password};
-
-            fetch(url, {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(data), // data can be `string` or {object}!
-                headers:{
-                  'Content-Type': 'application/json'
-                }
-            }).then(function(response) {
-              console.log('response',response)
-            }).catch(error => console.error('Error:', error))
+        this.setState({ loanding: true });
+        this.props.stateLogin({loanding: true });
+        message.loading('Processing, login request..', 3.0)
+        
+        authAxios.signin(email, password).then(res=>{
+          res != undefined && res.message != undefined ?
+          this.int(res.message): this.uot(res.message);
+        }).catch(err =>{
+          console.error('form axios signi Error', err);
+        })
       }
     });
   };
 
+  int(message){
+    if(message){
+      this.props.stateLogin(
+        {
+          isRedirect: true,
+          loanding: true,
+          success: true,
+          message: message
+        });
+      setTimeout(this.preproct(this.props), 2000);
+    }; 
+  }
+
+  uot(message){
+    this.props.stateLogin({
+      error: true,
+      loading: false,
+      message: message
+    });
+    setTimeout(this.preproct(this.props), 2000);
+  }
+  
+  preproct(props){
+    props.showMessage(); 
+    props.redirectTo();
+  }
 
   render() {
+    
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     const emailError = isFieldTouched('email') && getFieldError('email');
     const passwordError = isFieldTouched('password') && getFieldError('password');
-
+    
+    const { stateLogin, showMessage } = this.props
+    //console.log('stateLogin: ', {stateLogin, showMessage} );
     return (
+
       <Form onSubmit={this.handleSubmit} className="login-form" id="components-form-demo-normal-login">
         <Form.Item validateStatus={emailError ? 'error' : ''} help={emailError || ''}>
           {getFieldDecorator('email', {

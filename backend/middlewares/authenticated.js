@@ -10,7 +10,7 @@ let secret  = Configs.secret;
 module.exports = {
 
     accountAuth: (req, res, next) => {
-        let authorization = req.header('authenticate')
+        let authorization = req.header('Authenticate')
         if(!authorization){
             return res.status(403).json(MsgRespond(false, 'show', 'auth', 'auth', false,
                 'The request does not have the authentication header!!'));

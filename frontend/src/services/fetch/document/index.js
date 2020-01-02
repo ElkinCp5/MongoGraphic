@@ -1,4 +1,4 @@
-import {axios as Axios} from '../../utils';
+
 class document{
     all(input){
         return  input
