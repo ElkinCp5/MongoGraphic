@@ -1,9 +1,5 @@
 import React, { Component, useState, useReducer, useEffect  } from "react";
-import { Redirect } from "react-router-dom";
 import services from '../../../../../services' ;
-import SessionLocal from '../../../../../services/storage/session' ;
-import { successSimple, errorSimple  } from '../../../../../components/message';
-import {axios as Axios} from '../../../../../utils';
 import { 
   Form, 
   Icon, 
@@ -44,13 +40,13 @@ class NormalLoginForm extends Component {
     this.props.form.validateFields(async(err, values)=>{
       if (!err){
         const {email, password} = values;
-        this.setState({ loanding: true });
         this.props.stateLogin({loanding: true });
-        message.loading('Processing, login request..', 3.0)
+        message.loading('Processing, login request..', 2)
         
         authAxios.signin(email, password).then(res=>{
           res != undefined && res.message != undefined ?
           this.int(res.message): this.uot(res.message);
+
         }).catch(err =>{
           console.error('form axios signi Error', err);
         })
@@ -62,27 +58,25 @@ class NormalLoginForm extends Component {
     if(message){
       this.props.stateLogin(
         {
-          isRedirect: true,
           loanding: true,
           success: true,
           message: message
         });
-      setTimeout(this.preproct(this.props), 2000);
+      setTimeout(this.preproct(this.props), 1000);
     }; 
   }
 
   uot(message){
     this.props.stateLogin({
       error: true,
-      loading: false,
+      loading: true,
       message: message
     });
-    setTimeout(this.preproct(this.props), 2000);
+    setTimeout(this.preproct(this.props), 1000);
   }
   
   preproct(props){
     props.showMessage(); 
-    props.redirectTo();
   }
 
   render() {

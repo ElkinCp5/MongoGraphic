@@ -8,7 +8,6 @@ import FormLogin from "./forms/login/formSignin";
 import { Ecolor} from "../../images";
 import "./css/login.css"
 
-
 class Login extends Component {
   
   constructor(props) {
@@ -29,7 +28,8 @@ class Login extends Component {
   componentDidUpdate(){
     if(this.state.isRedirect){
       console.log(this.state.isRedirect);
-      this.props.history.push('/dashboard');
+      window.location.reload();
+      //this.props.history.push('/dashboard');
     }
   }
 
@@ -57,20 +57,14 @@ class Login extends Component {
       message.success(messageInfo);
     };
 
-    this.setState({
-      loading: false
-    });
-
-    setTimeout(
-      this.setState({
-        isRedirect: true
-      }
-    ), 1000);
+    setTimeout(this.handleRedirectTo(), 2000);
   }
 
   handleRedirectTo(){
-    this.props.history.push('/dashboard');
-    
+    this.setState({
+      isRedirect: true,
+      loading: false
+    })
   }
   
   render() {
@@ -90,7 +84,7 @@ class Login extends Component {
               </div>
             </div>
             <div className="container-login">
-              <FormLogin stateLogin={this.handleState} showMessage={this.handleMessage} redirectTo={this.handleRedirectTo} />
+              <FormLogin stateLogin={this.handleState} showMessage={this.handleMessage} />
               <div className="footer-login">
                 <Button shape="circle" icon="google" />
                 <Button shape="circle" icon="windows" />
