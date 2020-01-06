@@ -8,10 +8,11 @@ export default {
 
     create_token: (user)=>{
         const playToken ={
-            sub: user._id,
+            id: user._id,
             name:user.name,
             email: user.email,
             role: user.role,
+            verify: user.verify,
             avatar: user.image,
             iat: _iat,
             exp: _exp

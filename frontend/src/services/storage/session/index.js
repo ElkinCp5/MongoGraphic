@@ -1,10 +1,16 @@
 
-const set =(token)=>{
-    sessionStorage.setItem('token', token);
+const setToken =(storage)=>{
+    sessionStorage.setItem('token', storage);
+}
+const setAccount =(storage)=>{
+    sessionStorage.setItem('account', storage);
 }
 
-const get =()=>{
+const getToken =()=>{
     return sessionStorage.getItem('token');
+}
+const getAccount =()=>{
+    return sessionStorage.getItem('account');
 }
 
 const out =()=>{
@@ -12,7 +18,9 @@ const out =()=>{
 }
 
 export default {
-    set,
-    get,
+    setToken,
+    getToken,
+    setAccount,
+    getAccount,
     out
 }

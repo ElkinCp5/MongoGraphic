@@ -9,7 +9,7 @@ import { Ecolor} from "../../images";
 import "./css/login.css"
 
 
-class Login extends Component {
+class Signup extends Component {
   
   constructor(props) {
     super(props);
@@ -22,30 +22,6 @@ class Login extends Component {
     };
   }
 
-  handleClick = e =>{
-    let button = e.target.name;
-    let signin = this.state.signin;
-    let signup = this.state.signup;
-    let fromSignin = this.state.fromSignin;
-    let fromSignup = this.state.fromSignup;
-
-    if(button == 'signin' && !signin && signup){
-      signup = signin; signin = !signin;
-      fromSignup = 'not'; fromSignin = 'active'; 
-      //console.log('signin', this.state.signin)
-    }else if(button == 'signup' && !signup && signin){
-      signup = signin; signin = !signin;
-      fromSignin = 'not'; fromSignup = 'active'; 
-      //console.log('signup', this.state.signup)
-    }
-
-    this.setState({
-      signin: signin, 
-      signup: signup,
-      fromSignin: fromSignin,
-      fromSignup: fromSignup
-    });
-  }
   render() {
     return (
       <Standar className="login-page">
@@ -73,4 +49,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Signup;

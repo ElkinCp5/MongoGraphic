@@ -41,11 +41,18 @@ class NormalLoginForm extends Component {
       if (!err){
         const {email, password} = values;
         this.props.stateLogin({loanding: true });
-        message.loading('Processing, login request..', 2)
+        message.loading('Processing, login request..', 1.5)
         
         authAxios.signin(email, password).then(res=>{
-          res != undefined && res.message != undefined ?
-          this.int(res.message): this.uot(res.message);
+          if(res != undefined && res.message != undefined && res.user != false){
+            setTimeout(()=>{
+              this.int(res.message);
+            }, 1500);
+          }else if(!res.user){
+            setTimeout(()=>{
+              this.uot(res.message);
+            }, 1500);
+          }
 
         }).catch(err =>{
           console.error('form axios signi Error', err);
@@ -59,20 +66,22 @@ class NormalLoginForm extends Component {
       this.props.stateLogin(
         {
           loanding: true,
+          error: false,
           success: true,
           message: message
         });
-      setTimeout(this.preproct(this.props), 1000);
+      setTimeout(()=>this.preproct(this.props), 1000);
     }; 
   }
 
   uot(message){
     this.props.stateLogin({
+      loanding: true,
       error: true,
-      loading: true,
+      success: false,
       message: message
     });
-    setTimeout(this.preproct(this.props), 1000);
+    setTimeout(()=>this.preproct(this.props), 1000);
   }
   
   preproct(props){

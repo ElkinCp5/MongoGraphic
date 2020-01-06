@@ -1,6 +1,4 @@
-const originClient = process.env.ORIGIN_CLIENT;
-
-module.exports = {    
+export default {    
     host:{
         serve: process.env.SERVER_LOCAL || 'http://localhost:',
         port:  process.env.PORT_LOCAL || 8080

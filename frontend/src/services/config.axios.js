@@ -1,20 +1,22 @@
-import Axios from "axios";
-import { Config } from "../utils";
-import SessionStorage from "./storage/session"
 import Qs from 'qs';
 import http from 'http';
 import https from 'https'
+import Axios from "axios";
+import SessionStorage from "./storage/session"
+import Config from "../utils/config";
 
-const { host } = Config;
-let token = SessionStorage.get() ? SessionStorage.get() : false;
+let { host }= Config;
+let { serve, port } = host;
+let token = SessionStorage.getToken();
 let CancelToken = Axios.CancelToken; 
 
 export default Axios.create(
   {
+    
       // `baseURL` se antepondrá a` url` a menos que `url` sea absoluto.
      // Puede ser conveniente configurar `baseURL` para que una instancia de axios pase URL relativas
      // a los métodos de esa instancia.
-    baseURL: host.serve + host.port + '/api/',
+    baseURL: serve + port + '/api/',
     // `encabezados` son encabezados personalizados para enviar
     headers: {
       'Accept': 'application/json',

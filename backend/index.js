@@ -12,6 +12,8 @@ const UrlConnect  = moongodb.manager+
                     moongodb.host+
                     moongodb.port+
                     moongodb.database;
+            
+                    
 // Connection object of mongoose
 const ObjetConnection   = Mongoose.connection;
 const OptionsConnect    = moongodb.options;

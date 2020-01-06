@@ -1,8 +1,7 @@
 import React from "react";
 /* Router */
 import { BrowserRouter as Router, Switch } from "react-router-dom";
-import { Helper } from '../utils';
-
+import { helper as Helper } from '../../src/utils';
 /* Overwrite */
 import routes from "./json/routes";
 

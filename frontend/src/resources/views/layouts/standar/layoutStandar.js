@@ -7,7 +7,7 @@ import {
   withRouter
 } from "react-router-dom";
 /* var global system */
-import { Helper } from '../../../../utils';
+import { helper as Helper } from '../../../../utils';
 import "./layoutStandar.css";
 
 /* Import Custom Components */

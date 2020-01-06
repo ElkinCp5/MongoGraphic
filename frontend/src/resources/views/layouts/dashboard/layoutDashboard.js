@@ -4,7 +4,7 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
-import { Helper } from '../../../../utils';
+import { helper as Helper } from '../../../../utils';
 import { Layout } from "antd";
 import { Hdashboards as Header} from "../../../../components/header";
 import { Sdashboards as Sider } from "../../../../components/sider";
@@ -15,8 +15,6 @@ import "./dashboard.css";
 
 let { RouteWithSubRoutes } = Helper;
 let { Content} = Layout;
-
-
 
 class dashboardLayout extends Component {
   state = {
@@ -66,9 +64,7 @@ class dashboardLayout extends Component {
                   ))
                  
                 }
-                {
-                  console.log('dashboard Route: ',routes)
-                }
+              
               </Switch>
             </Content>
           </Layout>

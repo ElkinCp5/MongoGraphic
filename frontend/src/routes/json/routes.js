@@ -1,17 +1,23 @@
-import { login, signup, start, dashboard, profile, format, E404 } from "../../resources/views";
+import { login as signin, signup, start, proyect, dashboard, profile, format, E404, verify} from "../../resources/views";
 
 const routes = [
     {
         path: "/",
         exact: true,
-        component: login,
         isAuth: false,
+        component: signin,
     },
     {
         path: "/signup",
         exact: true,
-        component: signup,
         isAuth: false,
+        component: signup,
+    },
+    {
+        path: "/proyect",
+        exact: true,
+        isAuth: true,
+        component: proyect,
     },
     {
         path: "/dashboard",
@@ -51,6 +57,12 @@ const routes = [
       ]
     },
     {
+        path: '/account-verify',
+        exact: true,
+        isAuth: false,
+        component: verify
+    },
+    {
         path: '*',
         exact: false,
         component: E404
@@ -58,6 +70,3 @@ const routes = [
     
   ];
 export default routes;
-
-  
-  

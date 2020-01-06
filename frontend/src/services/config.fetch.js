@@ -1,6 +1,6 @@
 import { Config } from "../utils";
 
-const { host } = Config;
+const host = {port: '',  serve: ''};
 const baseURL = host.serve+host.port+'/api/';
 console.log('baseURL: ', baseURL);
 

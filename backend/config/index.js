@@ -4,8 +4,8 @@ module.exports = {
     moongodb:{
         manager:process.env.BASE_MONGO,
         host: process.env.HOST_MONGO,
-        database: process.env.DATE_BASE,
         port: process.env.PORT_MONGO,
+        database: process.env.DATA_BASE,
         options: {
             useNewUrlParser: true,
             useCreateIndex: true,

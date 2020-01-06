@@ -20,27 +20,27 @@ class Login extends Component {
       success: false,
       error: false
     };
-    this.handleMessage = this.handleMessage.bind(this);
-    this.handleState = this.handleState.bind(this);
+    this.handleMessage    = this.handleMessage.bind(this);
+    this.handleState      = this.handleState.bind(this);
     this.handleRedirectTo = this.handleRedirectTo.bind(this); 
+    this.handleLoading    = this.handleLoading.bind(this); 
   }
 
   componentDidUpdate(){
     if(this.state.isRedirect){
-      console.log(this.state.isRedirect);
       window.location.reload();
-      //this.props.history.push('/dashboard');
     }
   }
 
   handleState =(state)=>{
     this.setState({
-      isRedirect: state.isRedirect || this.state.isRedirect,
-      loanding: state.loanding || this.state.loanding,
-      message: state.message || this.state.message,
-      success: state.success || this.state.success,
-      error: state.error || this.state.error
+      isRedirect: state.isRedirect,
+      loanding: state.loanding,
+      message: state.message,
+      success: state.success,
+      error: state.error
     })
+    console.log({state: state});
   }
 
   handleMessage(){
@@ -51,28 +51,28 @@ class Login extends Component {
 
     if(error && loanding){ 
       message.error(messageInfo);
-    };
-
-    if(success && loanding){
+    }else if(success && loanding){
       message.success(messageInfo);
+      setTimeout(()=>this.handleRedirectTo(), 3000);
     };
-
-    setTimeout(this.handleRedirectTo(), 2000);
+    console.log({thisState: this.state});
+    
+    setTimeout(()=> this.handleLoading(), 3000);
   }
 
   handleRedirectTo(){
-    this.setState({
-      isRedirect: true,
-      loading: false
-    })
+    this.setState({ isRedirect: true})
   }
-  
+
+  handleLoading(){
+    this.setState({ loanding: false });
+  }
   render() {
     const { history, location} = this.props
-    
+    const { loanding } = this.state
     return (
       <Standar className="login-page">
-          <div className={this.state.loanding ? 'loanding' : ''} />
+          <div className={loanding ? 'loanding' : ''} />
           <div className="card-login">
             <div className="logo-login">
               <img src={Ecolor} />
