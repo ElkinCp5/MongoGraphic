@@ -1,4 +1,4 @@
-import { login as signin, signup, start, proyect, dashboard, profile, format, E404, verify} from "../../resources/views";
+import { signin, signup, start, proyect, dashboard, profile, format, E404, verify} from "../../resources/views";
 
 const routes = [
     {
@@ -50,6 +50,7 @@ const routes = [
             },
             {
                 path: "*",
+                exact: false,
                 isAuth: true,
                 component: E404
             }
@@ -59,12 +60,13 @@ const routes = [
     {
         path: '/account-verify',
         exact: true,
-        isAuth: false,
+        isAuth: true,
         component: verify
     },
     {
         path: '*',
         exact: false,
+        isAuth: false,
         component: E404
     }
     

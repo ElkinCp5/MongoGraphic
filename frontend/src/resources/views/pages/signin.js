@@ -73,19 +73,19 @@ class Login extends Component {
     return (
       <Standar className="login-page">
           <div className={loanding ? 'loanding' : ''} />
-          <div className="card-login">
-            <div className="logo-login">
+          <div className="card-auth signin">
+            <div className="logo-auth">
               <img src={Ecolor} />
-              <div className="tabs-login">
+              <div className="tabs-auth">
                 <ul>
                   <li><Link to="/" className="active">Inicio</Link></li>
                   <li><Link to="/signup">Registrate</Link></li>
                 </ul>
               </div>
             </div>
-            <div className="container-login">
+            <div className="container-auth">
               <FormLogin stateLogin={this.handleState} showMessage={this.handleMessage} />
-              <div className="footer-login">
+              <div className="footer-auth">
                 <Button shape="circle" icon="google" />
                 <Button shape="circle" icon="windows" />
                 <Button shape="circle" icon="linkedin" />

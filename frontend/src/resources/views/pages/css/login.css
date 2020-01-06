@@ -1,95 +1,106 @@
 :root{
-    --heightLogin:500px;
+    --heightauth:500px;
     --heightFooter:70px;
     --heightTabs:50px;
     --heightLogo: (130px + var(--heightTabs));
     --heightConent:calc(100% - (var(--heightLogo) + var(--heightFooter)));
     --colorTabs: var(--color-gray-3);
 }
-.card-login{
+
+.card-auth{
     width: 300px;
     height: 500px;
     border-radius: 10px;
     display: block;
-    margin: calc(50vh - 250px) auto;
+    margin: calc(50vh - 260px) auto;
     background-color: var(--color-white);
 }
 
-.card-login .logo-login {
+.card-auth.signin{
+    height: var(--heightauth);
+}
+
+.card-auth.signup{
+    height: 580px;
+    margin: calc(50vh - 290px) auto;
+}
+
+.card-auth .logo-auth {
     height: var(--heightLogo);
     width: 100%;
     text-align: center;
 }
 
-.card-login 
-.logo-login img{
+.card-auth 
+.logo-auth img{
     width: 90px;
     margin: 10px auto;
 }
 
 /*style tabs*/
-.card-login
-.tabs-login{
+.card-auth
+.tabs-auth{
     width: 100%;
     height: var(--heightTabs);
     text-align: center;
 }
-.tabs-login ul,
-.tabs-login ul li{
+
+.tabs-auth ul,
+.tabs-auth ul li{
     margin: 0;
     padding: 0;
     border-radius: 10px ;
 }
 
-.tabs-login ul li {
+.tabs-auth ul li {
     display: inline-block;
     list-style: none;
     font-size: 1.3em !important;
     color: var(--colorTabs) !important;
 }
 
-.tabs-login ul li a{
+.tabs-auth ul li a{
     display: inline-block;
     text-decoration: none;
     padding: 10px 20px;
     color: var(--colorTabs) !important;
 }
 
-.tabs-login ul li.active,
-.tabs-login ul li:focus,
-.tabs-login ul li a.active,
-.tabs-login ul li a:focus,
-.tabs-login ul li a:focus{
+.tabs-auth ul li.active,
+.tabs-auth ul li:focus,
+.tabs-auth ul li a.active,
+.tabs-auth ul li a:focus,
+.tabs-auth ul li a:focus{
     color: var(--color-primary-1) !important;
 }
 
-.tabs-login ul li:hover,
-.tabs-login ul li a:hover{
+.tabs-auth ul li:hover,
+.tabs-auth ul li a:hover{
     color: var(--color-second-1) !important;
 }
 
 /*style container*/
-.card-login
-.container-login{
+.card-auth
+.container-auth{
     height: var(--heightConent);
     padding: 10px 20px;
 }
 /*style footer*/
-.card-login
-.footer-login{
+.card-auth
+.footer-auth{
     height: var(--heightFooter);
     border-top: 1px solid var(--color-gray);
     text-align: center;
 }
 
-.footer-login button{
+.footer-auth button{
     height: 40px;
     width: 40px;
     margin: calc((var(--heightFooter) / 2) - 20px) 5px;
 }
 
-.footer-login button:hover,
-.footer-login button:focus{
+.footer-auth button:hover,
+.footer-auth button:focus{
     color: var(--color-second-2);
     border-color: var(--color-second-1);
 }

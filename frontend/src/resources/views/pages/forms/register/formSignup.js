@@ -3,19 +3,36 @@ import {
   Form,
   Input,
   Icon,
-  Button
+  Button,
+  Tooltip
 } from 'antd';
 import "../styleForms.css";
 
+function hasErrors(fieldsError){
+  return Object.keys(fieldsError).some( field => fieldsError[field]);
+}
+
 class RegistrationForm extends Component {
-  state = {
-    confirmDirty: false,
-    autoCompleteResult: [],
-  };
+
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      confirmDirty: false,
+      autoCompleteResult: [],
+    };
+  }
+
+  componentDidMount(){
+    //this.props.form.validateFields();
+  }
+  componentDidUpdate(){
+    
+  }
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
       }
@@ -45,38 +62,15 @@ class RegistrationForm extends Component {
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 24 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 24 },
-      },
-    };
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
 
+    const emailError = isFieldTouched('email') && getFieldError('email');
+    const passwordError = isFieldTouched('password') && getFieldError('password');
+    const confirmError = isFieldTouched('confirm') && getFieldError('confirm');
+    const nameError = isFieldTouched('name') && getFieldError('name');
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit} className="login-form" id="components-form-demo-normal-login">
-        <Form.Item>
-          {getFieldDecorator('name', {
-            rules: [
-              {
-                type: 'name',
-                message: 'The input is not valid name!',
-              },
-              {
-                required: true,
-                message: 'Please input your name!',
-              },
-            ],
-          })(<Input 
-              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} 
-              placeholder="name user"/>
-            )}
-        </Form.Item>
-        <Form.Item>
+      <Form onSubmit={this.handleSubmit} className="login-form" id="components-form-demo-normal-login">
+        <Form.Item validateStatus={emailError ? 'error' : ''} help={emailError || ''}>
           {getFieldDecorator('email', {
             rules: [
               {
@@ -89,13 +83,17 @@ class RegistrationForm extends Component {
               },
             ],
           })(<Input 
-              prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} 
-              placeholder="E-mail o correo"/>
-            )}
+            prefix={<Icon type="mail" 
+            style={{ color: 'rgba(0,0,0,.25)' }} />} 
+            placeholder="email o correo"/> )}
         </Form.Item>
-        <Form.Item hasFeedback>
+        <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
           {getFieldDecorator('password', {
             rules: [
+              {
+                min: 6,
+                message: 'Your password is very short, minimum of 6',
+              },
               {
                 required: true,
                 message: 'Please input your password!',
@@ -104,9 +102,12 @@ class RegistrationForm extends Component {
                 validator: this.validateToNextPassword,
               },
             ],
-          })(<Input.Password placeholder="Password"/>)}
+          })(<Input.Password 
+            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            type="password"
+            placeholder="Password" />)}
         </Form.Item>
-        <Form.Item hasFeedback>
+        <Form.Item validateStatus={confirmError ? 'error' : ''} help={confirmError || ''}>
           {getFieldDecorator('confirm', {
             rules: [
               {
@@ -117,10 +118,42 @@ class RegistrationForm extends Component {
                 validator: this.compareToFirstPassword,
               },
             ],
-          })(<Input.Password onBlur={this.handleConfirmBlur} placeholder="Confirm Password"/>)}
+          })(<Input.Password 
+            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            type="password"
+            placeholder="confirm Password"
+            onBlur={this.handleConfirmBlur} 
+            />)}
+        </Form.Item>
+        <Form.Item validateStatus={nameError ? 'error' : ''} help={nameError || ''}>
+          {getFieldDecorator('name', {
+            rules: [
+              {
+                min: 3,
+                message: 'minimum of caratares allowed',
+              },
+              {
+                max: 10,
+                message: 'maximum of caratares allowed',
+              },
+              { 
+                required: true,
+                message: 'Please input your name!', 
+                whitespace: true 
+              }
+            ],
+          })(<Input 
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="name"
+            />)}
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button 
+            type="primary" 
+            htmlType="submit" 
+            className="login-form-button"
+            disabled={hasErrors(getFieldsError())}
+          >
             Register
           </Button>
         </Form.Item>
@@ -129,4 +162,4 @@ class RegistrationForm extends Component {
   }
 }
 
-export default Form.create({ name: 'register' })(RegistrationForm);
+export default Form.create({ name: 'signup' })(RegistrationForm);

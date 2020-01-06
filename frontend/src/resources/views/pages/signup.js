@@ -25,19 +25,19 @@ class Signup extends Component {
   render() {
     return (
       <Standar className="login-page">
-          <div className="card-login">
-            <div className="logo-login">
+          <div className="card-auth signup">
+            <div className="logo-auth">
               <img src={Ecolor} />
-              <div className="tabs-login">
+              <div className="tabs-auth">
                 <ul>
                   <li><Link to="/" className="not">Inicio</Link></li>
                   <li><Link to="/signup" className="active">Registrate</Link></li>
                 </ul>
               </div>
             </div>
-            <div className="container-login">
+            <div className="container-auth">
               <FormRegiste />
-              <div className="footer-login">
+              <div className="footer-auth">
                 <Button shape="circle" icon="google" />
                 <Button shape="circle" icon="windows" />
                 <Button shape="circle" icon="linkedin" />

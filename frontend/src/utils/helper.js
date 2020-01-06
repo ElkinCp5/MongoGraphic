@@ -8,7 +8,7 @@ let { verifyToken, verifyAccount} = authAxios;
 let account = (SessionStorage.getAccount() != null) ? SessionStorage.getAccount() : null;
 let authentication = SessionStorage.getToken();
 let verify = account != null ? JSON.parse(account).verify : false;
-console.log('account: ', verify);
+
 
 let token = async()=>{
   let status = await verifyToken().then(res=>{ let { token } = res;
@@ -47,81 +47,63 @@ console.log('Helper:= ',
   {authentication,  verify}
 )
 
-const PrivateRoute = ({ children, ...rest })=>{
+const PrivateRoute =({children, ...rest})=>{
+  let { isAuthentication, isVerify, path} = rest;
+  console.log({rest});
   return (
-    <Route {...rest} render={({ location }) =>
-        (authentication) ? (
-          (verify) ?
-          children : 
-          <Redirect to={{
-            pathname: "/account-verify",
-            state: { from: location }
-          }}
-        />
-        ) : (
-          <Redirect to={{
-              pathname: "/",
-              state: { from: location }
-            }}
-          />
-        )
+    <Route {...rest} render={
+        ({ location }) =>{
+          if(isAuthentication && isVerify){
+            return children 
+          }else if(isAuthentication && !isVerify && path != '/account-verify'){
+            return (
+              <Redirect to={{
+                pathname: "/account-verify",
+                state: { from: location }
+              }}/>);
+          }else if(!isAuthentication  && path != '/'){
+            return (
+              <Redirect to={{
+                pathname: "/",
+                state: { from: location }
+              }}/>);
+          }else{
+            return children 
+          }
+        }  
       }
     />
   );
 }
 
-const verifyRoute = ({...rest })=>{
-  return (
-    <Route {...rest} render={({ location }) =>
-          <Redirect to={{
-              pathname: "/account-verify",
-              state: { from: location }
-            }}
-          />
-      }
-    />
-  );
-}
-const NotSessionRoute = ({...rest })=>{
-  return (
-    <Route {...rest} render={({ location }) =>
-          <Redirect to={{
-              pathname: "/dashboard",
-              state: { from: location }
-            }}
-          />
-      }
-    />
-  );
-}
-const validerUndefined=(valider)=>{
-  return (valider.isAuth          !== undefined &&
-          valider.isVerify        !== undefined &&
-          valider.authentication !== undefined
-          );
-} 
+
 const RouteWithSubRoutes = route => {
   let isAuth = route.isAuth != undefined ? route.isAuth : false;
   //console.log('RouteWithSubRoutes: ',route)
-  if( verify && isAuth && authentication){
+  if(isAuth ){
     return (
-      <h1>Hola primer si </h1>
-    );
-  }else if(!authentication && !verify && !route.isAuth ){
+      <PrivateRoute isAuthentication={authentication} isVerify={verify} path={route.path} >
+        <Route path={route.path}
+          render={props => (
+            // pass the sub-routes down to keep nesting
+            <route.component {...props} routes={route.routes} />
+          )}
+        />
+      </PrivateRoute>
+    )
+  }else if(!isAuth && authentication){
     return (
-      <h1>Hola segundo si</h1>
-    );
-  }else if(authentication && !verify && !route.isAuth){
+    <Route>
+        <Redirect to="/dashboard"/>
+    </Route>);
+  }else if(!isAuth && !authentication){
     return (
-      <h1>Hola tercer si</h1>
-    );
-  }else if(authentication && !verify && route.isAuth){
-    return (
-      <verifyRoute />
-    );
-  }else{
-    return (
-      <h1>Hola Final else</h1>
+      <Route path={route.path}
+          render={props => (
+            // pass the sub-routes down to keep nesting
+            <route.component {...props} routes={route.routes} />
+          )}
+        />
     );
   }
 }

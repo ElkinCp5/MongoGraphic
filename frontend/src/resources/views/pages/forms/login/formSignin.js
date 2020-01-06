@@ -113,13 +113,13 @@ class NormalLoginForm extends Component {
             ],
           })(<Input
               prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} 
-              placeholder="E-mail o correo"/>)}
+              placeholder="Email"/>)}
         </Form.Item>
         <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Please input your Password!' }],
           })(
-            <Input
+            <Input.Password
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="password"
               placeholder="Password"
