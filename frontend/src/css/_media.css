@@ -16,7 +16,7 @@
     .dashboard .ant-layout-sider{
         top: 0;
         left: 0;
-        position: absolute !important;
+        position: fixed !important;
         background-color: rgba(0, 0, 0, 0.8);
         min-height: 100vh;
         max-width: 100% !important;
@@ -65,14 +65,14 @@
 }
 
 
-/*Media login*/
+/*Media auth*/
 
 @media only screen and (max-height: 510px) {
     .hidden-lg{
         display: none !important;
     }
-    .card-login{
-        height: 340px;
+    .card-auth{
+        height: 340px !important;
         width: 90%;
         min-width: 540px;
         max-width: 740px;
@@ -83,49 +83,72 @@
         grid-gap: 0px;
         grid-auto-rows: minmax(100%, auto);
     }
-    .card-login .logo-login{
+    .card-auth .logo-auth{
         grid-column: 1;
         grid-row: 1;
         text-align:center;
         border-radius: 10px 0 0 10px;
-        background-image: url(../resources/images/other/bg7.jpg);
         background-position: center;
         background-repeat: no-repeat;
         background-size: 200%;
         
     }
-    .card-login 
-    .logo-login img{
+    .card-auth 
+    .logo-auth img{
         width: var(--sizeLogo);
         height:var(--sizeLogo);
         margin: calc(50% - ((var(--sizeLogo) / 2)- var(--heightTabs)) ) auto;
     }
-    .tabs-login ul{
+
+    .card-auth.signup 
+    .logo-auth{
+        background-image: url(../resources/images/other/bg13.jpg);
+    }
+    /*
+    Foto de NESA por Makers en Unsplash
+    */
+    .card-auth.signin 
+    .logo-auth{
+        background-image: url(../resources/images/other/bg14.jpg);
+    }
+
+    .card-auth.verify 
+    .logo-auth{
+        background-image: url(../resources/images/other/bg15.jpg);
+    }
+
+    .card-auth.verify 
+    .logo-auth img {
+        width: var(--sizeLogo);
+        height: var(--sizeLogo);
+        margin: calc(59% - (var(--sizeLogo) / 2)) auto;
+    }
+    .tabs-auth ul{
         margin: auto;
         width: 210px !important;
         background-color: rgba(0, 0, 0, 0.5);
     }
-    .tabs-login ul li,
-    .tabs-login ul li a{
+    .tabs-auth ul li,
+    .tabs-auth ul li a{
         border-radius: 10px ;
     }
-    .tabs-login ul li:nth-last-child(2){
+    .tabs-auth ul li:nth-last-child(2){
         margin-left: -6px;
     }
-    .tabs-login ul li.active,
-    .tabs-login ul li:focus,
-    .tabs-login ul li a.active,
-    .tabs-login ul li a:focus,
-    .tabs-login ul li a:focus{
+    .tabs-auth ul li.active,
+    .tabs-auth ul li:focus,
+    .tabs-auth ul li a.active,
+    .tabs-auth ul li a:focus,
+    .tabs-auth ul li a:focus{
         color: var(--color-primary-1) !important;
     }
 
-    .tabs-login ul li:hover,
-    .tabs-login ul li a:hover{
+    .tabs-auth ul li:hover,
+    .tabs-auth ul li a:hover{
         color: var(--color-second-1) !important;
     }
 
-    .card-login .container-login{
+    .card-auth .container-auth{
         height: auto;
         grid-column: 2/6;
         grid-row: 1;

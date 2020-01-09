@@ -23,7 +23,7 @@
 
 .dashboard .header-heading{
     background-color: var(--color-gray);
-    border-left: 2px solid var(--color-fuschia-2);
+    border-left: 2px solid var(--color-primary-2);
     padding: 5px 10px;
 }
 .ant-layout-sider 

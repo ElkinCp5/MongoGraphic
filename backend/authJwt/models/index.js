@@ -1,9 +1,10 @@
 // Cargamos el módulo de mongoose
-import Graphic from "../../dependencies";
-import bcrypt from 'bcrypt-nodejs';
+import Graphic              from "../../dependencies";
+import bcrypt               from 'bcrypt-nodejs';
+import jwt                  from '../jwt';
 
-const _Schema = Graphic.Schema;
-const _Model = Graphic.Model;
+const _Schema   = Graphic.Schema;
+const _Model    = Graphic.Model;
 
 // Creamos el objeto del esquema y sus atributos
 var Schema = new _Schema({
@@ -49,19 +50,23 @@ var Schema = new _Schema({
     
 }, {timestamps: true});
 
-Schema.pre('save', function(next){
+Schema.pre('save', async function(next){
     const auth = this;
     if(!auth.isModified('password')){
         return next();
     }
+
+
     bcrypt.genSalt(10, (err, salt)=>{
         if(err) next(err);
         bcrypt.hash(auth.password, salt, null, (err, hash)=>{
             if(err) next(err);
             auth.password = hash;
             next();
-        })
-    })
+        });
+    });
+
+
 })
 
 Schema.methods.validatePasswordLogin = function(password){

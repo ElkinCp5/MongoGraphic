@@ -1,35 +1,40 @@
 :root{
     --CardCube: 180px;
 }
-.card-dash-button,
-.card-dash-button a{
-    position: relative;
-    cursor: pointer;
-    background-color: var(--color-gray);
-    box-sizing: content-box;
-    border-radius: 5px;
-    color: var(--color-dark-4);
-}
-
 .card-dash-button {
     width: var(--CardCube);
     height: var(--CardCube);
     display: inline-block !important;
-    margin: 5px !important;
-    padding: 5px;
+    margin: 7px !important;
+    padding: 0px;
+    border-bottom: 2px solid var(--color-second-1);
     
 }
+.card-dash-button,
+.card-dash-button a{
+    display: inline-grid;
+    position: relative;
+    box-sizing: content-box;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--color-gray);
+}
+.card-dash-button a{
+    width: 100%;
+    height: 100%;
+    color: var(--color-dark-4);
+    background-color: var(--color-gray);
+    color: var(--color-second-1);
+}
+
 
 .card-dash-button:hover{
     -webkit-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
     box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
 }
-.card-dash-button:hover a{
-    color: var(--color-white);
-    background-color: var(--color-white-ahlpa);
-}
 .card-dash-button a:hover .circle{
-    background-color: var(--color-blue-1);
+    color: var(--color-white);
+    background-color: var(--color-primary-3);
 }
 /*circle Icon */
 .card-dash-button .circle{
@@ -44,7 +49,7 @@
 .card-dash-button .card-info .title{
     text-transform: uppercase;
     text-align: center;
-    color: var(--color-blue-3);
+    color: var(--color-primary-3);
     font-weight: 600;
 }
 

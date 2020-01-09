@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Redirect} from "react-router-dom";
+import { Link} from "react-router-dom";
 import { Button, message } from "antd";
 
 /* Import Custom Components */
@@ -53,7 +53,7 @@ class Login extends Component {
       message.error(messageInfo);
     }else if(success && loanding){
       message.success(messageInfo);
-      setTimeout(()=>this.handleRedirectTo(), 3000);
+      setTimeout(()=>this.handleRedirectTo(), 2500);
     };
     console.log({thisState: this.state});
     
@@ -67,9 +67,10 @@ class Login extends Component {
   handleLoading(){
     this.setState({ loanding: false });
   }
+  
   render() {
-    const { history, location} = this.props
-    const { loanding } = this.state
+    const { history, location} = this.props;
+    const { loanding } = this.state;
     return (
       <Standar className="login-page">
           <div className={loanding ? 'loanding' : ''} />

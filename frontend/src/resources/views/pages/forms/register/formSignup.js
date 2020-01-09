@@ -1,10 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, useState, useReducer, useEffect  } from "react";
+import services from '../../../../../services' ;
 import {
-  Form,
-  Input,
-  Icon,
+  Form, 
+  Icon, 
+  Input, 
   Button,
-  Tooltip
+  message, 
+  Checkbox,
+  Tooltip,
 } from 'antd';
 import "../styleForms.css";
 
@@ -12,14 +15,14 @@ function hasErrors(fieldsError){
   return Object.keys(fieldsError).some( field => fieldsError[field]);
 }
 
+const { authFetch, authAxios } = services;
 class RegistrationForm extends Component {
 
   
   constructor(props) {
     super(props);
     this.state = {
-      confirmDirty: false,
-      autoCompleteResult: [],
+      confirmDirty: false
     };
   }
 
@@ -34,10 +37,54 @@ class RegistrationForm extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const {email, password, name} = values;
+        this.props.stateLogin({loanding: true });
+        message.loading('Processing, login request..', 1.5)
+        
+        authAxios.signup(email, password, name).then(res=>{
+          if(res != undefined && res.message != undefined && res.user != false){
+            setTimeout(()=>{
+              this.int(res.message);
+            }, 1000);
+          }else if(!res.user){
+            setTimeout(()=>{
+              this.uot(res.message);
+            }, 1000);
+          }
+
+        }).catch(err =>{
+          console.error('form axios signi Error', err);
+        })
       }
     });
   };
+
+  int(message){
+    if(message){
+      this.props.stateLogin(
+        {
+          loanding: true,
+          error: false,
+          success: true,
+          message: message
+        });
+      setTimeout(()=>this.preproct(this.props), 1000);
+    }; 
+  }
+
+  uot(message){
+    this.props.stateLogin({
+      loanding: true,
+      error: true,
+      success: false,
+      message: message
+    });
+    setTimeout(()=>this.preproct(this.props), 1000);
+  }
+  
+  preproct(props){
+    props.showMessage(); 
+  }
 
   handleConfirmBlur = e => {
     const { value } = e.target;

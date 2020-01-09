@@ -1,9 +1,9 @@
 :root{
-    --color-hoverBuTo: var(--color-blue-2);
-    --color-hoverDropDpwnTo: var(--color-blue-3);
+    --color-hoverBuTo: var(--color-primary-2);
+    --color-hoverDropDpwnTo: var(--color-primary-3);
 }
 .header.ant-layout-header{
-    background-color: var(--color-blue-4);
+    background-color: var(--color-primary-4);
 }
 
 .ant-tooltip-inner,
@@ -43,7 +43,7 @@
 .menu-avartar
 .ant-badge .ant-avatar{
     margin-top: -5px !important;
-    color: var(--color-dark-4);
+    color: var(--color-second-4);
 }
 .header.ant-layout-header 
 button.ant-btn-link.ant-btn-circle{

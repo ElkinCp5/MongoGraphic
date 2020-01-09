@@ -6,7 +6,9 @@ import {
   Input, 
   Button,
   message, 
-  Checkbox }  from 'antd';
+  Checkbox,
+  Tooltip, 
+}  from 'antd';
 import "../styleForms.css";
 
 function hasErrors(fieldsError){
@@ -19,11 +21,7 @@ class NormalLoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: false,
-      message: false,
-      success: false,
-      error: false,
-      loanding: false
+      user: false
     };
   }
 
@@ -47,11 +45,11 @@ class NormalLoginForm extends Component {
           if(res != undefined && res.message != undefined && res.user != false){
             setTimeout(()=>{
               this.int(res.message);
-            }, 1500);
+            }, 1000);
           }else if(!res.user){
             setTimeout(()=>{
               this.uot(res.message);
-            }, 1500);
+            }, 1000);
           }
 
         }).catch(err =>{

@@ -3,7 +3,8 @@ import Auth                 from '../models';
 import jwt                  from '../jwt';
 import MsgRespond           from '../../other/msgRespond';
 import specialFunctions     from '../../other/specialFunctions';
-import { secret }      from '../../config';
+import verifiedSystem       from '../verify'; 
+import { secret }           from '../../config';
 
 
 let isDuplicated = async(email, signin= false) =>{
@@ -17,7 +18,6 @@ let isForm = (frm)=>{
 
 const special = new specialFunctions
 let RemoveProperty = special.removeProperty;
-let CreateProperty = special.createProperty;
 
 let jwtD     = Graphic.Jwt;
 let moment  = Graphic.Moment;
@@ -48,7 +48,16 @@ module.exports = {
             const newUser = new Auth({name, email, password});
             const isCredential = await newUser.save();
             RemoveProperty(isCredential, 'password');
+
             let token = await jwt.create_token(isCredential);
+            let tokenVerification = await jwt.create_token_verify(isCredential);
+            
+            if(!isCredential.verify){
+                verifiedSystem.token_send_mail(isCredential, tokenVerification).catch(error=>{
+                    console.error("Error: token send mail", error);
+                });
+            }
+            
             const user = {
                 id: isCredential._id,
                 email: isCredential.email,
@@ -58,11 +67,14 @@ module.exports = {
                 verify: isCredential.verify,
                 createdAt: isCredential.createdAt,
                 updatedAt: isCredential.updatedAt,
-                token: token,
+                token,
+                tokenVerification: (!isCredential.verify) ? tokenVerification : false,
             };
+            
+
             res.header('Authenticate', token).status(200)
                 .json(MsgRespond(user, 'show', 'auth', 'auth',
-                    'registro completado, bienvenido a mongo graphic')
+                    'Registration completed, welcome to mongo graphic')
                 );
         }else{
             console.error('This credential already exists!!');
@@ -77,7 +89,9 @@ module.exports = {
         if(isCredential){
             if(isCredential.validatePasswordLogin(password)){
                 RemoveProperty(isCredential, 'password');
+
                 let token = await jwt.create_token(isCredential);
+
                 const user = {
                     id: isCredential._id,
                     email: isCredential.email,
@@ -87,11 +101,12 @@ module.exports = {
                     verify: isCredential.verify,
                     createdAt: isCredential.createdAt,
                     updatedAt: isCredential.updatedAt,
-                    token: token,
+                    token
                 };
+
                 res.header('Authenticate', token).status(200).json(
                     MsgRespond(user, 'show', 'auth', 'auth',
-                    'bienvenido a mongo graphic')
+                    'welcome to mongo graphic')
                     );
             }else{
                 res.status(200).json(MsgRespond(false, 'signup','auth', 'admin', false,
@@ -105,15 +120,70 @@ module.exports = {
         }   
 
     },
-    restore_password: async (req, res)=>{
-        res.status(200).json({
-            messange: 'restore password'
-        });
+    verifyUpdate: async (req, res)=>{
+        // ESTO ES PARA VALIDAR EL CLIENTE
+        const client = req.headers.host;
+        //
+        const { id } = req.auth;
+        const updateUser = await Auth.findById(id, {password: 0});
+        if(updateUser && !updateUser.verify){
+            updateUser.verify = true;
+            req.auth.verify = true;
+            await updateUser.save();
+        
+            //console.log({respon: req.headers.host})
+            res.status(200)
+            .json(MsgRespond(true, 'Verification', 'auth', 'auth',
+                'verified account, welcome to mongo graphic'));
+        }else{
+            res.status(200).json(MsgRespond(false, 'Verification', 'auth', 'auth',
+                'Error trying to verify your account!'));
+        }
+        
     },
-    
     verifyAccount: async (req, res)=>{
-        const {verify} = await Auth.findById(req.auth.id, {password: 0});
-        return res.status(200).json({verify});
+        const { id } = req.auth;
+        const isCredential = await Auth.findById(id, {password: 0});
+        console.log(isCredential)
+        if(isCredential && isCredential.verify){
+            let token = await jwt.create_token(isCredential);
+
+            const user = {
+                id: isCredential._id,
+                email: isCredential.email,
+                image: isCredential.image,
+                name: isCredential.name,
+                role: isCredential.role,
+                verify: isCredential.verify,
+                createdAt: isCredential.createdAt,
+                updatedAt: isCredential.updatedAt,
+                token
+            };
+            res.header('Authenticate', token).status(200).json(
+                MsgRespond(user, 'show', 'auth', 'auth',
+                'welcome to mongo graphic')
+                );
+        }else{
+            res.status(200).json(MsgRespond(false, 'Verification', 'auth', 'auth',
+                'Your account has not been verified, check your email!'));
+        }
+    },
+    verifyReset: async(req, res)=>{
+        let { id } = req.auth;
+        const isCredential = await Auth.findById(id, {password: 0});
+
+        if(isCredential && !isCredential.verify){
+            let tokenVerification = await jwt.create_token_verify(isCredential);
+            await verifiedSystem.token_send_mail(isCredential, tokenVerification).catch(error=>{
+                return res.status(200).json(MsgRespond(false, 'Verification reset', 'auth', 'auth', false, error));
+            });
+
+            res.status(200).json(MsgRespond(true, 'Verification reset', 'auth', 'auth',
+                'Email verification mail has been sent!'));
+        }else{
+            res.status(200).json(MsgRespond(false, 'Verification reset', 'auth', 'auth',
+                'Error trying to reset verification your account!'));
+        }
     },
     verifyToken: async (req, res)=>{
         let authorization = req.header('Authenticate')
@@ -130,6 +200,11 @@ module.exports = {
             }
             res.status(200).json({ token: true});
         }
+    },
+    restore_password: async (req, res)=>{
+        res.status(200).json({
+            messange: 'restore password'
+        });
     },
 
 

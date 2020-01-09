@@ -17,7 +17,21 @@ export default {
             iat: _iat,
             exp: _exp
         }
-        const token = Graphic.Jwt.encode(playToken, process.env.TOKEN_SECRET || 'SXw{2WMaL}I1hL1ZDG^I'); 
+        const token = Graphic.Jwt.encode(playToken, process.env.TOKEN_SECRET); 
+        return token;
+    },
+    create_token_verify: (user)=>{
+        const playToken ={
+            id: user._id,
+            name:user.name,
+            email: user.email,
+            role: user.role,
+            verify: user.verify,
+            avatar: user.image,
+            iat: _iat,
+            exp: _exp
+        }
+        const token = Graphic.Jwt.encode(playToken, process.env.VERIFY_SECRET); 
         return token;
     }
 }

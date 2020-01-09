@@ -31,6 +31,7 @@ module.exports = {
         schemas: process.env.PATCH_SCHEMAS
     },
     secret: process.env.TOKEN_SECRET,
+    secretVerify: process.env.VERIFY_SECRET,
     //Si no desea bloquear las herramientas REST o las solicitudes de servidor a servidor, agregue una !originmarca en la función de origen de la siguiente manera:
     //  if (whitelist.indexOf(origin) !== -1 || !origin)
     parametersCors: {

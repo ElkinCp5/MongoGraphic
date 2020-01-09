@@ -43,13 +43,15 @@ let _account = async()=>{
 authentication = (authentication != undefined) ? authentication : false;
 verify        = (verify != undefined) ? verify : false;
 
+/*
 console.log('Helper:= ',
   {authentication,  verify}
 )
+*/
 
 const PrivateRoute =({children, ...rest})=>{
   let { isAuthentication, isVerify, path} = rest;
-  console.log({rest});
+  //console.log({rest});
   return (
     <Route {...rest} render={
         ({ location }) =>{

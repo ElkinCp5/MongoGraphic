@@ -1,4 +1,20 @@
-import { signin, signup, start, proyect, dashboard, profile, format, E404, verify} from "../../resources/views";
+import { 
+    signin, 
+    signup, 
+    proyects, 
+    dashboard, 
+    home,
+
+    collections,
+    showCollection,
+    createCollection,
+
+    documents, 
+    profile, 
+    format, 
+    E404, 
+    verify
+} from "../../resources/views";
 
 const routes = [
     {
@@ -14,27 +30,45 @@ const routes = [
         component: signup,
     },
     {
-        path: "/proyect",
+        path: "/proyects",
         exact: true,
         isAuth: true,
-        component: proyect,
+        component: proyects,
     },
     {
         path: "/dashboard",
-        component: start,
+        component: dashboard,
         isAuth: true,
         routes: [
             {
                 path: "/dashboard",
                 exact: true,
                 isAuth: true,
-                component: dashboard
+                component: home
             },
             {
-                path: "/dashboard/format",
+                path: "/dashboard/collections",
                 exact: true,
                 isAuth: true,
-                component: format
+                component: collections
+            },
+            {
+                path: "/dashboard/collections/:name",
+                exact: true,
+                isAuth: true,
+                component: showCollection
+            },
+            {
+                path: "/dashboard/collections/create",
+                exact: true,
+                isAuth: true,
+                component: createCollection
+            },
+            {
+                path: "/dashboard/documents",
+                exact: true,
+                isAuth: true,
+                component: documents
             },
             {
                 path: "/dashboard/profile",

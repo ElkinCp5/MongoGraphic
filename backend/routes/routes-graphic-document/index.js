@@ -5,6 +5,7 @@
     import LoadingSchemas               from '../../schema/loadinSchemaJson';
     import classSchemaDynamicModal      from '../../src/schemaDynamic';
     import MsgRespond                   from '../../other/msgRespond';
+    import middlewares                  from '../../middlewares';
     import router                       from 'express-promise-router';
 
     const Inflection        = Graphic.Inflection;
@@ -90,11 +91,11 @@
     };
 
     //Link routes and functions 
-    _router.get('/:name',         index);  
-    _router.get('/:name/:id',     show); 
-    _router.post('/:name',        create);  
-    _router.delete('/:name/:id',  distroy);
-    _router.put('/:name/:id',     update); 
+    _router.get('/:name',         middlewares.verifyAuth, index);  
+    _router.get('/:name/:id',     middlewares.verifyAuth, show); 
+    _router.post('/:name',        middlewares.verifyAuth, create);  
+    _router.delete('/:name/:id',  middlewares.verifyAuth, distroy);
+    _router.put('/:name/:id',     middlewares.verifyAuth, update); 
 
     
 module.exports = _router;

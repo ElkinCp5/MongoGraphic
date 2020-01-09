@@ -2,12 +2,12 @@
 
 import Graphic           from "../../dependencies";
 import structSchemaJson  from '../../schema/createStructSchemaJson';
-import saveFilSchemaJson from '../../schema/createSchemaJson';
 import saveFilSchemaJs   from '../../schema/createSchemaJs';
 import LoadingSchemas    from '../../schema/loadinSchemaJson';
 import specialFunctions  from '../../other/specialFunctions';  
 import MsgRespond        from '../../other/msgRespond';
 import path              from '../../root';
+import middlewares       from '../../middlewares';
 import router            from 'express-promise-router';
 
     // Estraer 
@@ -65,7 +65,8 @@ import router            from 'express-promise-router';
     //list the models
     let index = async(req, res) => {
         let schemas = await _LoadSchema.listsSchema();
-        res.json(schemas);
+        res.status(200).json(MsgRespond(schemas, 'list', 'collection','collection', 
+            'load of schemas completada'));
     };
 
     //find model by name  
@@ -157,11 +158,9 @@ import router            from 'express-promise-router';
 
     // Route the manager models
     _router.get('/',         index);
-    _router.get('/:name',    show);
-    _router.post('/',        create);
-    _router.put('/',         update);
-    _router.delete('/',      distroy);
-    
-
+    _router.get('/:name',    middlewares.accountAuth, show);
+    _router.post('/',        middlewares.accountAuth, create);
+    _router.put('/',         middlewares.accountAuth, update);
+    _router.delete('/',      middlewares.accountAuth, distroy);
 
 module.exports = _router;

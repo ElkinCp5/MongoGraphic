@@ -20,10 +20,6 @@
     height: var(--heightauth);
 }
 
-.card-auth.signup{
-    height: 580px;
-    margin: calc(50vh - 290px) auto;
-}
 
 .card-auth .logo-auth {
     height: var(--heightLogo);

@@ -1,0 +1,13 @@
+:root{
+    --heightauth:500px;
+    --heightFooter:70px;
+    --heightTabs:50px;
+    --heightLogo: (130px + var(--heightTabs));
+    --heightConent:calc(100% - (var(--heightLogo) + var(--heightFooter)));
+    --colorTabs: var(--color-gray-3);
+}
+
+.card-auth.verify button{
+    width: 40%;
+    margin: 0 10px;
+}

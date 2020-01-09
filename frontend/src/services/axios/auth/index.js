@@ -1,11 +1,21 @@
 import Axios from '../../config.axios';
 import SessionStorage from '../../storage/session'
 
-const session =() =>{
+const account =() =>{
     return Axios.get(`auth/account`).then(response=>{
-        let { data } = response; 
-        return data;
-    })
+        let { data } = response.data;
+        let { error } = response.data;
+        let { message } = response.data;
+        let msg = message || error;
+        console.log({account: response.data});
+        
+        return {
+            user: data,
+            message: msg
+        }
+    }).catch(err =>{
+        console.error('Service axios signup Error:=> ', err);
+    }); 
 }
 
 const signin = async (email, password) =>{
@@ -18,10 +28,10 @@ const signin = async (email, password) =>{
         let msg = message || error;
         console.log({signin: response.data});
         
-        if(token != undefined && token != '' && token && data != undefined){
-            data.token = undefined
-            SessionStorage.setToken(token)
-            SessionStorage.setAccount(JSON.stringify(data))
+        if(token != undefined && token && data != undefined){
+            data.token = undefined;
+            SessionStorage.setToken(token);
+            SessionStorage.setAccount(JSON.stringify(data));
         }else{
             SessionStorage.out();
         }
@@ -36,12 +46,9 @@ const signin = async (email, password) =>{
     });
 }
 
-const signup =(name, email, password) =>{
-    return Axios.post('auth/signup', {
-        name, 
-        email, 
-        password
-    }).then(response=>{
+const signup = (email, password, name) =>{
+    return Axios.post('auth/signup',  JSON.stringify({email, password, name}) )
+    .then(response=>{
         let { data } = response.data;
         let { token } = data;
         let { error } = response.data;
@@ -50,9 +57,9 @@ const signup =(name, email, password) =>{
         console.log({signup: response.data});
         
         if(token != undefined && token != '' && token && data != undefined){
-            data.token = undefined
-            SessionStorage.setToken(token)
-            SessionStorage.setAccount(data)
+            data.token = undefined;
+            SessionStorage.setToken(token);
+            SessionStorage.setAccount(JSON.stringify(data));
         }else{
             SessionStorage.out();
         }
@@ -60,14 +67,50 @@ const signup =(name, email, password) =>{
             user: data,
             message: msg
         }
+    }).catch(err =>{
+        console.error('Service axios signup Error:=> ', err);
     }); 
 }
 
-const verifyAccount = () =>{
-    return Axios.post('auth/verify-account').then(response=>{
-        let { data } = response;
-        return data
-    }); 
+const verify = () =>{
+    return Axios.post('auth/verify/account').then(response=>{
+        let { data } = response.data;
+        let { token } = data;
+        let { error } = response.data;
+        let { message } = response.data;
+        let msg = message || error;
+        console.log({verifyAccount: response.data});
+        
+        if(token &&  data){
+            data.token = undefined;
+            SessionStorage.out();
+            SessionStorage.setToken(token);
+            SessionStorage.setAccount(JSON.stringify(data));
+        }
+        return {
+            user: data,
+            message: msg
+        }
+    }).catch(err =>{
+        console.error('Service axios verify account Error:=> ', err);
+    });  
+}
+
+const reset = () =>{
+    return Axios.post('auth/verify/reset').then(response=>{
+        let { data } = response.data;
+        let { error } = response.data;
+        let { message } = response.data;
+        let msg = message || error;
+        console.log({verifyReset: response.data});
+        
+        return {
+            user: data,
+            message: msg
+        }
+    }).catch(err =>{
+        console.error('Service axios verify reset Error:=> ', err);
+    });  
 }
 
 const verifyToken = async() =>{
@@ -90,9 +133,10 @@ const destroy = async() =>{
 }
 
 export default {
-    session,
+    account,
     signin,
     signup,
-    verifyAccount,
+    reset,
+    verify,
     verifyToken
 }

@@ -32,13 +32,19 @@ class  Sdash extends Component {
                     <Menu.Item key="/dashboard">
                         <Link to="/dashboard">
                             <Icon type="profile" />
-                            <span>Tablero</span>
+                            <span>Inicio</span>
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="/dashboard/format">
-                        <Link to="/dashboard/format">
+                    <Menu.Item key="/dashboard/collections">
+                        <Link to="/dashboard/collections">
+                            <Icon type="profile" />
+                            <span>Collections</span>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="/dashboard/documents">
+                        <Link to="/dashboard/documents">
                             <Icon type="solution" />
-                            <span>Formato de Cv</span>
+                            <span>Documents</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="/dashboard/profile">
