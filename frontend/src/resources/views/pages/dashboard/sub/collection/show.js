@@ -40,15 +40,15 @@ const genExtra = () => (
   />
 );
 
-const { documentAxios } = services;
-const { Panel }         = Collapse;
+const { modelAxios } = services;
+const { Panel }      = Collapse;
 
 class DashboardPage extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      documents: LocalStorage.get('documents') || [],
+      collection: LocalStorage.get('collection') || [],
       collapsed: false,
       loanding: false,
       message: false,
@@ -63,48 +63,45 @@ class DashboardPage extends Component {
   }
 
   componentDidMount(){
-    this.handleDocuments();
+    this.handlecollection();
   }
 
   componentWillUnmount() {
-    //console.log('Fin en: ', this.state.collections.length);
+    //console.log('Fin en: ', this.state.collection.length);
   }
 
-  dataComparison(documents_response, documents_estate){
-    documents_response.sort(); 
-    documents_estate.sort();
-    let isComparison = (JSON.stringify(documents_response) === JSON.stringify(documents_estate));
+  dataComparison(collection_response = [], collection_state = []){
+    let CR = JSON.stringify(collection_response); 
+    let CS = JSON.stringify(collection_state);
+    let isComparison = (CR === CS);
     return isComparison;
   }
 
-  handleDocuments = async()=>{
+  handlecollection = async()=>{
     const { name } = await this.props.match.params;
-    const response = await documentAxios.index(name);
-    const { documents, message } = response;
-    const comparison = !this.dataComparison(documents, this.state.documents);
+    const response = await modelAxios.show(name);
+    const { model, verbatim, structure, message } = response;
+    const comparison = !this.dataComparison(structure, this.state.collection);
     this.setState({ loanding: true});
-
+    console.log('Type: ' ,(typeof response))
     if(comparison){
       boxMessage.loading('updating collection list, please wait a moment', 1.5);
     }
 
     setTimeout(()=>{
-      this.handlestatePreparer(documents, message, comparison);
+      this.handlestatePreparer(model, verbatim, structure, message, comparison);
     }, 2000);
     
   };
 
-  handlestatePreparer(res, msg, comp){
-    if(res.length){ 
-      if(comp){ boxMessage.success(msg)}
-      this.handleUpdateCollection(res);
-    }else if(res.length && res.length <= 0){ 
-      boxMessage.success('Empty document list');
-      this.handleUpdateCollection(res);
+  handlestatePreparer(model, verbatim, structure, message, comparison){
+    if((typeof verbatim) == 'object' && (typeof structure) == 'object' ){ 
+      if(comparison){ boxMessage.success(message)}
+      this.handleUpdateCollection(structure);
     }else{
-      boxMessage.error(msg)
+      boxMessage.error(message)
       this.handleUpdateCollection([]);
-      LocalStorage.remove('documents');
+      LocalStorage.remove('collection');
     }
     
     setTimeout(()=>{ 
@@ -112,9 +109,9 @@ class DashboardPage extends Component {
     }, 1000);
   }
 
-  handleUpdateCollection(documents){
-    this.setState({documents});
-    LocalStorage.set('documents', documents);
+  handleUpdateCollection(collection){
+    this.setState({collection});
+    LocalStorage.set('collection', collection);
   }
 
   handleStateDefault(){
@@ -128,18 +125,22 @@ class DashboardPage extends Component {
 
   handleSubtractProperties(data){
     let result = [];
-     for(var i in data)
-        if(i != '__v'){ result.push([i])};
+     for(var i in data){
+       let name = [i];
+       let type = data[i].type;
 
+       let field = {name, type}
+      result.push(field)
+     }
     return result;
   }
 
   render() {
-    let { documents, loanding } = this.state;
+    let { collection, loanding } = this.state;
     let { routes, match } = this.props;
     let { params } = match;
     
-    //console.log(this.documents);
+    console.log(this.handleSubtractProperties(collection));
   
     return (
       <div className="content-sub-page">
@@ -152,43 +153,25 @@ class DashboardPage extends Component {
         <div className="container-page">
         <div className={loanding ? 'subloanding' : ''} />
         <Collapse
-          defaultActiveKey={['1']}
+          defaultActiveKey={false}
           onChange={callback}
           expandIconPosition={'right'}
         >
           {
-            documents.length ? (
-              documents.map((document, index) => {
+            (this.handleSubtractProperties(collection)) ? (
+              this.handleSubtractProperties(collection).map((field, index) => {
                 return <Panel 
                 header={<a href="">
-                  <span style={{
-                  color: 'var(--color-second-2)',
-                  fontWeight: "bold"}}>ObjecId:
-                  </span> {document._id}
-                  </a>} 
-                key={document._id} 
+                  <span style={{ 
+                    color: 'var(--color-second-2)',
+                    fontWeight: "bold"
+                    }}>field:
+                  </span> {field.name} </a>} 
+                key={index} 
                 extra={genExtra()}>
                   <div className={"content-props"}>
-                    {
-                      (this.handleSubtractProperties(document)) ? (
-                        <List
-                        itemLayout="horizontal"
-                        dataSource={this.handleSubtractProperties(document)}
-                        renderItem={item => (
-                            <List.Item>
-                              <List.Item.Meta
-                                avatar={<Icon type="unordered-list" />}
-                                title={<a href=""><span style={{
-                                  color: 'var(--color-second-3)',
-                                  fontWeight: "bold"
-                                }}>item: </span> {item}</a>}
-                              />
-                            </List.Item>
-                          )}
-                        />
-                      ): null
-                    }
-
+                   <h2>hola todos</h2>
+                   {field.type}
                   </div>
                 </Panel>
               })
@@ -205,51 +188,3 @@ class DashboardPage extends Component {
 
 export default DashboardPage;
 
-/*
-<Collapse
-          defaultActiveKey={['1']}
-          onChange={callback}
-          expandIconPosition={'right'}
-        >
-          {
-            documents.length ? (
-              documents.map((document, index) => {
-                return <Panel 
-                header={<a href="">
-                  <span style={{
-                  color: 'var(--color-second-2)',
-                  fontWeight: "bold"}}>ObjecId:
-                  </span> {document._id}
-                  </a>} 
-                key={document._id} 
-                extra={genExtra()}>
-                  <div className={"content-props"}>
-                    {
-                      (this.handleSubtractProperties(document)) ? (
-                        <List
-                        itemLayout="horizontal"
-                        dataSource={this.handleSubtractProperties(document)}
-                        renderItem={item => (
-                            <List.Item>
-                              <List.Item.Meta
-                                avatar={<Icon type="unordered-list" />}
-                                title={<a href=""><span style={{
-                                  color: 'var(--color-second-3)',
-                                  fontWeight: "bold"
-                                }}>item: </span> {item}</a>}
-                              />
-                            </List.Item>
-                          )}
-                        />
-                      ): null
-                    }
-
-                  </div>
-                </Panel>
-              })
-            ): null
-          }
-          
-        </Collapse>
-
-*/

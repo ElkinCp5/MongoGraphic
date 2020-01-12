@@ -70,10 +70,10 @@ class DashboardPage extends Component {
     //console.log('Fin en: ', this.state.collections.length);
   }
 
-  dataComparison(collection_response, collection_estate){
+  dataComparison(collection_response, collection_state){
     collection_response.sort(); 
-    collection_estate.sort();
-    let isComparison = (JSON.stringify(collection_response) === JSON.stringify(collection_estate));
+    collection_state.sort();
+    let isComparison = (JSON.stringify(collection_response) === JSON.stringify(collection_state));
     return isComparison;
   }
 
@@ -84,7 +84,7 @@ class DashboardPage extends Component {
     this.setState({ loanding: true});
 
     if(comparison){
-      boxMessage.loading('updating collection list, please wait a moment', 1.5);
+      boxMessage.loading('updating collections list, please wait a moment', 1.5);
     }
 
     setTimeout(()=>{
@@ -96,18 +96,24 @@ class DashboardPage extends Component {
   handlestatePreparer(res, msg, comp){
     if(res.length){ 
       if(comp){ boxMessage.success(msg)}
-    }else{ boxMessage.error(msg) }
-    LocalStorage.set('collections', res);
+      this.handleUpdateCollection(res);
+    }else if(res.length <= 0){ 
+      boxMessage.success('Empty collection list');
+      this.handleUpdateCollection(res);
+    }else{
+      boxMessage.error(msg)
+      this.handleUpdateCollection([]);
+      LocalStorage.remove('collections');
+    }
+    
     setTimeout(()=>{ 
       this.handleStateDefault();
-      this.handleUpdateCollection();
     }, 1000);
   }
 
-  handleUpdateCollection(){
-    this.setState({
-      collections: LocalStorage.get('collections') || []
-    });
+  handleUpdateCollection(documents){
+    this.setState({documents});
+    LocalStorage.set('collections', documents);
   }
 
   handleStateDefault(){

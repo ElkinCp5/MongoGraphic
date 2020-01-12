@@ -128,9 +128,9 @@ class DashboardPage extends Component {
 
   handleSubtractProperties(data){
     let result = [];
-     for(var i in data)
-        if(i != '__v'){ result.push([i])};
-
+     for(var i in data){
+      result.push([[i], data[i]])
+     }
     return result;
   }
 
