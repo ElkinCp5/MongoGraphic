@@ -20,40 +20,7 @@ import router            from 'express-promise-router';
     var _path       = new path('/src/schemas/');
     //console.log(_path.exists('coffee', '.json'))
     var false_schema = { name: 'user', timestamps: true, structure: { name: "String" } };
-    /*var json = { 
-        name: 'user',
-        timestamps: true,
-        structure: {
-            name: "String", 
-            lastName: "String",
-            age: "Number",
-            salary: "String",
-            phone: "String",
-            address: "String",
-            create_at: "Date",
-            update_at: "Date"
-        }
-    };
-    var newJson = {
-        name: 'Coffee',
-        timestamps: true,
-        structure: {
-            "eggs": {
-                "type": "Number",
-                "min": [8, "'Too few eggs'"],
-                "max": 16
-            },
-            "bacon": {
-                "type": "Number",
-                "required": [true, "'Why no bacon?'"]
-            },
-            "drink": {
-                "type": "String",
-                "enum": ["'Coffee'", "'Tea'"],
-                "required": 'function() { return this.drink > 3;}'
-            }
-        }
-    }*/
+
     let _ValidateModelDinamic = async (name) =>{
         let Name = Inflection.singularize(name); 
         const model = await _LoadSchema.singleSchema(Name);
