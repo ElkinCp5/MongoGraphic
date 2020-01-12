@@ -91,11 +91,11 @@
     };
 
     //Link routes and functions 
-    _router.get('/:name',         middlewares.verifyAuth, index);  
-    _router.get('/:name/:id',     middlewares.verifyAuth, show); 
-    _router.post('/:name',        middlewares.verifyAuth, create);  
-    _router.delete('/:name/:id',  middlewares.verifyAuth, distroy);
-    _router.put('/:name/:id',     middlewares.verifyAuth, update); 
+    _router.get('/:name',         middlewares.accountAuth, middlewares.verifyAuth, index);  
+    _router.get('/:name/:id',     middlewares.accountAuth, middlewares.verifyAuth, show); 
+    _router.post('/:name',        middlewares.accountAuth, middlewares.verifyAuth, create);  
+    _router.delete('/:name/:id',  middlewares.accountAuth, middlewares.verifyAuth, distroy);
+    _router.put('/:name/:id',     middlewares.accountAuth, middlewares.verifyAuth, update); 
 
     
 module.exports = _router;

@@ -8,18 +8,19 @@ class loadSchema{
         this.Schemas = [];
     }
 
-    listsSchema(){
-        var Model = {};  
+    listsSchema(isJson = false){
+        let Model = {};
+        this.Schemas = [];  
         this.FileManager.readdirSync( this._Path.root() ).forEach((file) =>{
-            var filePath = this._Path.file(file, false);
+            let filePath = this._Path.file(file, false);
             // Route validation
             if(this.fileExtension(file) !== 'js' && /.*.js/.test(file)){  
                 Model = false;
             }else{
-                var name = this.Inflection.singularize(file.replace('.js', '').replace('-', '_'));
-                var schema = require(filePath);
+                let name = this.Inflection.singularize(file.replace('.js', '').replace('-', '_'));
+                let schema = require(filePath);
                 // Object creation to root list
-                Model = { name: `${name}`, schema: schema};
+                Model = { name: `${name}`, schema: schema} ;
                 // Add object to root list
                 this.Schemas.push(Model);
             } 
@@ -27,15 +28,16 @@ class loadSchema{
         return this.Schemas;
     }
 
-    singleSchema(file){
+    singleSchema(file, isJson = false){
         var filePath = this._Path.exists(file);
         var Model= {}; 
         // Route validation
         //console.log('singleSchema: ', filePath);
         if(filePath){ 
             var name = this.Inflection.singularize(file.replace('.js', '').replace('-', '_'));
+            let schema = require(filePath)
             // Object creation to root list
-            Model = { name: `${name}`, schema: require(filePath) };
+                Model = { name: `${name}`, schema: schema} ;
         }else {
             Model= false
         }

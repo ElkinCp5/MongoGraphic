@@ -22,7 +22,6 @@ let token = async()=>{
     return false;
   })
   console.log({token: status });
-  
   return status;
   
 }
@@ -36,7 +35,6 @@ let _account = async()=>{
     return false;
   })
   console.log({account: status });
-  
   return status;
 }
 

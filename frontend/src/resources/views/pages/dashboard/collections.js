@@ -7,8 +7,8 @@ import {
   Tooltip, 
   Button, 
   Input, 
-  Checkbox,
-  message } from "antd";
+  Alert,
+  message as boxMessage } from "antd";
 
 
 /* Import Custom Components */
@@ -16,10 +16,11 @@ import { layoutDashboard as Dashboard } from "../../layouts";
 import { HtitleHeader as Title } from "../../../../components/header";
 import { cardDash as Cards } from "../../../../components/cards";
 import SessionStorage from "../../../../services/storage/session";
+import LocalStorage from '../../../../services/storage/local';
 import services from '../../../../services' ;
 
 
-let account = (SessionStorage.getAccount() != null) ? JSON.parse(SessionStorage.getAccount()) : null;
+const account = (SessionStorage.getAccount() != null) ? JSON.parse(SessionStorage.getAccount()) : null;
 
 const { authFetch, modelAxios } = services;
 
@@ -35,89 +36,117 @@ function CardLists(props){
   );
   return List ;
 }
+const buttonTitle = [
+  {
+    icon: 'plus',
+    url: '/create'
+  }
+];
 
+//LocalStorage.remove('collections');
 class DashboardPage extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      collections: [],
+      collections: LocalStorage.get('collections') || [],
       loanding: false,
       message: false,
-      success: true,
-      error: false
+      success: false,
+      error: false,
+      alert: false
     };
+    this.handleStateDefault = this.handleStateDefault.bind(this);
+    this.handleUpdateCollection = this.handleUpdateCollection.bind(this);
   }
 
   componentDidMount(){
-    //console.log('Count: ', this.state.collections.length)
-    if(this.state.collections.length == 0){
-      this.setState({collections: [], loanding: true, success: false, error: false })
-      message.loading('Processing, collection request..', 1.5);
-      this.handleCollections(); 
-    }
+    this.handleCollections();
+    //LocalStorage.remove('collections'); 
+    //console.log('Inicio: ', this.state.collections.length);
   }
 
+  componentWillUnmount() {
+    //console.log('Fin en: ', this.state.collections.length);
+  }
 
-  handleCollections = () => {
-    modelAxios.index().then(res=>{
-        if(res.collections){
-            this.setState({ collections: res.collections });
-            setTimeout(()=>{ this.int(res.message) }, 1000);
-        }else if(!res.collections){
-          setTimeout(()=>{ this.uot(res.message) }, 1000);
-        }
-      }).catch(err =>{
-          console.error('form axios reset error: ', err);
-      });
+  dataComparison(collection_response, collection_estate){
+    collection_response.sort(); 
+    collection_estate.sort();
+    let isComparison = (JSON.stringify(collection_response) === JSON.stringify(collection_estate));
+    return isComparison;
+  }
 
+  handleCollections = async()=>{
+    const response = await modelAxios.index();
+    const { collections, message } = response;
+    const comparison = !this.dataComparison(collections, this.state.collections);
+    this.setState({ loanding: true});
+
+    if(comparison){
+      boxMessage.loading('updating collection list, please wait a moment', 1.5);
+    }
+
+    setTimeout(()=>{
+      this.handlestatePreparer(collections, message, comparison);
+    }, 2000);
+    
   };
 
-  int(message){
-    if(message){
-      this.setState(
-        {
-          success: true,
-          message: message
-        });
-      setTimeout(()=> {this.handleMessage()}, 1000);
-    }; 
+  handlestatePreparer(res, msg, comp){
+    if(res.length){ 
+      if(comp){ boxMessage.success(msg)}
+    }else{ boxMessage.error(msg) }
+    LocalStorage.set('collections', res);
+    setTimeout(()=>{ 
+      this.handleStateDefault();
+      this.handleUpdateCollection();
+    }, 1000);
   }
 
-  uot(message){
+  handleUpdateCollection(){
     this.setState({
-      error: true,
-      message: message
+      collections: LocalStorage.get('collections') || []
     });
-    setTimeout(()=> {this.handleMessage()}, 1000);
   }
 
-  handleMessage(){
-    let success     = this.state.success,
-        error       = this.state.error, 
-        messageInfo = this.state.message, 
-        loanding    = this.state.loanding;
-
-    if(error && loanding){ 
-      message.error(messageInfo);
-    }else if(success && loanding){
-      message.success(messageInfo);
-    };
-    setTimeout(()=> { 
-      this.setState({ loanding: false, }) 
-    }, 3000);
-    console.log({thisState: this.state});
+  handleStateDefault(){
+    this.setState({
+      loanding: false,
+      success: false,
+      message: false,
+      error: false
+    });
   }
 
   render() {
     let { routes } = this.props;
-    let { loanding, collections } = this.state;
+    let { collections, loanding, alert } = this.state;
+    //console.log('Fin: ', this.state.collections.length);
+
     return (
-      <div>
-        <div className={loanding ? 'loanding' : ''} />
-        <Title toBack={false} title="Tablero" subTitle="Cuadrilla para diligenciar tu hoja de vida" />
+      <div className="content-sub-page">
+        <div className={loanding ? 'subloanding' : ''} />
+        <Title toBack={false} 
+          title={`List of collections`}
+          headsubTitle ={`Quantity`}
+          subTitle={`${collections.length}`}
+          buttons={buttonTitle}
+        />
         <div className="container-page">
-          <CardLists collections={collections}/>
+
+          {
+            alert ?
+            <Alert
+              message="Error"
+              description={alert}
+              type="error"
+              showIcon
+            /> :
+            <CardLists 
+              collections={collections}
+            />
+          }
         </div>
       </div>
     );

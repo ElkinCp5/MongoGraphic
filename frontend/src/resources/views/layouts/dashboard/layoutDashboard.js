@@ -16,40 +16,42 @@ import "./dashboard.css";
 let { RouteWithSubRoutes } = Helper;
 let { Content} = Layout;
 
-class dashboardLayout extends Component {
-  state = {
-    collapsed: false
-  };
+class dashboardLayout  extends Component{
 
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
-  
-  componentDidMount() {
-
-  }
   constructor(props) {
     super(props);
     this.state = {
-      collapsed: false,
+    collapsed: false,
       isToggleOn: false,
       isMobile: false
-    };
-    /*this.toggleCollapsed = this.toggleCollapsed.bind(this);*/
-    /*this.bodyScroll(this.toggleCollapsed);*/
+    }
+    this.toggle = this.toggle.bind(this);
   }
 
-  render() {
+  toggle(){
+    this.setState({
+      collapsed: !this.state.collapsed
+    })
+  };
+  
+  render(){
+    
+    let { collapsed } = this.state
     let { location, routes } = this.props;
     let { pathname } = location;
     return (
       <Router>
         <Layout className="dashboard">
-          <Sider pathname={pathname} logoName={EDcolor} logoE={ECcolor} onCollapsed={this.toggle} collapsed={this.state.collapsed}/>
+          <Sider pathname={pathname} 
+            logoName={EDcolor} 
+            logoE={ECcolor} 
+            onCollapsed={this.toggle} 
+            collapsed={collapsed}/>
           <Layout>
-            <Header  collapsed={this.state.collapsed} onCollapsed={this.toggle} />
+            <Header 
+              collapsed={collapsed} 
+              onCollapsed={this.toggle} 
+            />
 
             <Content
               style={{

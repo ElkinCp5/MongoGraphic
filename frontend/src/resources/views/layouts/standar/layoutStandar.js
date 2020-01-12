@@ -18,9 +18,7 @@ let { Header, Content, Sider} = Layout;
 
 
 class standarLayout extends React.Component {
-  componentDidMount() {
 
-  }
   constructor(props) {
     super(props);
     this.state = {
@@ -29,6 +27,10 @@ class standarLayout extends React.Component {
     };
     
   }
+  componentDidMount() {
+
+  }
+  
   redirect(history){
     history.push('/dashboard');
   }

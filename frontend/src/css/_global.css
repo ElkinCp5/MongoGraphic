@@ -1,11 +1,50 @@
+.content-sub-page{
+    display: block;
+    box-sizing: content-box;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
 .loanding{
     width: 100%;
     min-height: 100vh;
     max-height: 100%;
     display: block;
     position: fixed;
-    background: rgba(0, 0, 0, .7);
+    background: rgba(0, 0, 0, 0.8);
     top:0;
     left:0;
     z-index: 100;
+}
+
+.subloanding{
+    width: 100%;
+    min-height: 100vh;
+    max-height: 100%;
+    display: block;
+    position: absolute;
+    background: rgba(0, 0, 0, .8);
+    top:0;
+    left:0;
+    z-index: 100;
+}
+
+.page-header .ant-btn-primary {
+    background-color: var(--color-second-2) !important;
+    border-color: var(--color-second-2) !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.page-header .ant-btn-primary:hover {
+    background-color: var(--color-primary-2) !important;
+    border-color: var(--color-primary-3) !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 4px 0 rgba(0, 0, 0, 0.045);
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.045);
+}
+.ant-page-header-heading-extra{
+    text-align: right;
 }

@@ -3,14 +3,24 @@ const schema = {
     "low_first": "Client",
     "singularize": "client",
     "pluralize": "clients"
-},
- structure:{
-    name: String,
-    lastName: String,
-    age: Number,
-    company: String,
-    phone: String,
-    address: String
-}
+  },
+  json:{
+    name: 'String',
+    lastName: 'String',
+    age: 'Number',
+    company: 'String',
+    phone: 'String',
+    mobile: 'String',
+    address: 'String'
+  },
+  structure:{
+      name: String,
+      lastName: String,
+      age: Number,
+      company: String,
+      phone: String,
+      mobile: String,
+      address: String
+  }
 }
  module.exports = schema;
