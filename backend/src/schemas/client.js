@@ -5,22 +5,49 @@ const schema = {
     "pluralize": "clients"
   },
   json:{
-    name: 'String',
-    lastName: 'String',
-    age: 'Number',
-    company: 'String',
-    phone: 'String',
-    mobile: 'String',
-    address: 'String'
+    name: {
+      type:'String',
+      required: 'true'
+    },
+    lastName: {
+      type:'String'
+    },
+    age: {
+      type:'Number'
+    },
+    company: {
+      type:'String'
+    },
+    phone: {
+      type:'String'
+    },
+    mobile: {
+      type:'String'
+    },
+    address: {
+      type:'String'
+    }
   },
   structure:{
-      name: String,
-      lastName: String,
+      name: {
+        type:String
+      },
+      lastName: {
+        type:String
+      },
       age: Number,
-      company: String,
-      phone: String,
-      mobile: String,
-      address: String
+      company: {
+        type:String
+      },
+      phone: {
+        type:String
+      },
+      mobile: {
+        type:String
+      },
+      address: {
+        type:String
+      }
   }
 }
  module.exports = schema;

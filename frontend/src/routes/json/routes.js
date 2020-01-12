@@ -59,13 +59,13 @@ const routes = [
                 component: showCollection
             },
             {
-                path: "/dashboard/collections/create",
+                path: "/dashboard/create/collection/",
                 exact: true,
                 isAuth: true,
                 component: createCollection
             },
             {
-                path: "/dashboard/documents",
+                path: "/dashboard/documents/:name",
                 exact: true,
                 isAuth: true,
                 component: documents

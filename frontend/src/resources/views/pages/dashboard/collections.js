@@ -36,12 +36,7 @@ function CardLists(props){
   );
   return List ;
 }
-const buttonTitle = [
-  {
-    icon: 'plus',
-    url: '/create'
-  }
-];
+
 
 //LocalStorage.remove('collections');
 class DashboardPage extends Component {
@@ -54,7 +49,14 @@ class DashboardPage extends Component {
       message: false,
       success: false,
       error: false,
-      alert: false
+      alert: false,
+      buttonTitle:[
+        {
+          icon: 'plus',
+          url: '/dashboard/create/collection',
+          tooltip: 'Create new collection'
+        }
+      ]
     };
     this.handleStateDefault = this.handleStateDefault.bind(this);
     this.handleUpdateCollection = this.handleUpdateCollection.bind(this);
@@ -64,6 +66,12 @@ class DashboardPage extends Component {
     this.handleCollections();
     //LocalStorage.remove('collections'); 
     //console.log('Inicio: ', this.state.collections.length);
+
+    /**
+     * 
+     * 
+     * <Alert message="Warning text" banner />
+     */
   }
 
   componentWillUnmount() {
@@ -126,18 +134,19 @@ class DashboardPage extends Component {
   }
 
   render() {
-    let { routes } = this.props;
-    let { collections, loanding, alert } = this.state;
+    let { routes, history } = this.props;
+    let { collections, loanding, alert, buttonTitle } = this.state;
     //console.log('Fin: ', this.state.collections.length);
 
     return (
       <div className="content-sub-page">
         <div className={loanding ? 'subloanding' : ''} />
         <Title toBack={false} 
-          title={`List of collections`}
-          headsubTitle ={`Quantity`}
+          title={`Collections`}
+          headsubTitle ={`Quantity of schemas`}
           subTitle={`${collections.length}`}
           buttons={buttonTitle}
+          history={history}
         />
         <div className="container-page">
 

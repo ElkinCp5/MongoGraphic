@@ -1,30 +1,23 @@
 import React, { Component } from "react";
-import { Card, Row, Col, Icon, Tooltip, Button, Input, message as boxMessage, List, Collapse } from "antd";
+import { 
+  Select, 
+  Icon, 
+  Button, 
+  message as boxMessage, 
+  Collapse, 
+  Table} from "antd";
 import inflec from "inflection";
 
 
 /* Import Custom Components */
-import SessionStorage from "../../../../../../services/storage/session";
-import LocalStorage from '../../../../../../services/storage/local';
-import services from '../../../../../../services' ;
 import { HtitleHeader as Title } from "../../../../../../components/header";
+//import SessionStorage from "../../../../../../services/storage/session";
+import LocalStorage from '../../../../../../services/storage/local';
+//import typeData from '../../../../../json/type_data';
+import Columns from '../../../../../json/columns_data';
+import services from '../../../../../../services' ;
 
-let buttonTitle = [
-  {
-    icon: 'delete',
-    url: '/create'
-  },
-  {
-    icon: 'edit',
-    url: '/create',
-    tooltip: ''
-  },
-  {
-    icon: 'unordered-list',
-    url: '/create'
-  }
-  
-];
+
 
 function callback(key) {
   console.log(key);
@@ -40,22 +33,58 @@ const genExtra = () => (
   />
 );
 
-const { modelAxios } = services;
-const { Panel }      = Collapse;
+function onChange(value) {
+  console.log(`selected ${value}`);
+}
+
+function onBlur() {
+  console.log('blur');
+}
+
+function onFocus() {
+  console.log('focus');
+}
+
+function onSearch(val) {
+  console.log('search:', val);
+}
+
+const { modelAxios }  = services;
+const { Panel }       = Collapse;
+const { Option }      = Select;
+
 
 class DashboardPage extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      collection: LocalStorage.get('collection') || [],
+      collection: LocalStorage.get(this.props.match.params.name) || [],
       collapsed: false,
       loanding: false,
       message: false,
       success: false,
       error: false,
       alert: false,
-      name: this.props.match.params.name || false
+      name: this.props.match.params.name || false,
+      buttonTitle: [
+        {
+          icon: 'delete',
+          url: '/create',
+          tooltip: 'Delete collection'
+        },
+        {
+          icon: 'edit',
+          url: '/create',
+          tooltip: 'Edit collection'
+        },
+        {
+          icon: 'unordered-list',
+          url: `/dashboard/documents/${this.props.match.params.name}`,
+          tooltip: 'See list of documents'
+        }
+        
+      ]
     };
     this.dataComparison = this.dataComparison.bind(this);
     this.handleStateDefault = this.handleStateDefault.bind(this);
@@ -78,12 +107,12 @@ class DashboardPage extends Component {
   }
 
   handlecollection = async()=>{
-    const { name } = await this.props.match.params;
+    const { name } = await this.state;
     const response = await modelAxios.show(name);
     const { model, verbatim, structure, message } = response;
     const comparison = !this.dataComparison(structure, this.state.collection);
     this.setState({ loanding: true});
-    console.log('Type: ' ,(typeof response))
+    //console.log('Type: ' ,(typeof response))
     if(comparison){
       boxMessage.loading('updating collection list, please wait a moment', 1.5);
     }
@@ -101,7 +130,7 @@ class DashboardPage extends Component {
     }else{
       boxMessage.error(message)
       this.handleUpdateCollection([]);
-      LocalStorage.remove('collection');
+      LocalStorage.remove(this.state.name);
     }
     
     setTimeout(()=>{ 
@@ -111,7 +140,7 @@ class DashboardPage extends Component {
 
   handleUpdateCollection(collection){
     this.setState({collection});
-    LocalStorage.set('collection', collection);
+    LocalStorage.set(this.state.name, collection);
   }
 
   handleStateDefault(){
@@ -123,25 +152,56 @@ class DashboardPage extends Component {
     });
   }
 
-  handleSubtractProperties(data){
+  handleColumn(data){
+    let columns = Columns(data)
+    columns.push({
+        title: 'Parameters',
+        key: 'Parameters',
+        fixed: 'right',
+        width: 150,
+        render: () => 
+        <Button type="primary" shape="round" icon="setting" size={'large'}>
+          Download
+        </Button>,
+    })
+    //console.log(columns, data)
+    return columns;
+  }
+  handleData(data){
     let result = [];
      for(var i in data){
-       let name = [i];
-       let type = data[i].type;
-
-       let field = {name, type}
+       let field = {};
+       if(data[i].required){ field['required'] = data[i].required };
+       if(data[i].unique){ field['unique'] = data[i].unique};
+       if(data[i].type){ field['type'] = data[i].type};
+       if(data[i].min){ field['min'] = data[i].min };
+       if(data[i].max){ field['max'] = data[i].max};
+       if(data[i].min){ field['min'] = data[i].min };
+       field['name'] = i;
       result.push(field)
      }
     return result;
   }
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFields((err, fieldsValue) => {
+      if (err) {
+        return;
+      }
+      console.log('Received values of form: ', fieldsValue);
+    });
+  };
+
   render() {
-    let { collection, loanding } = this.state;
-    let { routes, match } = this.props;
+    //const { getFieldDecorator } = this.props.form;
+    let { collection, loanding, buttonTitle } = this.state;
+    let { routes, match, history } = this.props;
     let { params } = match;
-    
-    console.log(this.handleSubtractProperties(collection));
-  
+
+    //console.info(this.props)
+
     return (
       <div className="content-sub-page">
         <Title toBack={false} 
@@ -149,35 +209,43 @@ class DashboardPage extends Component {
           headsubTitle ={`10 Documents `}
           subTitle="list of documents"
           buttons={buttonTitle}
+          history={history}
         />
         <div className="container-page">
         <div className={loanding ? 'subloanding' : ''} />
         <Collapse
-          defaultActiveKey={false}
+          defaultActiveKey={1}
           onChange={callback}
           expandIconPosition={'right'}
         >
-          {
-            (this.handleSubtractProperties(collection)) ? (
-              this.handleSubtractProperties(collection).map((field, index) => {
-                return <Panel 
-                header={<a href="">
-                  <span style={{ 
-                    color: 'var(--color-second-2)',
-                    fontWeight: "bold"
-                    }}>field:
-                  </span> {field.name} </a>} 
-                key={index} 
-                extra={genExtra()}>
-                  <div className={"content-props"}>
-                   <h2>hola todos</h2>
-                   {field.type}
-                  </div>
-                </Panel>
-              })
-            ): null
-          }
-          
+        <Panel 
+        header={<a href="">
+          <span style={{
+            color: 'var(--color-second-2)',
+            fontWeight: "bold"
+            }}>Collection in json:
+          </span> {params.name } </a>} 
+          key={0}
+          extra={genExtra()}>
+            <div className={"content-props"}>
+              <pre>
+                {JSON.stringify(collection, null, 4)}
+              </pre>
+            </div>
+          </Panel>
+        <Panel 
+        header={<a href="">
+          <span style={{
+            color: 'var(--color-second-2)',
+            fontWeight: "bold"
+            }}>Structure of collection:
+          </span> {params.name } </a>} 
+          key={1}
+          extra={genExtra()}>
+            <div className={"content-props"}>
+              <Table columns={this.handleColumn(collection)} dataSource={this.handleData(collection)} scroll={{ x: 1500}} />
+            </div>
+          </Panel>
         </Collapse>
         </div>
       </div>
@@ -187,4 +255,46 @@ class DashboardPage extends Component {
 
 
 export default DashboardPage;
-
+/**
+ * {getFieldDecorator(field.toLowerCase(), config)( )}
+ * <Row>
+                <Col >
+                  <Form layout='vertical' {...formItemLayout}>
+                  {
+                (typeof collection == 'object') ? (
+                  this.handleSubtractProperties(collection).map((field, index) => {
+                    return (
+                    <Form.Item label={field.name} key={index}>
+                      <Table columns={columns} dataSource={data} scroll={{ x: 1500, y: 400 }} />
+                            <Select
+                            showSearch
+                            style={{ width: 200 }}
+                            placeholder="Select a person"
+                            optionFilterProp="children"
+                            onChange={onChange}
+                            onFocus={onFocus}
+                            onBlur={onBlur}
+                            onSearch={onSearch}
+                            defaultValue={field.type || 'undefined'}
+                            filterOption={(input, option) =>
+                              option.props.children.toLowerCase()
+                              .indexOf(input.toLowerCase()) >= 0
+                            }
+                            >
+                            {
+                              typeData.map((type, index)=>{
+                                return <Option value={type} key={index}>{type}</Option>
+                              })
+                            }
+                            </Select>
+                         
+                          </Form.Item>
+                        
+                          )
+                        })
+                      ): null
+                    }
+                  </Form>
+                </Col>
+              </Row>
+ */
