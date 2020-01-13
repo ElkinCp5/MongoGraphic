@@ -21,7 +21,7 @@ class dashboardLayout  extends Component{
   constructor(props) {
     super(props);
     this.state = {
-    collapsed: false,
+    collapsed: true,
       isToggleOn: false,
       isMobile: false
     }

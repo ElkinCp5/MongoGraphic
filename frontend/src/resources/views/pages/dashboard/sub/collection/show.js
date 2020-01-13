@@ -15,6 +15,7 @@ import { HtitleHeader as Title } from "../../../../../../components/header";
 import LocalStorage from '../../../../../../services/storage/local';
 //import typeData from '../../../../../json/type_data';
 import Columns from '../../../../../json/columns_data';
+import propertys from  '../../../../../json/propertys_data';
 import services from '../../../../../../services' ;
 
 
@@ -155,32 +156,15 @@ class DashboardPage extends Component {
   handleColumn(data){
     let columns = Columns(data)
     columns.push({
-        title: 'Parameters',
-        key: 'Parameters',
+        title: 'Config',
+        key: 'config',
         fixed: 'right',
-        width: 150,
+        width: 75,
         render: () => 
-        <Button type="primary" shape="round" icon="setting" size={'large'}>
-          Download
-        </Button>,
+        <Button type="primary" shape="circle" icon="setting" />,
     })
     //console.log(columns, data)
     return columns;
-  }
-  handleData(data){
-    let result = [];
-     for(var i in data){
-       let field = {};
-       if(data[i].required){ field['required'] = data[i].required };
-       if(data[i].unique){ field['unique'] = data[i].unique};
-       if(data[i].type){ field['type'] = data[i].type};
-       if(data[i].min){ field['min'] = data[i].min };
-       if(data[i].max){ field['max'] = data[i].max};
-       if(data[i].min){ field['min'] = data[i].min };
-       field['name'] = i;
-      result.push(field)
-     }
-    return result;
   }
 
   handleSubmit = e => {
@@ -243,7 +227,7 @@ class DashboardPage extends Component {
           key={1}
           extra={genExtra()}>
             <div className={"content-props"}>
-              <Table columns={this.handleColumn(collection)} dataSource={this.handleData(collection)} scroll={{ x: 1500}} />
+              <Table columns={this.handleColumn(collection)} dataSource={propertys(collection)} scroll={{ x: 1500}} />
             </div>
           </Panel>
         </Collapse>

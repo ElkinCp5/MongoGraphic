@@ -2,7 +2,7 @@ import React from "react";
 var width = 150;
 const handleColumn = (data)=>{
     let result = [];
-    let width = 150;
+    let width = 200;
     let columns = {};
 
     result.push(
@@ -10,8 +10,8 @@ const handleColumn = (data)=>{
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        fixed: 'left',
-        width: 200,
+        //fixed: 'left',
+        width: 150,
       }
     )
     for(const value in data){
@@ -22,7 +22,7 @@ const handleColumn = (data)=>{
             title: "Type",
             dataIndex: "type",
             key: "type",
-            width: 200,
+            width: width,
           }
         )
         columns['type'] = 'type';
