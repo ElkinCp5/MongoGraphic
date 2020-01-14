@@ -8,9 +8,8 @@ const EditableRow = ({ form, index, ...props }) => (
     <EditableContext.Provider value={form}>
       <tr {...props} />
     </EditableContext.Provider>
-  );
-  
-  const EditableFormRow = Form.create()(EditableRow);
+  );  
+const EditableFormRow = Form.create()(EditableRow);
   
   class EditableCell extends Component {
     state = {
@@ -93,7 +92,7 @@ const EditableRow = ({ form, index, ...props }) => (
       super(props);
         
       this.state = {
-        dataSource: this.props.data || [],
+        dataSource: this.props.rows || [],
         count: this.props.count,
       };
       this.columns = this.props.columns || [];

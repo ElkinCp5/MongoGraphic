@@ -70,15 +70,25 @@
 
 .editable-cell {
     position: relative;
-  }
+}
   
-  .editable-cell-value-wrap {
+.editable-cell-value-wrap {
     padding: 5px 12px;
     cursor: pointer;
-  }
+}
   
-  .editable-row:hover .editable-cell-value-wrap {
+.editable-row:hover .editable-cell-value-wrap {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     padding: 4px 11px;
-  }
+}
+
+.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
+    color: white !important;
+    background: var(--color-primary-3) !important;
+}
+
+.ant-tabs-tab:hover{
+    color: var(--color-primary-3) !important;
+    font-weight: 500;
+}

@@ -26,7 +26,7 @@ const handleColumn = (data)=>{
     let result = [];
     let columns = {};
 
-    result.push(
+    /*result.push(
       {
         title: 'Name',
         dataIndex: 'name',
@@ -34,7 +34,7 @@ const handleColumn = (data)=>{
         //fixed: 'left',
         width: 150,
       }
-    )
+    )*/
     for(const property in data){
       let type = (typeof data[property]);
       let subProperty = data[property];

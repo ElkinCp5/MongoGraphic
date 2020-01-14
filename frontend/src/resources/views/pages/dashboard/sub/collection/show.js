@@ -5,7 +5,7 @@ import {
   Button, 
   message as boxMessage, 
   Collapse, 
-  Table} from "antd";
+  Tabs} from "antd";
 import inflec from "inflection";
 
 
@@ -15,7 +15,7 @@ import EditableTable from "../../../../../../components/tables/tableEditable"
 //import SessionStorage from "../../../../../../services/storage/session";
 import LocalStorage from '../../../../../../services/storage/local';
 //import typeData from '../../../../../json/type_data';
-import Columns from '../../../../../json/columns_data';
+import columns from '../../../../../json/columns_data';
 import propertys from  '../../../../../json/propertys_data';
 import services from '../../../../../../services' ;
 
@@ -54,7 +54,7 @@ function onSearch(val) {
 const { modelAxios }  = services;
 const { Panel }       = Collapse;
 const { Option }      = Select;
-
+const { TabPane }    = Tabs;
 
 class DashboardPage extends Component {
   
@@ -155,7 +155,7 @@ class DashboardPage extends Component {
   }
 
   handleColumn(data){
-    let columns = Columns(data)
+    let columns = columns(data)
     /*columns.push({
         title: 'Config',
         key: 'config',
@@ -198,12 +198,49 @@ class DashboardPage extends Component {
         />
         <div className="container-page">
         <div className={loanding ? 'subloanding' : ''} />
-        <Collapse
-          defaultActiveKey={1}
-          onChange={callback}
-          expandIconPosition={'right'}
-        >
-        <Panel 
+        <Tabs defaultActiveKey="2" type="card">
+          <TabPane 
+            tab={
+              <span>
+                <Icon type="pic-right" />
+                Structure JSON
+              </span>
+            }
+            key="1"
+          >
+            <pre>
+              {
+                JSON.stringify(collection, null, 4)
+              }
+            </pre>
+          </TabPane>
+
+          <TabPane
+            tab={
+              <span>
+                <Icon type="bars"/>
+                Structure component
+              </span>
+            }
+            key="2"
+          >
+            <EditableTable
+              rows={propertys(collection)}
+              columns={columns(collection)}
+              count={propertys(collection).length}
+            />
+          </TabPane>
+        </Tabs>
+        </div>
+      </div>
+    );
+  }
+}
+
+
+export default DashboardPage;
+/**
+ *         <Panel 
         header={<a href="">
           <span style={{
             color: 'var(--color-second-2)',
@@ -218,7 +255,7 @@ class DashboardPage extends Component {
               </pre>
             </div>
           </Panel>
-        <Panel 
+          <Panel 
         header={<a href="">
           <span style={{
             color: 'var(--color-second-2)',
@@ -236,16 +273,6 @@ class DashboardPage extends Component {
               />
             </div>
           </Panel>
-        </Collapse>
-        </div>
-      </div>
-    );
-  }
-}
-
-
-export default DashboardPage;
-/**
  * <Table columns={this.handleColumn(collection)} dataSource={propertys(collection)} scroll={{ x: 1500}} />
  * {getFieldDecorator(field.toLowerCase(), config)( )}
  * <Row>

@@ -27,13 +27,6 @@ const handleData = (data) =>{
           let content = subProperty[property];
           if(isInto(column, property)){
             column[property] = content;
-            /*console.log(
-              {
-                subType,
-                property,
-                content: subProperty[property]
-              }
-            );*/
           }
           //column[property] = data[property].required
         }
