@@ -11,6 +11,7 @@ import inflec from "inflection";
 
 /* Import Custom Components */
 import { HtitleHeader as Title } from "../../../../../../components/header";
+import EditableTable from "../../../../../../components/tables/tableEditable"
 //import SessionStorage from "../../../../../../services/storage/session";
 import LocalStorage from '../../../../../../services/storage/local';
 //import typeData from '../../../../../json/type_data';
@@ -155,14 +156,14 @@ class DashboardPage extends Component {
 
   handleColumn(data){
     let columns = Columns(data)
-    columns.push({
+    /*columns.push({
         title: 'Config',
         key: 'config',
         fixed: 'right',
         width: 75,
         render: () => 
         <Button type="primary" shape="circle" icon="setting" />,
-    })
+    })*/
     //console.log(columns, data)
     return columns;
   }
@@ -227,7 +228,12 @@ class DashboardPage extends Component {
           key={1}
           extra={genExtra()}>
             <div className={"content-props"}>
-              <Table columns={this.handleColumn(collection)} dataSource={propertys(collection)} scroll={{ x: 1500}} />
+              
+              <EditableTable 
+                columns={this.handleColumn(collection)} 
+                data={propertys(collection)}
+                count={propertys(collection).length || 0}
+              />
             </div>
           </Panel>
         </Collapse>
@@ -240,6 +246,7 @@ class DashboardPage extends Component {
 
 export default DashboardPage;
 /**
+ * <Table columns={this.handleColumn(collection)} dataSource={propertys(collection)} scroll={{ x: 1500}} />
  * {getFieldDecorator(field.toLowerCase(), config)( )}
  * <Row>
                 <Col >

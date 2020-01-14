@@ -1,8 +1,29 @@
 import React from "react";
-var width = 150;
+const width = 200;
+
+const camelizeString =(string)=>{
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const isInto =(columns, property) =>{
+  return (!columns[property]) ? true : false;
+}
+
+const subtract =(result, columns) =>{
+  
+}
+
+const JsonColumn = (text, width) =>{
+  return {
+    title: camelizeString(text),
+    dataIndex: text,
+    key: text,
+    width,
+  }
+}
+
 const handleColumn = (data)=>{
     let result = [];
-    let width = 200;
     let columns = {};
 
     result.push(
@@ -14,90 +35,34 @@ const handleColumn = (data)=>{
         width: 150,
       }
     )
-    for(const value in data){
-      if(data[value].type){
-        if(!columns['type']){ 
-        result.push(
-          {
-            title: "Type",
-            dataIndex: "type",
-            key: "type",
-            width: width,
+    for(const property in data){
+      let type = (typeof data[property]);
+      let subProperty = data[property];
+
+      if(type === 'object'){
+
+        for(const property in subProperty){
+          let subType = (typeof subProperty[property]);
+          if(isInto(columns, property)){
+            result.push(JsonColumn(property, width));
+            columns[property] = property;
           }
-        )
-        columns['type'] = 'type';
-      }
-      };
-      if(data[value].required){
-        if(!columns['required']){ 
-        result.push(
-          {
-            title: "Required",
-            dataIndex: "required",
-            key: "required",
-            width: width,
-          }
-        )
-        columns['requires'] = 'requires';
         }
-      };
-      if(data[value].unique){
-        if(!columns['unique']){ 
-        result.push(
-          {
-            title: "Unique",
-            dataIndex: "unique",
-            key: "unique",
-            width: width,
-          }
-        )
-        columns['unique'] = 'unique';
+
+      }else if(type === 'string'){
+
+        if(isInto(columns, property)){
+          result.push(JsonColumn(property, width));
+          columns[property] = property;
         }
-      };
-      if(data[value].min){
-        if(!columns['min']){ 
-        result.push(
-          {
-            title: "Min",
-            dataIndex: "min",
-            key: "min",
-            width: width,
-          }
-        )
-        columns['min'] = 'min';
+        
       }
-      };
-      if(data[value].max){
-        if(!columns['max']){ 
-        result.push(
-          {
-            title: "Max",
-            dataIndex: "max",
-            key: "max",
-            width: width,
-          }
-        )
-        columns['max'] = 'max';
-      }
-      };
-      if(data[value].default){
-        if(!columns['default']){ 
-        result.push(
-          {
-            title: "Default",
-            dataIndex: "default",
-            key: "default",
-          }
-        )
-        columns['default'] = 'default';
-      }
-      };
-      
     }
     result.push({
       title: '',
       key: 'Parameters',
     })
+    //console.log({columns: result});
     return result;
   }
   export default handleColumn;
