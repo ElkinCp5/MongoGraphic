@@ -16,7 +16,7 @@ const schema = {
         bacon: {
             type: "Number",
             required: [
-                'true',
+                true,
                 'Why no bacon?'
             ]
         },

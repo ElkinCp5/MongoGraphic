@@ -16,7 +16,7 @@ import EditableTable from "../../../../../../components/tables/tableEditable"
 import LocalStorage from '../../../../../../services/storage/local';
 //import typeData from '../../../../../json/type_data';
 import columns from '../../../../../json/columns_data';
-import propertys from  '../../../../../json/propertys_data';
+import rows from  '../../../../../json/rows_data';
 import services from '../../../../../../services' ;
 
 
@@ -88,8 +88,10 @@ class DashboardPage extends Component {
         
       ]
     };
+    this.renderColumns  = columns(this.state.collection);
+    this.renderRows     = rows(this.state.collection);
     this.dataComparison = this.dataComparison.bind(this);
-    this.handleStateDefault = this.handleStateDefault.bind(this);
+    this.handleStateDefault     = this.handleStateDefault.bind(this);
     this.handleUpdateCollection = this.handleUpdateCollection.bind(this);
   }
 
@@ -154,20 +156,6 @@ class DashboardPage extends Component {
     });
   }
 
-  handleColumn(data){
-    let columns = columns(data)
-    /*columns.push({
-        title: 'Config',
-        key: 'config',
-        fixed: 'right',
-        width: 75,
-        render: () => 
-        <Button type="primary" shape="circle" icon="setting" />,
-    })*/
-    //console.log(columns, data)
-    return columns;
-  }
-
   handleSubmit = e => {
     e.preventDefault();
 
@@ -225,9 +213,9 @@ class DashboardPage extends Component {
             key="2"
           >
             <EditableTable
-              rows={propertys(collection)}
-              columns={columns(collection)}
-              count={propertys(collection).length}
+            columns={this.renderColumns}
+            rows={this.renderRows}
+            count={this.renderRows.lengths}
             />
           </TabPane>
         </Tabs>
@@ -240,6 +228,29 @@ class DashboardPage extends Component {
 
 export default DashboardPage;
 /**
+ * <table>
+              <thead>
+                <tr>
+                  {
+                    collection ? (
+                      columns(collection).map((item, index)=>{
+                        return <th key={index} type={item.type}>
+                          {
+                            item.title
+                          }
+                        </th>
+                      })
+                    ): null
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>John Lennon</td>
+                  <td>Rhythm Guitar</td>
+                </tr>
+              </tbody>
+            </table>
  *         <Panel 
         header={<a href="">
           <span style={{
@@ -268,12 +279,12 @@ export default DashboardPage;
               
               <EditableTable 
                 columns={this.handleColumn(collection)} 
-                data={propertys(collection)}
-                count={propertys(collection).length || 0}
+                data={rows(collection)}
+                count={rows(collection).length || 0}
               />
             </div>
           </Panel>
- * <Table columns={this.handleColumn(collection)} dataSource={propertys(collection)} scroll={{ x: 1500}} />
+ * <Table columns={this.handleColumn(collection)} dataSource={rows(collection)} scroll={{ x: 1500}} />
  * {getFieldDecorator(field.toLowerCase(), config)( )}
  * <Row>
                 <Col >

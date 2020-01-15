@@ -1,3 +1,21 @@
+.ant-btn.ant-btn-circle > .anticon{
+    line-height: 1.3;
+}
+.ant-btn.ant-btn-primary,
+.ant-btn.ant-btn-primary.ant-btn-circle.ant-btn-icon-only{
+    background-color: var(--color-primary-1);
+    border: 0  !important;
+}
+
+.ant-btn.ant-btn-danger.ant-btn-circle.ant-btn-icon-only{
+    background-color: var(--color-second-1);
+    border: 0  !important;
+}
+.ant-btn.ant-btn-primary:hover,
+.ant-btn.ant-btn-primary.ant-btn-circle:hover{
+    background-color: var(--color-primary-2);
+    border-color: none;
+}
 .content-sub-page{
     display: block;
     box-sizing: content-box;
@@ -32,19 +50,19 @@
 
 .page-header .ant-btn-primary{
     background-color: var(--color-second-2) !important;
-    border-color: var(--color-second-2) !important;
+    border-color: none !important;
 }
 
 .page-header .ant-btn-primary:hover {
     background-color: var(--color-primary-2) !important;
-    border-color: var(--color-primary-3) !important;
+    border-color: none !important;
 
 }
 
 .ant-collapse-content .ant-table-fixed 
 .ant-btn-primary{
     background-color: var(--color-primary-3) !important;
-    border-color: var(--color-primary-3) !important;
+    border-color: none !important;
 }
 
 .ant-page-header-heading-extra{
@@ -91,4 +109,11 @@
 .ant-tabs-tab:hover{
     color: var(--color-primary-3) !important;
     font-weight: 500;
+}
+
+.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, 
+.ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, 
+.ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, 
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+    background: var(--color-gray) !important;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Row, Col, Icon, Tooltip, Button, Input, message as boxMessage, List, Collapse } from "antd";
+import { Card, Row, Col, Icon, Tooltip, Empty, Button, Input, message as boxMessage, List, Collapse } from "antd";
 import inflec from "inflection";
 
 
@@ -120,7 +120,12 @@ class DashboardPage extends Component {
   handleSubtractProperties(data){
     let result = [];
      for(var i in data){
-      result.push([[i], data[i]])
+       if(i != '__v'){
+        result.push({
+          name: i,
+          text: data[i]
+        });
+       }
      }
     return result;
   }
@@ -173,7 +178,7 @@ class DashboardPage extends Component {
                                 title={<a href=""><span style={{
                                   color: 'var(--color-second-3)',
                                   fontWeight: "bold"
-                                }}>item: </span> {item}</a>}
+                                }}>{item.name}: </span> {item.text}</a>}
                               />
                             </List.Item>
                           )}
@@ -184,7 +189,21 @@ class DashboardPage extends Component {
                   </div>
                 </Panel>
               })
-            ): null
+            ): (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                imageStyle={{
+                  height: 60,
+                }}
+                description={
+                  <span>
+                    Customize <a href="#API">Description</a>
+                  </span>
+                }
+              >
+                <Button type="primary">Create Now</Button>
+              </Empty>
+            )
           }
           
         </Collapse>

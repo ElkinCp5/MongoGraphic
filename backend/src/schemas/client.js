@@ -7,7 +7,7 @@ const schema = {
   json:{
     name: {
       type:'String',
-      required: 'true'
+      required: true
     },
     lastName: {
       type:'String'

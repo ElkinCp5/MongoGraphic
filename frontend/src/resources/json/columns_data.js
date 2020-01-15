@@ -19,6 +19,7 @@ const JsonColumn = (text, width) =>{
     dataIndex: text,
     key: text,
     width,
+    editable: true,
   }
 }
 
@@ -26,15 +27,16 @@ const handleColumn = (data)=>{
     let result = [];
     let columns = {};
 
-    /*result.push(
+    result.push(
       {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
         //fixed: 'left',
         width: 150,
+        editable: true,
       }
-    )*/
+    )
     for(const property in data){
       let type = (typeof data[property]);
       let subProperty = data[property];
@@ -51,18 +53,18 @@ const handleColumn = (data)=>{
 
       }else if(type === 'string'){
 
-        if(isInto(columns, property)){
-          result.push(JsonColumn(property, width));
-          columns[property] = property;
+        if(isInto(columns, 'type')){
+          result.push(JsonColumn('type', width));
+          columns['type'] = 'type';
         }
-        
+
       }
     }
     result.push({
       title: '',
       key: 'Parameters',
     })
-    //console.log({columns: result});
+    console.log({columns: result});
     return result;
   }
   export default handleColumn;

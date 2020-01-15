@@ -9,5 +9,5 @@ export default [
     "Array",
     "Decimal128",
     "Map",
-    'undefined',
+    "Undefined"
 ]

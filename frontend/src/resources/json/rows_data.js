@@ -15,12 +15,13 @@ const isInto =(columns, property) =>{
 }
 
 const handleData = (data) =>{
-    let rows = [];
+    let rows  = [];
+    let key   = 0;
     for(const property in data){
       let column = {};
       let type = (typeof data[property]);
       let subProperty = data[property];
-
+      column['key'] = key++;
       if(type === 'object'){
         for(const property in subProperty){
           let subType = (typeof subProperty[property]);
@@ -33,12 +34,13 @@ const handleData = (data) =>{
 
       }else if((typeof data[property]) === 'string'){
         column['type'] = data[property]
+        
       }
       column['name'] = property;
       rows.push(column)
       
     }
-    //console.log({data: rows});
+    console.log({data: rows});
     return rows;
   }
 
