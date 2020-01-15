@@ -23,7 +23,7 @@ const SelectDefault = (props)=>{
     let { defaultValue, placeholder } = props;
     return (
         <Select showSearch
-        style={{ width: 200 }}
+        style={{ width: '100%' }}
         placeholder={ placeholder || "Select default"}
         optionFilterProp="children"
         onChange={onChange}

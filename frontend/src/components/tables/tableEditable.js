@@ -34,17 +34,7 @@ function onSearch(val) {
   console.log('search:', val);
 }
 
-function inputLists(props){
-  const { items } = props;
-  console.log({
-    items
-  })
 
-  const List = items.map((input, index) =>
-  <li></li>
-  );
-  return List ;
-}
 
 class EditableCell extends Component {
   getInput = (value = 'string') => {

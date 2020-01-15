@@ -7,7 +7,9 @@ import {
   Tooltip, 
   Form,
   Button, 
-  Input, 
+  Input,
+  Switch,
+  Radio,
   Checkbox 
 } from "antd";
 
@@ -26,6 +28,8 @@ const rulesInputFieldName = {
     },
   ],
 }
+
+const InputGroup = Input.Group;
 
 class DynamicFieldSet extends Component {
   
@@ -77,11 +81,10 @@ class DynamicFieldSet extends Component {
     let { routes } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
-
-      wrapperCol: {
+      /*wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 11 },
-      },
+        sm: { span: 24 },
+      }*/
     };
     const formItemLayoutWithOutLabel = {
       wrapperCol: {
@@ -92,25 +95,51 @@ class DynamicFieldSet extends Component {
     getFieldDecorator('keys', { initialValue: [] });
     const keys = getFieldValue('keys');
     const formItems = keys.map((k, index) => (
-      <div key={k}>
-        <Form.Item {...(formItemLayout)} required={false} >
-          { 
-            getFieldDecorator(`names[${k}]`, rulesInputFieldName)
-            (<Input placeholder="field name" style={{ width: '60%', marginRight: 8 }} />)
-          }
-        </Form.Item>
-          <Form.Item {...(formItemLayout)} required={false} >
-          {
-            <SelectDefault defaultValue='String' placeholder={'Select a type data'}/>
-          }
-        </Form.Item>
+      <div className='row-filds' key={k}>
+        <Row>
+          <Col xs={24} sm={8}>
+            <Form.Item label="Field name" {...(formItemLayout)} style={{ paddingRight: 4 }} required={false} >
+              { 
+                getFieldDecorator(`names[${k}]`, rulesInputFieldName)
+                (<Input placeholder="field name" />)
+              }
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={8}>
+            <Form.Item label="Select a type " {...(formItemLayout)} style={{ paddingRight: 4 }}  required={false} >
+            {
+              <SelectDefault defaultValue='String' placeholder={'Select a type data'}/>
+            }
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={8}>
+            <Form.Item 
+            label={["Required: ", <Switch checkedChildren="true" unCheckedChildren="false" required={false}/>]} 
+            {...(formItemLayout)} style={{ paddingRight: 4 }}  required={false} >
+            {
+              <Input placeholder={'validation of meassege'} style={{ paddingRight: 4 }} required={false}/>
+            }
+            </Form.Item>
+          </Col>
+          
+        </Row>
         {
           getFieldValue('keys').length > 0 ? (
-            <Icon
+            <div style={{
+              textAlign: "right",
+              display: 'block',
+              width: '100%',
+              padding: '5px'
+            }}>
+              <Icon
+              style={{
+                fontSize: "24px"
+              }}
               className="dynamic-delete-button"
               type="minus-circle-o"
               onClick={() => {this.remove(k); console.log(k)}}
-            />
+              />
+            </div>
           ) : null
         }
       </div>
@@ -118,7 +147,7 @@ class DynamicFieldSet extends Component {
 
     
     return (
-      <div>
+      <div className='input-create-schema'>
         <Title toBack={false} title="Tablero" subTitle="Cuadrilla para diligenciar tu hoja de vida" />
         <div className="container-page">
         <Form onSubmit={this.handleSubmit}>
