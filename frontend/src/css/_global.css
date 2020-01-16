@@ -131,6 +131,15 @@
 .input-create-schema
 .row-filds{
     padding: 5px 10px;
+    margin: 5px 0;
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(200, 200, 200, 0.8);
+}
+
+.input-create-schema
+.row-filds:hover,
+.input-create-schema
+.row-filds:focus{
+    background-color: rgba(200, 200, 200, 0.287);
+    border: 1px solid rgba(155, 155, 155, 0.8);
 }
