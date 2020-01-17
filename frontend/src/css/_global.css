@@ -143,3 +143,48 @@
     background-color: rgba(200, 200, 200, 0.287);
     border: 1px solid rgba(155, 155, 155, 0.8);
 }
+
+.list-validation,
+.sub-validation ul li{
+    padding: 10px;
+    display: block;
+    font-weight: 500;
+    font-style: normal;
+    text-decoration: none;
+}
+
+
+.list-validation .sub-validation,
+.list-validation .sub-validation > .ant-checkbox-wrapper{
+    display: block;
+    background-color: rgba(238, 238, 238, 0.233);
+}
+
+.list-validation .sub-validation{
+    margin: 5px 0;
+    border: 1px solid var(--color-gray);
+    border-radius: 5px;
+}
+
+.list-validation .sub-validation > .ant-checkbox-wrapper{
+    padding: 10px;
+    
+}
+
+.list-validation  .sub-validation.header > .ant-checkbox-wrapper{
+    background-color: var(--color-primary-1);
+}
+
+.list-validation .sub-validation:hover{
+    cursor: pointer;
+    background-color: rgba(223, 223, 223, 0.68);
+}
+
+.list-validation .sub-validation ul{
+    display: block;
+    margin: 0;
+    padding-left: 10px;
+}
+.list-validation .sub-validation ul.active{
+    display:none;
+}

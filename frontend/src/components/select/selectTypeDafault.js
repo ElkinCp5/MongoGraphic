@@ -20,15 +20,15 @@ function onSearch(val) {
 }
 
 const SelectDefault = (props)=>{
-    let { defaultValue, placeholder } = props;
+    let { defaultValue, placeholder, select} = props;
     return (
         <Select showSearch
         style={{ width: '100%' }}
         placeholder={ placeholder || "Select default"}
         optionFilterProp="children"
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onChange={select}
+        //onFocus={select}
+        onBlur={select}
         onSearch={onSearch}
         defaultValue={defaultValue || 'undefined'}
         filterOption={(input, option) => 
