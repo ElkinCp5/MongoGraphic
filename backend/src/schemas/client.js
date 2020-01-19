@@ -3,51 +3,14 @@ const schema = {
     "low_first": "Client",
     "singularize": "client",
     "pluralize": "clients"
-  },
-  json:{
+},
+ structure:{
     name: {
-      type:'String',
-      required: true
-    },
-    lastName: {
-      type:'String'
-    },
-    age: {
-      type:'Number'
-    },
-    company: {
-      type:'String'
-    },
-    phone: {
-      type:'String'
-    },
-    mobile: {
-      type:'String'
-    },
-    address: {
-      type:'String'
+        type: String
     }
-  },
-  structure:{
-      name: {
-        type:String
-      },
-      lastName: {
-        type:String
-      },
-      age: Number,
-      company: {
-        type:String
-      },
-      phone: {
-        type:String
-      },
-      mobile: {
-        type:String
-      },
-      address: {
-        type:String
-      }
-  }
-}
+},
+ timestamps: true 
+ 
+  } 
+
  module.exports = schema;

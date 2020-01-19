@@ -26,7 +26,7 @@ const account = (SessionStorage.getAccount() != null) ? JSON.parse(SessionStorag
 const { authFetch, modelAxios } = services;
 
 function CardLists(props){
-  const { collections } = props;
+  const { collections, loanding } = props;
   const List = collections.map((fild, index) =>
     <Cards key={index}
     index={index}
@@ -34,6 +34,11 @@ function CardLists(props){
     description={fild.schema.verbatim.pluralize}
     icon={'database'}
     url={`collections/${fild.name}`}
+    loanding={loanding}
+    action={{
+      name: fild.schema.verbatim.singularize,
+      confirm: true
+    }}
     />
   );
   return List ;
@@ -56,6 +61,7 @@ class DashboardPage extends Component {
     };
     this.handleStateDefault = this.handleStateDefault.bind(this);
     this.handleUpdateCollection = this.handleUpdateCollection.bind(this);
+    this.handleLoand = this.handleLoand.bind(this);
   }
 
   componentDidMount(){
@@ -129,6 +135,13 @@ class DashboardPage extends Component {
     });
   }
 
+  handleLoand(){
+    this.setState({
+      loanding: !this.state.loanding
+    });
+  }
+
+
   render() {
     let { routes, history } = this.props;
     let { collections, loanding, alert, buttonTitle } = this.state;
@@ -157,10 +170,12 @@ class DashboardPage extends Component {
               description='collection o schema moongose'
               icon={'plus'}
               url={`/dashboard/create/collection`}
+
               key={'0'}
               />,
               <CardLists 
               collections={collections}
+              loanding={this.handleLoand}
               key={'lists-card'}/>] : null
               }
             </Skeleton>

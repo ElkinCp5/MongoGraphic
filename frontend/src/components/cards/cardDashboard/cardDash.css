@@ -10,9 +10,22 @@
     border-bottom: 2px solid var(--color-second-1);
     
 }
+
+.card-dash-button .card-action {
+    float: right;
+    padding: 5px;
+    background-color: var(--color-gray-1);
+    border-radius: 50%;
+    margin: 3px;
+}
+
+.card-dash-button .card-action:hover {
+    background-color: var(--color-gray-2);
+}
+
 .card-dash-button,
 .card-dash-button a{
-    display: inline-grid;
+    /*display: inline-grid;*/
     position: relative;
     box-sizing: content-box;
     border-radius: 5px;

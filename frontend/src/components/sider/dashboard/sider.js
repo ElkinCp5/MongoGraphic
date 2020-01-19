@@ -55,13 +55,7 @@ class  Sdash extends Component {
                     <Menu.Item key="/dashboard/collections">
                         <Link to="/dashboard/collections">
                             <Icon type="database" />
-                            <span>Collections</span>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="/dashboard/documents">
-                        <Link to="/dashboard/documents">
-                            <Icon type="solution" />
-                            <span>Documents</span>
+                            <span>Schemas</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="/dashboard/profile">

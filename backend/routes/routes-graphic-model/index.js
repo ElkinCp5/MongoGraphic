@@ -41,7 +41,7 @@ import router            from 'express-promise-router';
         const { name } = req.params;
         const model = await _ValidateModelDinamic(name);
         model ? res.json(MsgRespond(model, 'show', name, 'model',
-                    'search completed' )) :
+                    `finished search of the ${ name } scheme` )) :
                 res.json(MsgRespond(false, 'show',  name, 'model', false,
                     'This scheme does not exist!' ));
     };
@@ -58,7 +58,7 @@ import router            from 'express-promise-router';
                 let _saveFilSchema = await new saveFilSchemaJs(_Sch);
 
                 _Sch ? await _saveFilSchema.saveFile(_Sch.verbatim.singularize) & 
-                    res.json(MsgRespond(_Sch, 'create', _Sch.verbatim.singularize,'model','create completed'))
+                    res.json(MsgRespond(_Sch, 'create', _Sch.verbatim.singularize,'model',`creation of the completed ${name} schema`))
                 : res.json(MsgRespond(_Sch,'create', _Sch.verbatim.singularize,'model', Boolean, 'failed attempt to create a scheme!!'));
             }else if(model){
                 res.json(MsgRespond(model, 'create', name,'model', Boolean, 'This scheme already exists!!'));
@@ -91,7 +91,7 @@ import router            from 'express-promise-router';
                 var _updateOne = _VlaidateUndefai(renemer) ? true : false ;
 
                 _Sch ? await _saveFilSchema.updateFile(_name, _rename, _updateOne) &
-                    res.json(MsgRespond(schema, 'update', _name + ' update ->' + _rename, 'model', 'update completed')) :
+                    res.json(MsgRespond(schema, 'update', _name + ' update ->' + _rename, 'model', `upgrade of the completed ${name} schema`)) :
                     res.json(MsgRespond(false, 'update', name, 'model', Boolean, `failed update, this model <'${_name}'> does exist` ))
             }else if(!model){
                 res.json(MsgRespond(false, 'update', name, 'model', Boolean, 'This scheme does not exist!!'));
@@ -109,12 +109,13 @@ import router            from 'express-promise-router';
         // send for post renameFile add -> req.body.name
 
         let { confirm, name} = req.body
+        console.log('Delete: ', { confirm, name});
         let _Sch = _strSchema.toSchema(false_schema);
         let _saveFilSchema = await new saveFilSchemaJs(_Sch);
 
         if(_VlaidateUndefai(name) && _VlaidateUndefai(confirm) && _path.exists(name) && confirm && _saveFilSchema) {
             let module_delete = await _saveFilSchema.deleteFile(name);
-            module_delete ? res.json(MsgRespond(false, 'delete', name, 'model', 'delete completed' )): 
+            module_delete ? res.json(MsgRespond(true, 'delete', name, 'model', `removal of the completed ${ name } scheme` )): 
             res.json(MsgRespond(false, 'delete', name, 'model', Boolean, `failed delete, this model <'${name}'> does exist`));
         }else if(!_path.exists(name)){
             res.json(MsgRespond(false, 'delete', name,'model', Boolean, 'This scheme does not exist!!'));
