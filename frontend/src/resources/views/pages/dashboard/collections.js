@@ -8,6 +8,7 @@ import {
   Button, 
   Input, 
   Alert,
+  Skeleton,
   message as boxMessage } from "antd";
 
 
@@ -28,9 +29,10 @@ function CardLists(props){
   const { collections } = props;
   const List = collections.map((fild, index) =>
     <Cards key={index}
+    index={index}
     title={fild.name} 
     description={fild.schema.verbatim.pluralize}
-    icon={'bank'}
+    icon={'database'}
     url={`collections/${fild.name}`}
     />
   );
@@ -44,19 +46,13 @@ class DashboardPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collections: LocalStorage.get('collections') || [],
-      loanding: false,
+      collections: [],
+      loanding: true,
       message: false,
       success: false,
       error: false,
       alert: false,
-      buttonTitle:[
-        {
-          icon: 'plus',
-          url: '/dashboard/create/collection',
-          tooltip: 'Create new collection'
-        }
-      ]
+      buttonTitle:[]
     };
     this.handleStateDefault = this.handleStateDefault.bind(this);
     this.handleUpdateCollection = this.handleUpdateCollection.bind(this);
@@ -79,7 +75,7 @@ class DashboardPage extends Component {
   }
 
   dataComparison(collection_response, collection_state){
-    collection_response.sort(); 
+    if(collection_response.length){collection_response.sort()}; 
     collection_state.sort();
     let isComparison = (JSON.stringify(collection_response) === JSON.stringify(collection_state));
     return isComparison;
@@ -96,22 +92,22 @@ class DashboardPage extends Component {
     }
 
     setTimeout(()=>{
-      this.handlestatePreparer(collections, message, comparison);
+      this.handlestatePreparer(collections, message, true);
     }, 2000);
     
   };
 
-  handlestatePreparer(res, msg, comp){
-    if(res.length){ 
-      if(comp){ boxMessage.success(msg)}
-      this.handleUpdateCollection(res);
-    }else if(res.length <= 0){ 
+  handlestatePreparer(collections, message, comp){
+    if(collections.length){ 
+      if(comp){ boxMessage.success(message)}
+      this.handleUpdateCollection(collections);
+    }else if(collections.length <= 0){ 
       boxMessage.success('Empty collection list');
-      this.handleUpdateCollection(res);
+      this.handleUpdateCollection(collections);
     }else{
-      boxMessage.error(msg)
+      boxMessage.error(message)
       this.handleUpdateCollection([]);
-      LocalStorage.remove('collections');
+      //LocalStorage.remove('collections');
     }
     
     setTimeout(()=>{ 
@@ -119,9 +115,9 @@ class DashboardPage extends Component {
     }, 1000);
   }
 
-  handleUpdateCollection(documents){
-    this.setState({documents});
-    LocalStorage.set('collections', documents);
+  handleUpdateCollection(collections){
+    this.setState({collections});
+    //LocalStorage.set('collections', documents);
   }
 
   handleStateDefault(){
@@ -140,27 +136,34 @@ class DashboardPage extends Component {
 
     return (
       <div className="content-sub-page">
-        <div className={loanding ? 'subloanding' : ''} />
+        {
+          //<div className={loanding ? 'subloanding' : ''} />
+        }
         <Title toBack={false} 
-          title={`Collections`}
+          title={`Schema list`}
           headsubTitle ={`Quantity of schemas`}
           subTitle={`${collections.length}`}
           buttons={buttonTitle}
           history={history}
         />
         <div className="container-page">
-
+          
           {
-            alert ?
-            <Alert
-              message="Error"
-              description={alert}
-              type="error"
-              showIcon
-            /> :
-            <CardLists 
+            <Skeleton loading={loanding} active>
+              {
+              !loanding ?
+              [<Cards
+              title='New schema'
+              description='collection o schema moongose'
+              icon={'plus'}
+              url={`/dashboard/create/collection`}
+              key={'0'}
+              />,
+              <CardLists 
               collections={collections}
-            />
+              key={'lists-card'}/>] : null
+              }
+            </Skeleton>
           }
         </div>
       </div>

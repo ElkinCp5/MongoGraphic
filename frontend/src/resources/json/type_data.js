@@ -1,4 +1,5 @@
 export default [
+    "Undefined",
     "String",
     "Number",
     "Date",
@@ -9,5 +10,5 @@ export default [
     "Array",
     "Decimal128",
     "Map",
-    "Undefined"
+    
 ]

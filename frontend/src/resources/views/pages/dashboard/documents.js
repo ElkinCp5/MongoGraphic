@@ -31,7 +31,7 @@ class DashboardPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: LocalStorage.get('documents') || [],
+      documents: [],
       collapsed: false,
       loanding: false,
       message: false,
@@ -95,7 +95,7 @@ class DashboardPage extends Component {
     }else{
       boxMessage.error(msg)
       this.handleUpdateCollection([]);
-      LocalStorage.remove('documents');
+      //LocalStorage.remove('documents');
     }
     
     setTimeout(()=>{ 
@@ -105,7 +105,7 @@ class DashboardPage extends Component {
 
   handleUpdateCollection(documents){
     this.setState({documents});
-    LocalStorage.set('documents', documents);
+    //LocalStorage.set('documents', documents);
   }
 
   handleStateDefault(){

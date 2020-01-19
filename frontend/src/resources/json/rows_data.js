@@ -40,7 +40,7 @@ const handleData = (data) =>{
       rows.push(column)
       
     }
-    console.log({data: rows});
+    //console.log({data: rows});
     return rows;
   }
 

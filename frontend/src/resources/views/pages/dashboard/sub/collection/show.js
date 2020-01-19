@@ -5,7 +5,10 @@ import {
   Button, 
   message as boxMessage, 
   Collapse, 
-  Tabs} from "antd";
+  Tabs,
+  Skeleton,
+  Card,
+  Avatar} from "antd";
 import inflec from "inflection";
 
 
@@ -55,15 +58,16 @@ const { modelAxios }  = services;
 const { Panel }       = Collapse;
 const { Option }      = Select;
 const { TabPane }    = Tabs;
+const { Meta } = Card;
 
 class DashboardPage extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      collection: LocalStorage.get(this.props.match.params.name) || [],
+      collection: false,
       collapsed: false,
-      loanding: false,
+      loanding: true,
       message: false,
       success: false,
       error: false,
@@ -111,26 +115,28 @@ class DashboardPage extends Component {
   }
 
   handlecollection = async()=>{
-    const { name } = await this.state;
+    const { name, collection } = await this.state;
     const response = await modelAxios.show(name);
     const { model, verbatim, structure, message } = response;
     const comparison = !this.dataComparison(structure, this.state.collection);
     this.setState({ loanding: true});
-    //console.log('Type: ' ,(typeof response))
+  
     if(comparison){
       boxMessage.loading('updating collection list, please wait a moment', 1.5);
     }
+    //console.log('Type: ' , this.state.collection)
 
     setTimeout(()=>{
-      this.handlestatePreparer(model, verbatim, structure, message, comparison);
+      this.handlestatePreparer(model, verbatim, structure, message, true);
     }, 2000);
     
   };
 
   handlestatePreparer(model, verbatim, structure, message, comparison){
     if((typeof verbatim) == 'object' && (typeof structure) == 'object' ){ 
-      if(comparison){ boxMessage.success(message)}
-      this.handleUpdateCollection(structure);
+      if(comparison){ boxMessage.success(message) }
+        this.handleUpdateCollection(structure);
+        console.log({structure})
     }else{
       boxMessage.error(message)
       this.handleUpdateCollection([]);
@@ -178,14 +184,15 @@ class DashboardPage extends Component {
     return (
       <div className="content-sub-page">
         <Title toBack={false} 
-          title={`Collection: ${params.name }`}
-          headsubTitle ={`10 Documents `}
-          subTitle="list of documents"
+          title={`Schema: ${params.name }`}
+          headsubTitle ={`Structure view:`}
+          subTitle="Schema fields"
           buttons={buttonTitle}
           history={history}
         />
         <div className="container-page">
-        <div className={loanding ? 'subloanding' : ''} />
+        {//<div className={loanding ? 'subloanding' : ''} />
+        }
         <Tabs defaultActiveKey="2" type="card">
           <TabPane 
             tab={
@@ -196,11 +203,18 @@ class DashboardPage extends Component {
             }
             key="1"
           >
-            <pre>
+            <Skeleton loading={loanding} active>
               {
-                JSON.stringify(collection, null, 4)
+                (typeof collection == 'object') ? 
+                <pre>
+                  {
+                    JSON.stringify(collection, null, 4)
+                  }
+                </pre>: null
+                
               }
-            </pre>
+            </Skeleton>
+            
           </TabPane>
 
           <TabPane
@@ -212,11 +226,17 @@ class DashboardPage extends Component {
             }
             key="2"
           >
-            <EditableTable
-            columns={this.renderColumns}
-            rows={this.renderRows}
-            count={this.renderRows.lengths}
-            />
+            <Skeleton loading={loanding} active>
+            {
+              (typeof collection == 'object') ? 
+              <EditableTable
+              columns={columns(collection)}
+              rows={rows(collection)}
+              count={rows(collection).lengths}
+              /> : null
+              
+            }
+            </Skeleton>
           </TabPane>
         </Tabs>
         </div>

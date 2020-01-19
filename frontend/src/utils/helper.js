@@ -82,7 +82,7 @@ const RouteWithSubRoutes = route => {
   //console.log('RouteWithSubRoutes: ',route)
   if(isAuth ){
     return (
-      <PrivateRoute isAuthentication={authentication} isVerify={verify} path={route.path} >
+      <PrivateRoute isAuthentication={authentication} isVerify={verify} path={route.path} key={`${route.path}`}>
         <Route path={route.path}
           render={props => (
             // pass the sub-routes down to keep nesting

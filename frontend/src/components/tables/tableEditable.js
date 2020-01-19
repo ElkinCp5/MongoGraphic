@@ -9,7 +9,6 @@ import {
   Form 
 } from 'antd';
 import React, {Component, createContext} from "react";
-
 import typeData from '../../resources/json/type_data';
 
 
@@ -72,8 +71,7 @@ class EditableCell extends Component {
       />
 
     }else if(inputType === 'select'){
-      return <Select
-      showSearch
+      return <Select showSearch
       style={{ width: 200 }}
       placeholder="Select a person"
       optionFilterProp="children"
@@ -85,8 +83,7 @@ class EditableCell extends Component {
       filterOption={(input, option) =>
         option.props.children.toLowerCase()
         .indexOf(input.toLowerCase()) >= 0
-      }
-      >
+      }>
       {
         typeData.map((type, index)=>{
           return <Option value={type} key={index}>{type}</Option>
@@ -139,11 +136,14 @@ class EditableCell extends Component {
 class EditableTable extends Component {
   constructor(props) {
     super(props);
-    this.rows = this.props.rows;
-    this.columns = this.props.columns;
-    this.state = { data, editingKey: '' };
-    if(this.columns.length > 0){
-      this.columns.push({
+    this.state = {
+      stateRows: this.props.rows || [],
+      stateColumns: this.props.columns || [],
+      data, editingKey: ''
+     };
+    
+    if(this.state.stateColumns.length > 0){
+      this.state.stateColumns.push({
         title: 'Action',
         dataIndex: 'action',
         fixed: 'right',
@@ -183,6 +183,7 @@ class EditableTable extends Component {
         },
       });
     }
+    console.log("state inicial:",this.state.stateColumns)
   }
 
   isEditing = record => record.key === this.state.editingKey;
@@ -237,13 +238,14 @@ class EditableTable extends Component {
   };
 
   render() {
+    const { stateColumns, stateRows } = this.state
     const components = {
       body: {
         cell: EditableCell,
       },
     };
 
-    const columns = this.columns.map(col => {
+    const columns = stateColumns.map(col => {
       if (!col.editable) {
         return col;
       }
@@ -263,7 +265,7 @@ class EditableTable extends Component {
       <EditableContext.Provider value={this.props.form}>
         <Table
           components={components}
-          dataSource={this.rows}
+          dataSource={stateRows}
           columns={columns}
           rowClassName="editable-row"
           pagination={{

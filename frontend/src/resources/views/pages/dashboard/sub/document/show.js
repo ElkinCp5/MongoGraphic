@@ -50,7 +50,7 @@ class DashboardPage extends Component {
     this.state = {
       documents: LocalStorage.get('documents') || [],
       collapsed: false,
-      loanding: false,
+      loanding: true,
       message: false,
       success: false,
       error: false,

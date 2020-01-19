@@ -72,15 +72,17 @@ class treeDynamicField extends Component {
     };
 
     onType = (select) => {
-        this.setState(state=>(
-            {
-                ...state,
-                params:{
-                    ...state.params,
-                    type: (select) ? select : undefined
+        if(select != 'Undefined'){
+            this.setState(state=>(
+                {
+                    ...state,
+                    params:{
+                        ...state.params,
+                        type: (select) ? select : undefined
+                      }
                   }
-              }
-        ));
+            )); 
+        }
     };
 
 

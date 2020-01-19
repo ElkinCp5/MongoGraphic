@@ -62,7 +62,7 @@ class dashboardLayout  extends Component{
               <Switch>
                 {
                    routes.map((route, index) => (
-                    <RouteWithSubRoutes key={index} {...route} />
+                    <RouteWithSubRoutes key={`subroute-${index}`} {...route} />
                   ))
                  
                 }

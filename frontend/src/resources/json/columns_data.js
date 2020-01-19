@@ -64,7 +64,7 @@ const handleColumn = (data)=>{
       title: '',
       key: 'Parameters',
     })
-    console.log({columns: result});
+    //console.log({columns: result});
     return result;
   }
   export default handleColumn;

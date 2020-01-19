@@ -67,7 +67,33 @@ const show = async(name) =>{
     }
 }
 
+const create = async(model) =>{
+    try {
+        let rep = await Axios.post(`models`, model).then(
+            response=>{
+                let { data } = response.data;
+                let { error } = response.data;
+                let { message } = response.data;
+                let { verbatim, structure } = data
+                let msg = message || error;
+                return modelResponse(structure, msg, verbatim, model.name);
+
+            }).catch(err =>{
+                console.error('error in the response of the axios collection process service show:=> ', err);
+                let error = err.toString();
+                return modelResponse(false, error);
+            });
+        console.log('axios collection show:=> ', rep);
+        return rep;
+    } catch (err) {
+        console.error('Error executing service axios collection show process:=> ', err);
+        let error = err.toString();
+        return modelResponse(false, error);
+    }
+}
+
 export default {
     index,
-    show
+    show,
+    create
 }
