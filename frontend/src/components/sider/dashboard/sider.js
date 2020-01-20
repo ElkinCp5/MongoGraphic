@@ -48,8 +48,8 @@ class  Sdash extends Component {
                 defaultSelectedKeys={"/dashboard"}>
                     <Menu.Item key="/dashboard">
                         <Link to="/dashboard">
-                            <Icon type="read" />
-                            <span>Inicio</span>
+                            <Icon type="home" />
+                            <span>Home</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="/dashboard/collections">

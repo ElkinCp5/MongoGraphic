@@ -113,7 +113,6 @@ class DashboardPage extends Component {
     }else{
       boxMessage.error(message)
       this.handleUpdateCollection([]);
-      //LocalStorage.remove('collections');
     }
     
     setTimeout(()=>{ 
@@ -123,7 +122,7 @@ class DashboardPage extends Component {
 
   handleUpdateCollection(collections){
     this.setState({collections});
-    //LocalStorage.set('collections', documents);
+    LocalStorage.set('collections', collections);
   }
 
   handleStateDefault(){

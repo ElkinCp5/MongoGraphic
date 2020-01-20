@@ -194,11 +194,13 @@ class DynamicFieldSet extends Component {
 
       }
     };
-    structure.forEach((value, index, modelJson)=>{
+    structure.forEach((value, index)=>{
       let name = value.name;
-      modelJson[index].name = undefined;
-      new_model.structure[name] = modelJson[index]
-      console.log(new_model);
+      console.log({name});
+      let new_modelStructure = structure[index];
+      new_modelStructure.name = undefined;
+      new_model.structure[name] = new_modelStructure
+      console.log({new_model});
 
     });
 
@@ -309,10 +311,14 @@ class DynamicFieldSet extends Component {
           subTitle={`${name ? name : 'undefined schema' }`}
         />
         <div className="container-page">
-          <div style={{ padding: '20px', backgroundColor: '#CCC', display:'none'}}>
+          <div style={{ 
+            padding: '20px', 
+            backgroundColor: '#CCC', 
+            //display:'none'
+          }}>
             <pre className="language-bash">{JSON.stringify(model, null, 2)}</pre>
           </div>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={(e)=>this.handleSubmit(e)}>
           <Form.Item>
           <div style={{ marginBottom: '0px' }}>
             <Input onChange={ (e)=> this.handleChange(e) } 
@@ -343,7 +349,7 @@ class DynamicFieldSet extends Component {
           onCancel={this.handleModal.bind(this)}
         >
           <TreeDynamic initialize={{}} 
-          onProcessField={this.handleProcessFieldStructure}/>
+            onProcessField={this.handleProcessFieldStructure}/>
         </Modal> : null}
         </div>
       </div>
