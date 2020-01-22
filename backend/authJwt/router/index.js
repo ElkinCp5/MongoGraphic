@@ -1,9 +1,9 @@
 'use strict'
 // Cargamos el módulo de express para poder crear rutas
-import Graphic              from "../../dependencies";
-import middlewares from '../../middlewares';
+const Graphic              = require("../../dependencies");
+const middlewares = require('../../middlewares');
 // Cargamos el controlador
-import { 
+const { 
     index,
     show,
     signin, 
@@ -12,7 +12,7 @@ import {
     verifyUpdate,
     verifyAccount,
     verifyToken
-} from '../controllers';
+} = require('../controllers');
 let Router = Graphic.Router;
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 //Router.get('/user/:id', middlewaresAuth.ensureAuth, ctrlAuth.getAuth);

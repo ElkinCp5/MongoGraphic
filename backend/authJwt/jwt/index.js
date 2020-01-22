@@ -4,7 +4,7 @@ const Configs   = require('../../config');
 const _iat      = Graphic.Moment().unix();
 const _exp      = Graphic.Moment().add(7, 'day').unix();
 
-export default {
+module.exports =  {
 
     create_token: (user)=>{
         const playToken ={

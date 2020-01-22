@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { helper as Helper } from '../../src/utils';
 /* Overwrite */
 import routes from "./json/routes";
-import '../index.css';
+
 
 let { RouteWithSubRoutes } = Helper;
 

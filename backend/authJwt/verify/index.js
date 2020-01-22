@@ -7,7 +7,7 @@ let url = undefined;
 const ServerNode  = host.serve;
 const Port        = host.port;
 
-export default {
+module.exports = {
 
     token_send_mail: async(user, token)=>{
         if(process.env.NODE_ENV !== 'production'){

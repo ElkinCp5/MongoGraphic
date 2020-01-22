@@ -1,4 +1,5 @@
-@import "./css/_master.css";
+@import url("./css/_master.css");
+
 body {
   margin: 0;
   padding: 0;

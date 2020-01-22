@@ -49,10 +49,10 @@ class validate{
                     data.structure != "undefined"
                 ) ? true : false;
     }
-    removeProperty =(frm, property)=>{
+    removeProperty(frm, property){
         (frm[property]) ? frm[property] = undefined : null;
     }
-    createProperty =(frm, property = undefined)=>{
+    createProperty(frm, property = undefined){
         (frm != undefined && property != undefined) ? frm.push({property}): null;
     }
 }

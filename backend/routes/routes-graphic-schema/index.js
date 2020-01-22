@@ -1,14 +1,14 @@
 'use strict'
 
-import Graphic           from "../../dependencies";
-import structSchemaJson  from '../../schema/createStructSchemaJson';
-import saveFilSchemaJs   from '../../schema/createSchemaJs';
-import LoadingSchemas    from '../../schema/loadinSchemaJson';
-import specialFunctions  from '../../other/specialFunctions';  
-import MsgRespond        from '../../other/msgRespond';
-import path              from '../../root';
-import middlewares       from '../../middlewares';
-import router            from 'express-promise-router';
+const Graphic           = require("../../dependencies");
+const structSchemaJson  = require('../../schema/createStructSchemaJson');
+const saveFilSchemaJs   = require('../../schema/createSchemaJs');
+const LoadingSchemas    = require('../../schema/loadinSchemaJson');
+const specialFunctions  = require('../../other/specialFunctions');  
+const MsgRespond        = require('../../other/msgRespond');
+const path              = require('../../root');
+const middlewares       = require('../../middlewares');
+const router            = require('express-promise-router');
 
     // Estraer 
     const Inflection        = Graphic.Inflection;

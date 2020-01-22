@@ -1,10 +1,10 @@
-import Graphic              from  "../../dependencies";
-import Auth                 from '../models';
-import jwt                  from '../jwt';
-import MsgRespond           from '../../other/msgRespond';
-import specialFunctions     from '../../other/specialFunctions';
-import verifiedSystem       from '../verify'; 
-import { secret }           from '../../config';
+const Graphic              = require("../../dependencies");
+const Auth                 = require('../models');
+const jwt                  = require('../jwt');
+const MsgRespond           = require('../../other/msgRespond');
+const specialFunctions     = require('../../other/specialFunctions');
+const verifiedSystem       = require('../verify'); 
+const { secret }           = require('../../config');
 
 
 let isDuplicated = async(email, signin= false) =>{

@@ -1,8 +1,8 @@
-@import "./_global.css";
-@import "./_colors.css";
-@import "./_fonts.css";
-@import "./_media.css";
-@import "./_mediaGrid.css";
+@import url("./_global.css");
+@import url("./_colors.css");
+@import url("./_fonts.css");
+@import url("./_media.css");
+@import url("./_mediaGrid.css");
 
 
 .dashboard{

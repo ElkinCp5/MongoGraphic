@@ -6,7 +6,9 @@ const RoutesSchema         = require('../routes/routes-graphic-schema');
 const RoutesAuthJWT        = require('../authJwt/router');
 const Path                 = require('../root');
 const MethodOverride       = require('method-override');
-const engineRender         = require('ejs');
+const EngineRender         = require('ejs');
+const Config               = require('../config');
+
 
 const Webpack = require('webpack');
 const WebpackDevMiddleware = require('webpack-dev-middleware');
@@ -18,16 +20,16 @@ const Static        = Graphic.Express.static;
 const BodyParser    = Graphic.Express.urlencoded;
 const Cors          = Graphic.Cors;
 const NewPath       = new Path('/public/');
-const RenderFile    = engineRender.renderFile;
+const RenderFile    = EngineRender.renderFile;
 
 Server.use(exJson.json());
 Server.use(BodyParser({extended:false}));
 Server.use(Morgan('dev'));
 //Server.use(Cors(Config.parametersCors));
-Server.use(Cors());
+//Server.use(Cors());
 Server.use(MethodOverride('X-HTTP-Method-Override'));
 Server.use(Static(NewPath.folder()));
-Server.use(WebpackDevMiddleware(Webpack(WebpackConfig)))
+//Server.use(WebpackDevMiddleware(Webpack(WebpackConfig)))
 
 Server.set('views', NewPath.folder());
 Server.engine('html', RenderFile);
