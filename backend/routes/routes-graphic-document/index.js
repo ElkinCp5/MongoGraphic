@@ -1,12 +1,12 @@
 'use strict'
 //App routes  
     // clase que crea los esquemas y modelos dinamicamente
-    import Graphic                      from "../../dependencies";
-    import LoadingSchemas               from '../../schema/loadinSchemaJson';
-    import classSchemaDynamicModal      from '../../src/schemaDynamic';
-    import MsgRespond                   from '../../other/msgRespond';
-    import middlewares                  from '../../middlewares';
-    import router                       from 'express-promise-router';
+    const Graphic                      = require("../../dependencies");
+    const LoadingSchemas               = require('../../schema/loadinSchemaJson');
+    const classSchemaDynamicModal      = require('../../src/schemaDynamic');
+    const MsgRespond                   = require('../../other/msgRespond');
+    const middlewares                  = require('../../middlewares');
+    const router                       = require('express-promise-router');
 
     const Inflection        = Graphic.Inflection;
     const _LoadSchema       = new LoadingSchemas;

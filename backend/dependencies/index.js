@@ -1,19 +1,19 @@
 // MODULE FOR DEPENDENCIES
-import dotenv from 'dotenv';
-    dotenv.config();
+const dotenv = require('dotenv'); 
+dotenv.config();
 
-import FileManager   from'fs';
-import Inflection    from'inflection';
-import Mongoose      from'mongoose';
-import Express       from'express';
-import session       from'express-session';
-import Passport      from 'passport';
-import Router        from'express-promise-router';
-import Http          from'http';
-import Jwt           from'jwt-simple';
-import Moment        from'moment';
-import Path          from'path';
-import Cors          from'cors';
+const FileManager   = require('fs');
+const Inflection    = require('inflection');
+const Mongoose      = require('mongoose');
+const Express       = require('express');
+const session       = require('express-session');
+const Passport      = require( 'passport');
+const Router        = require('express-promise-router');
+const Http          = require('http');
+const Jwt           = require('jwt-simple');
+const Moment        = require('moment');
+const Path          = require('path');
+const Cors          = require('cors');
 
 let Schema    = Mongoose.Schema;
 let Model     = Mongoose.model;

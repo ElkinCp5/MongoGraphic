@@ -1,7 +1,7 @@
 // Cargamos el módulo de mongoose
-import Graphic              from "../../dependencies";
-import bcrypt               from 'bcrypt-nodejs';
-import jwt                  from '../jwt';
+const Graphic              = require("../../dependencies");
+const bcrypt               = require('bcrypt-nodejs');
+const jwt                  = require('../jwt');
 
 const _Schema   = Graphic.Schema;
 const _Model    = Graphic.Model;

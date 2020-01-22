@@ -1,8 +1,8 @@
 'user strict'
-import Graphic      from  "../dependencies";
-import Configs      from '../config';
-import MsgRespond   from '../other/msgRespond';
-import Auth                 from '../authJwt/models';
+const Graphic      = require( "../dependencies");
+const Configs      = require('../config');
+const MsgRespond   = require('../other/msgRespond');
+const Auth                 = require('../authJwt/models');
 
 let jwt     = Graphic.Jwt;
 let moment  = Graphic.Moment;

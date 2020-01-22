@@ -1,16 +1,16 @@
 //Load app dependencies  
-import Morgan               from 'morgan';
-import Graphic              from "../dependencies";
-import RoutesDocument       from '../routes/routes-graphic-document';
-import RoutesSchema         from '../routes/routes-graphic-schema';
-import RoutesAuthJWT        from '../authJwt/router';
-import Path                 from '../root';
-import MethodOverride       from 'method-override';
-import engineRender         from 'ejs';
+const Morgan               = require('morgan');
+const Graphic              = require("../dependencies");
+const RoutesDocument       = require('../routes/routes-graphic-document');
+const RoutesSchema         = require('../routes/routes-graphic-schema');
+const RoutesAuthJWT        = require('../authJwt/router');
+const Path                 = require('../root');
+const MethodOverride       = require('method-override');
+const engineRender         = require('ejs');
 
-import Webpack from 'webpack';
-import WebpackDevMiddleware from 'webpack-dev-middleware';
-import WebpackConfig from '../../webpack.config';
+const Webpack = require('webpack');
+const WebpackDevMiddleware = require('webpack-dev-middleware');
+const WebpackConfig = require('../../webpack.config');
 // Cargamos los módulos de express y body-parser
 const Server        = Graphic.Express();
 const exJson        = Graphic.Express;
@@ -27,7 +27,7 @@ Server.use(Morgan('dev'));
 Server.use(Cors());
 Server.use(MethodOverride('X-HTTP-Method-Override'));
 Server.use(Static(NewPath.folder()));
-//Server.use(WebpackDevMiddleware(Webpack(WebpackConfig)))
+Server.use(WebpackDevMiddleware(Webpack(WebpackConfig)))
 
 Server.set('views', NewPath.folder());
 Server.engine('html', RenderFile);
