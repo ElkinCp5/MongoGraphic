@@ -12,15 +12,20 @@
 }
 
 .card-dash-button .card-action {
-    float: right;
     padding: 5px;
-    background-color: var(--color-gray-1);
+    font-size: 18px;
+    color: var(--color-white);
+    background-color: var(--color-second-2);
     border-radius: 50%;
-    margin: 3px;
+    margin: 3px 5px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 1;
 }
 
 .card-dash-button .card-action:hover {
-    background-color: var(--color-gray-2);
+    background-color: var(--color-second-3);
 }
 
 .card-dash-button,
@@ -28,7 +33,7 @@
     /*display: inline-grid;*/
     position: relative;
     box-sizing: content-box;
-    border-radius: 5px;
+    border-radius: 5px 20px 5px 5px;
     cursor: pointer;
     background-color: var(--color-gray);
 }
@@ -41,7 +46,8 @@
 }
 
 
-.card-dash-button:hover{
+.card-dash-button:hover,
+.card-dash-button .card-action:hover{
     -webkit-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
     box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
 }

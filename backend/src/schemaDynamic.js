@@ -11,11 +11,13 @@ class SchemaDynamic{
         }
         
     }
+
+
     ModalDynamic(){
         const name      = this._global.pluralize;
         const schema    = this._global.schema;
         const model     = this._global.model;
-        //console.log(this.structure)
+        
         let Mdynamic;
         const schemaDynamic = new schema(
             this.structure
@@ -23,11 +25,12 @@ class SchemaDynamic{
         
         try {
             Mdynamic = new model(name);
-          } catch (error) {
+        } catch (error) {
             Mdynamic = new model(name, schemaDynamic);
-          }
+        }
         return  Mdynamic;
     }
+
 
     OnFunction(pather){
         var AV ={}

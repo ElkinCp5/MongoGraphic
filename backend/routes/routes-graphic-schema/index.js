@@ -40,9 +40,9 @@ import router            from 'express-promise-router';
     let show = async (req, res) => { 
         const { name } = req.params;
         const model = await _ValidateModelDinamic(name);
-        model ? res.json(MsgRespond(model, 'show', name, 'model',
+        model ? res.status(200).json(MsgRespond(model, 'show', name, 'model',
                     `finished search of the ${ name } scheme` )) :
-                res.json(MsgRespond(false, 'show',  name, 'model', false,
+                res.status(304).json(MsgRespond(false, 'show',  name, 'model', false,
                     'This scheme does not exist!' ));
     };
 
@@ -58,15 +58,15 @@ import router            from 'express-promise-router';
                 let _saveFilSchema = await new saveFilSchemaJs(_Sch);
 
                 _Sch ? await _saveFilSchema.saveFile(_Sch.verbatim.singularize) & 
-                    res.json(MsgRespond(_Sch, 'create', _Sch.verbatim.singularize,'model',`creation of the completed ${name} schema`))
-                : res.json(MsgRespond(_Sch,'create', _Sch.verbatim.singularize,'model', Boolean, 'failed attempt to create a scheme!!'));
+                    res.status(200).json(MsgRespond(_Sch, 'create', _Sch.verbatim.singularize,'model',`creation of the completed ${name} schema`))
+                : res.status(200).json(MsgRespond(false,'create', _Sch.verbatim.singularize,'model', Boolean, 'failed attempt to create a scheme!!'));
             }else if(model){
-                res.json(MsgRespond(model, 'create', name,'model', Boolean, 'This scheme already exists!!'));
+                res.status(304).json(MsgRespond(false, 'create', name,'model', Boolean, 'This scheme already exists!!'));
             }else{
-                res.json(MsgRespond(false, 'create', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+                res.status(304).json(MsgRespond(false, 'create', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and structure are required!!'));
             }
         }else{
-            res.json(MsgRespond(false, 'create', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+            res.status(304).json(MsgRespond(false, 'create', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and structure are required!!'));
         }
     };
     
@@ -91,15 +91,15 @@ import router            from 'express-promise-router';
                 var _updateOne = _VlaidateUndefai(renemer) ? true : false ;
 
                 _Sch ? await _saveFilSchema.updateFile(_name, _rename, _updateOne) &
-                    res.json(MsgRespond(schema, 'update', _name + ' update ->' + _rename, 'model', `upgrade of the completed ${name} schema`)) :
-                    res.json(MsgRespond(false, 'update', name, 'model', Boolean, `failed update, this model <'${_name}'> does exist` ))
+                    res.status(200).json(MsgRespond(schema, 'update', _name + ' update ->' + _rename, 'model', `upgrade of the completed ${name} schema`)) :
+                    res.status(304).json(MsgRespond(false, 'update', name, 'model', Boolean, `failed update, this model <'${_name}'> does exist` ))
             }else if(!model){
-                res.json(MsgRespond(false, 'update', name, 'model', Boolean, 'This scheme does not exist!!'));
+                res.status(304).json(MsgRespond(false, 'update', name, 'model', Boolean, 'This scheme does not exist!!'));
             }else{
-                res.json(MsgRespond(false, 'update', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+                res.status(304).json(MsgRespond(false, 'update', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and structure are required!!'));
             }
         }else{
-            res.json(MsgRespond(false, 'update', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and timestamps are required!!'));
+            res.status(304).json(MsgRespond(false, 'update', name, 'model', Boolean, 'Invalid schema structure, check the fields: name and structure are required!!'));
         }
          
     };
@@ -110,22 +110,22 @@ import router            from 'express-promise-router';
 
         let { confirm, name} = req.body
         console.log('Delete: ', { confirm, name});
-        let _Sch = _strSchema.toSchema(false_schema);
+        let _Sch = await _strSchema.toSchema(false_schema);
         let _saveFilSchema = await new saveFilSchemaJs(_Sch);
 
         if(_VlaidateUndefai(name) && _VlaidateUndefai(confirm) && _path.exists(name) && confirm && _saveFilSchema) {
             let module_delete = await _saveFilSchema.deleteFile(name);
-            module_delete ? res.json(MsgRespond(true, 'delete', name, 'model', `removal of the completed ${ name } scheme` )): 
-            res.json(MsgRespond(false, 'delete', name, 'model', Boolean, `failed delete, this model <'${name}'> does exist`));
+            module_delete ? res.status(200).json(MsgRespond(true, 'delete', name, 'model', `removal of the completed ${ name } scheme` )): 
+            res.status(304).json(MsgRespond(false, 'delete', name, 'model', Boolean, `failed delete, this model <'${name}'> does exist`));
         }else if(!_path.exists(name)){
-            res.json(MsgRespond(false, 'delete', name,'model', Boolean, 'This scheme does not exist!!'));
+            res.status(304).json(MsgRespond(false, 'delete', name,'model', Boolean, 'This scheme does not exist!!'));
         }else if(!confirm){
-            res.json(MsgRespond(false, 'delete', name, 'model', Boolean, 'Invalid structure, check the field: confirm are required!!'));
-        } else res.json(MsgRespond(false, 'delete', name, 'model', Boolean, 'Invalid structure, check the fields: name and confirm are required!!'));
+            res.status(304).json(MsgRespond(false, 'delete', name, 'model', Boolean, 'Invalid structure, check the field: confirm are required!!'));
+        } else res.status(304).json(MsgRespond(false, 'delete', name, 'model', Boolean, 'Invalid structure, check the fields: name and confirm are required!!'));
     };
 
     // Route the manager models
-    _router.get('/',         index);
+    _router.get('/',         middlewares.accountAuth, index);
     _router.get('/:name',    middlewares.accountAuth, show);
     _router.post('/',        middlewares.accountAuth, create);
     _router.put('/',         middlewares.accountAuth, update);

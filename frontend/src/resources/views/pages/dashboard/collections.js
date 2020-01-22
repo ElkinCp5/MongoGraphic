@@ -164,18 +164,17 @@ class DashboardPage extends Component {
             <Skeleton loading={loanding} active>
               {
               !loanding ?
-              [<Cards
-              title='New schema'
-              description='collection o schema moongose'
-              icon={'plus'}
-              url={`/dashboard/create/collection`}
-
-              key={'0'}
-              />,
-              <CardLists 
-              collections={collections}
-              loanding={this.handleLoand}
-              key={'lists-card'}/>] : null
+              [
+                <Cards title='New schema' description='collection o schema moongose'
+                icon={'plus'}
+                url={`/dashboard/create/collection`}
+                key={'0'} />,
+                
+                <CardLists 
+                collections={collections}
+                loanding={this.handleLoand}
+                key={'lists-card'}/>
+              ] : null
               }
             </Skeleton>
           }

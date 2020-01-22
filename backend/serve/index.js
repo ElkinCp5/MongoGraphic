@@ -2,7 +2,7 @@
 import Morgan               from 'morgan';
 import Graphic              from "../dependencies";
 import RoutesDocument       from '../routes/routes-graphic-document';
-import RoutesModel          from '../routes/routes-graphic-model';
+import RoutesSchema         from '../routes/routes-graphic-schema';
 import RoutesAuthJWT        from '../authJwt/router';
 import Path                 from '../root';
 import MethodOverride       from 'method-override';
@@ -35,7 +35,7 @@ Server.set('view engine', 'html');
 // Rutas para los diferenctes apartado
 
 Server.use('/api/auth/',   RoutesAuthJWT);
-Server.use('/api/models/', RoutesModel);
+Server.use('/api/models/', RoutesSchema);
 Server.use('/api/documents/',  RoutesDocument);
 Server.get('*', async(req, res) => {
      res.render('index.html');

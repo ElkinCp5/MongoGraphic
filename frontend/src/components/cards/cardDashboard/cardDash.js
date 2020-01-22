@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Icon, Button, message as boxMessage  } from "antd";
+import { Icon, Button, message as boxMessage, Modal } from "antd";
 import Services from '../../../services';
 import "./cardDash.css";
 
 const { modelAxios } = Services;
+const { confirm } = Modal;
 
 let Card = (props) => {
     let { title, description, url, icon, index, action, loanding } = props;
@@ -14,6 +15,22 @@ let Card = (props) => {
     url         = (url && url != '') ? url : "undefined";
     icon        = (icon && icon != '') ? icon : "close-circle";
     index       = (index && index != '') ? index : 'undefined';
+
+    const showDeleteConfirm = (action)=>{
+        confirm({
+          title: 'Are you sure delete this schema?',
+          content: 'Please note that by deleting this scheme, the data posted on the database will also be deleted.',
+          okText: 'Yes',
+          okType: 'danger',
+          cancelText: 'No',
+          onOk() {
+            handleDelete(action);
+          },
+          onCancel() {
+            console.log('Cancel');
+          },
+        });
+    }
 
     const handleDelete = async (action)=>{
         console.log('Action datas: ', action);
@@ -37,7 +54,7 @@ let Card = (props) => {
         <div className="card-dash-button grid-card-dash" key={`card--${index}`}>
             {
             action ? (
-                <Icon type="delete" className="card-action" onClick={()=> handleDelete(action)}/>
+                <Icon type="delete" className="card-action" onClick={()=> showDeleteConfirm(action)}/>
             ): null
             }
             <Link to={url} name={title}>

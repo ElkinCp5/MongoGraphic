@@ -2,10 +2,7 @@ const originClient = process.env.ORIGIN_CLIENT;
 
 module.exports = {    
     moongodb:{
-        manager: process.env.BASE_MONGO,
-        host: process.env.HOST_MONGO,
-        port: process.env.PORT_MONGO,
-        database: process.env.DATA_BASE,
+        uriDB: process.env.NODE_ENV !='production' ? process.env.MONGO_LOCAL : process.env.MONGO_PRODUCTION,
         options: {
             useNewUrlParser: true,
             useCreateIndex: true,
