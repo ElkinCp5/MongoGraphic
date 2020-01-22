@@ -25,8 +25,8 @@ const RenderFile    = EngineRender.renderFile;
 Server.use(exJson.json());
 Server.use(BodyParser({extended:false}));
 Server.use(Morgan('dev'));
-//Server.use(Cors(Config.parametersCors));
-//Server.use(Cors());
+Server.use(Cors(Config.parametersCors));
+Server.use(Cors());
 Server.use(MethodOverride('X-HTTP-Method-Override'));
 Server.use(Static(NewPath.folder()));
 //Server.use(WebpackDevMiddleware(Webpack(WebpackConfig)))

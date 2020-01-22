@@ -19,7 +19,7 @@ export default Axios.create(
     baseURL: serve + port + '/api/',
     // `encabezados` son encabezados personalizados para enviar
     headers: {
-      'Accept': 'application/json',
+      'Access':'application/json',
       'Content-type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Authenticate': token
