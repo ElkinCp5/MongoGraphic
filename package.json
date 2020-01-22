@@ -1,7 +1,9 @@
 {
   "name": "mongographic",
+  "description": "Webpack is a module bundler and this is a example",
   "version": "0.1.0",
-  "private": true,
+  "author": "Elkin Chaverra Portocarrero",
+  "license": "ISC",
   "dependencies": {
     "antd": "^3.25.1",
     "axios": "^0.19.0",
@@ -33,9 +35,20 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node backend/index.js",
+    "start:nodemo": "nodemon --exec babel-node backend/index.js",
     "webpack": "webpack --mode production --watch",
-    "webpack-dev": "webpack-dev-server --mode production"
+    "webpack-dev": "webpack-dev-server --mode production",
+    "build": "webpack --mode production",
+    "postinstall": "npm run build",
+    "start": "node backend/index.js"
+  },
+  "scripts:deploy": {
+    "start:nodemo": "nodemon --exec babel-node backend/index.js",
+    "webpack": "webpack --mode production --watch",
+    "webpack-dev": "webpack-dev-server --mode production",
+    "build": "webpack --mode production",
+    "postinstall": "npm run build",
+    "start": "node backend/index.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",

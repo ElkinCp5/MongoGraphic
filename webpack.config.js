@@ -2,10 +2,12 @@ const path = require('path') ;
 const htmlWebpackPlugin        =require('html-webpack-plugin');
 const miniCssExtractPlugin     =require('mini-css-extract-plugin');
 const liveReloadPlugin         =require('webpack-livereload-plugin'); 
-const devMode = 'production';
+const devMode = process.env.NODE_ENV;
+
+console.log({devMode})
 // 'production'
 module.exports = {
-    mode: devMode,
+    mode: 'production',
     entry: './frontend/src/index.js',
     output:{
         path: path.join(__dirname, './backend/public'),
@@ -27,8 +29,19 @@ module.exports = {
             },
             {
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: ['babel-loader']
+                exclude: /\/node_modules$/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                      presets: [
+                          '@babel/preset-env',
+                          '@babel/preset-react'
+                        ],
+                      plugins: [
+                          "@babel/plugin-proposal-class-properties"
+                        ]
+                    }
+                }
             },
             { 
                 test: /\.(sa|sc|c)ss$/,
@@ -36,7 +49,7 @@ module.exports = {
                     {
                         loader: miniCssExtractPlugin.loader,
                         options:{
-                            hmr: devMode,
+                            hmr: 'production',
                             reloadAll: true,
                         }
                     },
@@ -49,7 +62,15 @@ module.exports = {
     },
     plugins:[
         new htmlWebpackPlugin({
-            template: './frontend/public/index.html'
+            template: './frontend/public/index.html',
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true
+            }
         }),
         new miniCssExtractPlugin({
             filename: 'css/bundle.css',
@@ -58,5 +79,6 @@ module.exports = {
         }),
         new liveReloadPlugin()
         
-    ]
+    ],
+    devtool: 'source-map'
 }

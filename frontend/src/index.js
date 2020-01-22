@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RouterLink from './routes';
-import './index.css';
 import "antd/dist/antd.css"; 
 
 ReactDOM.render(<RouterLink />, document.getElementById('app'));
