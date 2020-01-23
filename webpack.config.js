@@ -62,15 +62,7 @@ module.exports = {
     },
     plugins:[
         new htmlWebpackPlugin({
-            template: './frontend/public/index.html',
-            minify: {
-                collapseWhitespace: true,
-                removeComments: true,
-                removeRedundantAttributes: true,
-                removeScriptTypeAttributes: true,
-                removeStyleLinkTypeAttributes: true,
-                useShortDoctype: true
-            }
+            template: './frontend/public/index.html'
         }),
         new miniCssExtractPlugin({
             filename: 'css/bundle.css',
@@ -82,3 +74,15 @@ module.exports = {
     ],
     devtool: 'source-map'
 }
+
+/*
+,
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true
+            }
+*/

@@ -74,17 +74,12 @@
     padding: 0 !important;
 }
 
-.ant-table-thead{
 
-}
 .ant-table-thead > tr > th {
     background: var(--color-primary-3) !important;
     color: var(--color-white) !important;
 }
-.content-sub-page .ant-collapse-content 
-.ant-table-fixed{
 
-}
 
 .editable-cell {
     position: relative;

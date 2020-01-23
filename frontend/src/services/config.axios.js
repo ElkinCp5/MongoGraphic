@@ -7,8 +7,14 @@ import Config from "../utils/config";
 
 let { host }= Config;
 let { serve, port } = host;
+let baseURL = '';
 let token = SessionStorage.getToken();
 let CancelToken = Axios.CancelToken; 
+
+// development
+//baseURL = serve + port + '/api/';
+// production
+baseURL = '/api/';
 
 export default Axios.create(
   {
@@ -16,7 +22,7 @@ export default Axios.create(
       // `baseURL` se antepondrá a` url` a menos que `url` sea absoluto.
      // Puede ser conveniente configurar `baseURL` para que una instancia de axios pase URL relativas
      // a los métodos de esa instancia.
-    baseURL: serve + port + '/api/',
+    baseURL,
     // `encabezados` son encabezados personalizados para enviar
     headers: {
       'Access':'application/json',

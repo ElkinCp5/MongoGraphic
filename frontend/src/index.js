@@ -2,7 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import RouterLink from './routes';
 import "antd/dist/antd.css"; 
-import './index.css';
+import './css/master.css';
+import "./css/global.css";
+import "./css/colors.css";
+import "./css/fonts.css";
+import "./css/media.css";
+import "./css/mediaGrid.css";
 
 ReactDOM.render(<RouterLink />, document.getElementById('app'));
 
